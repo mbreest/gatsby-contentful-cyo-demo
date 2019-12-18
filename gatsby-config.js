@@ -5,6 +5,7 @@ module.exports = {
     title: `Spreadshirt Create Blog`,
     description: `Create Blog - Inspiration. Lifestyle. Weihnachtswahnsinn.`,
     author: `Heiko Stute`,
+    siteUrl: `https://gatsby-contentful-cyo-demo.netlify.com`
   },
   plugins: [
     {
@@ -91,5 +92,12 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },  
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {          
+        policy: [{ userAgent: '*', disallow: '/' }]
+      }
+    },
+    `gatsby-plugin-sitemap`,  
   ],
 }
