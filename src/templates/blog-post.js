@@ -68,11 +68,12 @@ export const query = graphql`
             title
             published(formatString: "MMMM DD, YYYY")
             bannerImage {
-                fluid(maxWidth: 1200, quality: 80, toFormat: WEBP) {
+                fluid(maxWidth: 1200, quality: 80) {
                     aspectRatio
                     sizes
                     src
                     srcSet
+                    srcSetWebp
                 }
             }
             content {
@@ -87,11 +88,12 @@ export const query = graphql`
                 name
                 links {
                   image {
-                    fluid(maxHeight: 200, maxWidth: 300, quality: 80, toFormat: WEBP, resizingBehavior: THUMB, cropFocus: CENTER) {
+                    fluid(maxHeight: 200, maxWidth: 300, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {
                       aspectRatio
                       sizes
                       src
                       srcSet
+                      srcSetWebp
                     }
                     title
                   }
@@ -124,11 +126,12 @@ export const query = graphql`
               slug
               title
               bannerImage {
-                fluid(maxHeight: 200, maxWidth: 300, quality: 80, toFormat: WEBP, resizingBehavior: THUMB, cropFocus: CENTER) {                  
+                fluid(maxHeight: 200, maxWidth: 300, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {                  
                   aspectRatio
                   sizes
                   src
-                  srcSet                  
+                  srcSet   
+                  srcSetWebp
                 }
               }
             }

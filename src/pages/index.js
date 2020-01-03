@@ -22,7 +22,7 @@ export default (props) => {
               return (        
                 <div key={data.node.id}
                       css={css`
-                float: left; width:33%; height:450px; padding: 24px 12px 12px 0px;            
+                float: left; width:33%; height:420px; padding: 24px 12px 12px 0px;            
                 `}>
                   <Link
                     to={ "/blog/" + data.node.slug }
@@ -68,7 +68,7 @@ export default (props) => {
               return (        
                 <div key={data.node.id}
                       css={css`
-                float: left; width:33%; height:450px; padding: 24px 12px 12px 0px;            
+                float: left; width:33%; height:420px; padding: 24px 12px 12px 0px;            
                 `}>
                   <Link
                     to={ "/blog/" + data.node.slug }
@@ -142,11 +142,12 @@ export const query = graphql`
                     slug
                     published(formatString: "MMMM DD, YYYY")
                     bannerImage {
-                        fluid(maxWidth: 600, quality: 80, toFormat: WEBP) {
+                        fluid(maxWidth: 600, quality: 80) {
                             aspectRatio
                             sizes
                             src
                             srcSet
+                            srcSetWebp
                         }
                     }
                     content {
@@ -193,11 +194,12 @@ export const query = graphql`
                     slug
                     published(formatString: "MMMM DD, YYYY")
                     bannerImage {
-                        fluid(maxWidth: 600, quality: 80, toFormat: WEBP) {
+                        fluid(maxWidth: 600, quality: 80) {
                             aspectRatio
                             sizes
                             src
                             srcSet
+                            srcSetWebp
                         }
                     }
                     content {

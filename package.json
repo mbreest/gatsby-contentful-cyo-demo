@@ -3,7 +3,7 @@
   "private": true,
   "description": "CYO Demo",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "Martin Breest <mbs@spreadshirt.net>",
   "dependencies": {
     "@emotion/core": "^10.0.22",
     "dotenv": "^8.2.0",
@@ -31,7 +31,7 @@
     "react-helmet": "^5.2.1",
     "react-typography": "^0.16.19",
     "typography": "^0.16.19",
-    "typography-theme-kirkham": "^0.16.19"
+    "typography-theme-wordpress-2016": "^0.16.19"
   },
   "devDependencies": {
     "prettier": "^1.19.1"
