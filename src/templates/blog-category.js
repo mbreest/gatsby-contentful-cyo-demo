@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, graphql } from 'gatsby';
 import Img from "gatsby-image";
-import Layout from "../components/layout"
+import Layout from "../components/layout-blog"
 import SEO from "../components/seo"
 import { css } from "@emotion/core"
 import { rhythm } from "../utils/typography"
@@ -18,7 +18,7 @@ export default ({ data }) => {
       {(data.allContentfulBlogPost.nodes || []).map( (data) => (        
             <div key={data.id}>
               <Link
-                to={ "/blog/" + data.slug }
+                to={ "/blog/" + data.slug + "/" }
                 css={css`
                   text-decoration: none;
                   color: inherit;
@@ -32,9 +32,9 @@ export default ({ data }) => {
                     {data.title}{" "}                                       
                 </h3>
               </Link>              
-              <p>{data.published} | <Link to={"/blog/authors/" + data.author.short}>{data.author.name}</Link></p>
+              <p>{data.published} | <Link to={"/blog/autor/" + data.author.short + "/"}>{data.author.name}</Link></p>
               <Link
-                to={ "/blog/" + data.slug }
+                to={ "/blog/" + data.slug + "/" }
                 css={css`
                   text-decoration: none;
                   color: inherit;
@@ -43,7 +43,7 @@ export default ({ data }) => {
                 <Img fluid={data.bannerImage.fluid} />
               </Link>                                                            
               <p>{data.content.childMarkdownRemark.excerpt} <Link
-                to={ "/blog/" + data.slug }
+                to={ "/blog/" + data.slug + "/" }
               >Weiterlesen</Link></p>
               
             </div>

@@ -1,14 +1,14 @@
 import React from 'react';
 import {Link, graphql } from 'gatsby';
 import Img from "gatsby-image";
-import Layout from "../components/layout"
+import Layout from "../components/layout-blog"
 import SEO from "../components/seo"
 import { css } from "@emotion/core" 
 import ContentElementText from "../components/contentelementtext"
 import ContentElementLinkGallery from "../components/contentelementlinkgallery"
 
 export default ({ data }) => {    
-  console.log(data)
+  //console.log(data)
   const { title, published, bannerImage, content, contentElements, author, relatedBlogPosts } = data.contentfulBlogPost
   const { html, excerpt } = content.childMarkdownRemark 
   const { name, short } = author 
@@ -17,7 +17,7 @@ export default ({ data }) => {
       <SEO title={title} description={excerpt} />
       <div>
         <h1>{title}</h1>
-        <p>{published} | <Link to={"/blog/authors/" + short}>{name}</Link></p>
+        <p>{published} | <Link to={"/blog/autor/" + short + "/"}>{name}</Link></p>
         <div>
           <Img fluid={bannerImage.fluid} />
         </div>
@@ -49,7 +49,7 @@ export default ({ data }) => {
             float: left; width:300px; padding: 24px 12px 12px 0px;            
             `}>
               <Link
-                to={ "/blog/" + node.slug }                
+                to={ "/blog/" + node.slug + "/" }                
               >                
                 <Img fluid={node.bannerImage.fluid} />
                 <p>{node.title}</p>

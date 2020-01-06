@@ -3,26 +3,18 @@ import { css } from "@emotion/core"
 import { useStaticQuery, Link, graphql } from "gatsby"
 import { rhythm } from "../utils/typography"
 import logo from "../images/logo.svg";
-export default ({ children }) => {
-    const data = useStaticQuery(
-        graphql`
-          query {
-            site {
-              siteMetadata {
-                title
-              }
-            }
-            allContentfulBlogCategory(filter: {default: {eq: false}}, sort: {fields: index, order: ASC}) {
-              edges {
-                node {
-                  name
-                  short
-                }
-              }
-            }
+export default ({ children }) => {    
+  const data = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
           }
-        `
-      )
+        }
+      }
+    `
+  )
     return (
         <div 
           css={css`
@@ -38,12 +30,16 @@ export default ({ children }) => {
               width: 200px;
               `} alt={data.site.siteMetadata.title}/>            
             </Link>   
-            <ul style={{ listStyle: `none`, float: `right` }}>
-            {(data.allContentfulBlogCategory.edges).map( (edge) => (        
+            <ul style={{ listStyle: `none`, float: `right` }}>            
               <li style={{ display: `inline-block`, marginRight: `1rem` }}>
-                <Link to={"/blog/categories/" + edge.node.short}>{edge.node.name}</Link>
+                <Link to="/selbst-gestalten/">Selbst Gestalten</Link>
               </li>
-            ))}                          
+              <li style={{ display: `inline-block`, marginRight: `1rem` }}>
+                <Link to="/produkte/">Produkte</Link>
+              </li>
+              <li style={{ display: `inline-block`, marginRight: `1rem` }}>
+                <Link to="/blog/">News</Link>
+              </li>
             </ul>
           </header>
           {children}        

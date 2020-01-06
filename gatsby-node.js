@@ -3,6 +3,16 @@ const path = require('path');
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
     
+  const blog = new Promise((resolve, reject) => {
+    const blogTemplate = path.resolve('src/templates/blog.js');
+    resolve(              
+      createPage({
+        path: "/blog",
+        component: blogTemplate
+      })
+    );
+  });
+
   const blogPosts = new Promise((resolve, reject) => {
     const blogPostTemplate = path.resolve('src/templates/blog-post.js');
     resolve(
@@ -53,7 +63,7 @@ exports.createPages = ({ graphql, actions }) => {
         }
         result.data.allContentfulAuthor.edges.forEach((edge) => {
           createPage({
-            path: "/blog/authors/" + edge.node.short,
+            path: "/blog/autor/" + edge.node.short,
             component: authorTemplate,
             context: {
               short: edge.node.short,
@@ -84,7 +94,7 @@ exports.createPages = ({ graphql, actions }) => {
         }
         result.data.allContentfulBlogCategory.edges.forEach((edge) => {
           createPage({
-            path: "/blog/categories/" + edge.node.short,
+            path: "/blog/kategorie/" + edge.node.short,
             component: blogCategoryTemplate,
             context: {
               short: edge.node.short,
@@ -95,6 +105,57 @@ exports.createPages = ({ graphql, actions }) => {
       }),
     );
   });
+
+  const products = new Promise((resolve, reject) => {
+    const productsTemplate = path.resolve('src/templates/products.js');
+    resolve(              
+      createPage({
+        path: "/produkte",
+        component: productsTemplate
+      })
+    );
+  });
+
+  const productDetails = new Promise((resolve, reject) => {
+    const productDetailTemplate = path.resolve('src/templates/product-detail.js');
+    resolve(
+      graphql(`
+        {
+            allContentfulProductType (filter: {active: {eq: true}}, limit: 1000) {
+                edges {
+                    node {
+                        slug
+                    }
+                }
+            }
+        }
+          `).then((result) => {
+        if (result.errors) {
+          reject(result.errors);
+        }
+        result.data.allContentfulProductType.edges.forEach((edge) => {
+          createPage({
+            path: "/detail/" + edge.node.slug,
+            component: productDetailTemplate,
+            context: {
+              slug: edge.node.slug,
+            },
+          });
+        });
+        return;
+      }),
+    );
+  });
+
+  const designer = new Promise((resolve, reject) => {
+    const designerTemplate = path.resolve('src/templates/designer.js');
+    resolve(              
+      createPage({
+        path: "/selbst-gestalten",
+        component: designerTemplate
+      })
+    );
+  });
   
-  return Promise.all([blogPosts, authors, blogCategories])
+  return Promise.all([blog, blogPosts, authors, blogCategories, products, productDetails, designer])
 };
