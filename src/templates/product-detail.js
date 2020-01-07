@@ -7,24 +7,24 @@ import Breadcrumb from "../components/breadcrumb"
 import ActionButton from "../components/actionbutton"
 
 export default ({ data }) => {  
-  var links = [{"url": "/", "title": "Home"}, {"url": "/produkte/", "title": "Produkte"}, {"url": "/detail/" + data.contentfulProductType.slug + "/", "title": data.contentfulProductType.name}]
+  var links = [{"url": "/", "title": "Home"}, {"url": "/produkte/", "title": "Produkte"}, {"url": "/detail/" + data.contentfulCatalogProduct.slug + "/", "title": data.contentfulCatalogProduct.name}]
   return (
     <Layout>
-      <SEO title={data.contentfulProductType.name} description={data.contentfulProductType.description.childMarkdownRemark.html} />
+      <SEO title={data.contentfulCatalogProduct.name} description={data.contentfulCatalogProduct.description.childMarkdownRemark.html} />
       <Breadcrumb links={links}/>
       <div css={css`
-        background-color: #e8e8e8; display: flex;
+        background-color: #f2f2f2; display: flex;
         `}>        
         <div css={css`
         flex: 50%;
         `}>
-            <img src={ "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + data.contentfulProductType.contentfulid + ",width=450,height=450,backgroundColor=e8e8e8.jpg" } alt={data.contentfulProductType.name}/>
+            <img src={ "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + data.contentfulCatalogProduct.contentfulid + ",width=450,height=450,backgroundColor=f2f2f2.jpg" } alt={data.contentfulCatalogProduct.name}/>
         </div>
         <div css={css`
         flex: 50%; margin: 1em;
         `}>
-          <h1>{data.contentfulProductType.name}</h1>                          
-          <ActionButton title="Selbst gestalten" link={"/selbst-gestalten/?productType=" + data.contentfulProductType.contentfulid}/> 
+          <h1>{data.contentfulCatalogProduct.name}</h1>                          
+          <ActionButton title="Selbst gestalten" link={"/selbst-gestalten/?productType=" + data.contentfulCatalogProduct.contentfulid} full="yes"/> 
         </div>        
       </div>
 
@@ -32,15 +32,15 @@ export default ({ data }) => {
         clear: left;
         `}>
         <h2>Produktdetails</h2>
-        <div dangerouslySetInnerHTML={{ __html: data.contentfulProductType.description.childMarkdownRemark.html }} />  
+        <div dangerouslySetInnerHTML={{ __html: data.contentfulCatalogProduct.description.childMarkdownRemark.html }} />  
       </div>
     </Layout>
   )
 }
 
 export const query = graphql`
-    query productTypeQuery($slug: String!){       
-      contentfulProductType(slug: {eq: $slug}) {             
+    query catalogProductQuery($slug: String!){       
+      contentfulCatalogProduct(slug: {eq: $slug}) {             
         name
         slug
         description {

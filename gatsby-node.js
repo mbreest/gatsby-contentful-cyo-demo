@@ -121,7 +121,7 @@ exports.createPages = ({ graphql, actions }) => {
     resolve(
       graphql(`
         {
-            allContentfulProductType (filter: {active: {eq: true}}, limit: 1000) {
+            allContentfulCatalogProduct (filter: {active: {eq: true}}, limit: 1000) {
                 edges {
                     node {
                         slug
@@ -133,7 +133,7 @@ exports.createPages = ({ graphql, actions }) => {
         if (result.errors) {
           reject(result.errors);
         }
-        result.data.allContentfulProductType.edges.forEach((edge) => {
+        result.data.allContentfulCatalogProduct.edges.forEach((edge) => {
           createPage({
             path: "/detail/" + edge.node.slug,
             component: productDetailTemplate,
@@ -157,5 +157,40 @@ exports.createPages = ({ graphql, actions }) => {
     );
   });
   
-  return Promise.all([blog, blogPosts, authors, blogCategories, products, productDetails, designer])
+  const catalogCategory = new Promise((resolve, reject) => {
+    const catalogCategoryTemplate = path.resolve('src/templates/category.js');
+    resolve(
+      graphql(`
+        {
+            allContentfulCatalogCategory (filter: {slug: {ne: "homepage"}}, limit: 1000) {
+                edges {
+                    node {
+                        slug
+                    }
+                }
+            }
+        }
+          `).then((result) => {
+        if (result.errors) {
+          reject(result.errors);
+        }        
+        result.data.allContentfulCatalogCategory.edges.forEach((edge) => {
+          let slug = "/";
+          if (edge.node.slug !== "-") {
+            slug = "/" + edge.node.slug;
+          }
+          createPage({
+            path: slug,
+            component: catalogCategoryTemplate,
+            context: {
+              slug: edge.node.slug,
+            },
+          });
+        });
+        return;
+      }),
+    );
+  });
+
+  return Promise.all([blog, blogPosts, authors, blogCategories, products, productDetails, designer, catalogCategory])
 };

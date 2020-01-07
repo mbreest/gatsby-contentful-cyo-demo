@@ -22,7 +22,7 @@ export default ({ data }) => {
             Produkte
           </h1>     
           <div>
-          {data.allContentfulProductType.edges.map( (data) => {                        
+          {data.allContentfulCatalogProduct.edges.map( (data) => {                        
               return (        
                 <div key={data.node.id}
                       css={css`
@@ -55,8 +55,8 @@ export default ({ data }) => {
 }
 
 export const query = graphql`
-    query allProductsQuery {
-      allContentfulProductType (filter: {active: {eq: true}}, limit: 1000) {
+    query allCatalogProductsQuery {
+      allContentfulCatalogProduct (filter: {active: {eq: true}}, limit: 1000) {
         edges {
             node {
                 name                    

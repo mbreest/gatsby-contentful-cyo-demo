@@ -1,0 +1,24 @@
+.ceproductlist {
+    padding: 2em;
+    margin-bottom: 2em;
+}
+
+.ceproductlist > h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.ceproductlist > div {
+    display: flex;    
+}
+
+.ceproductlist > div > div {
+    margin-right: 1em;
+    flex: 150px;
+}
+
+.ceproductlist > div > div > a > p {
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+}

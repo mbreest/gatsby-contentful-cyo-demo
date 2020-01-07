@@ -117,7 +117,7 @@ export const query = graphql`
             node_locale: {
               eq: "de"
             }, 
-            blog_post: {
+            blogpost: {
               elemMatch: {
                 categories: {
                   elemMatch: {
@@ -170,7 +170,7 @@ export const query = graphql`
             node_locale: {
               eq: "de"
             }, 
-            blog_post: {
+            blogpost: {
               elemMatch: {
                 categories: {
                   elemMatch: {

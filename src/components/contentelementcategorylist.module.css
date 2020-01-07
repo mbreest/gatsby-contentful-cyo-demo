@@ -1,0 +1,19 @@
+.cecategorylist {
+    padding: 2em;
+    margin-bottom: 2em;
+}
+
+.cecategorylist > h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.cecategorylist > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.cecategorylist > div > div {
+    flex: 25%;
+}

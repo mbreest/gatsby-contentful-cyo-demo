@@ -3,7 +3,6 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { css } from "@emotion/core"
 import Breadcrumb from "../components/breadcrumb"
-import Helmet from 'react-helmet';
 import Designer from "../components/designer"
 
 export default () => {  

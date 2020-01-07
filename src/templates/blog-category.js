@@ -63,7 +63,7 @@ export const query = graphql`
           }
         }
       }
-      allContentfulBlogPost(filter: {blog_post: {elemMatch: {categories: {elemMatch: {short: {eq: $short}}}}}}, sort: {fields: published, order: DESC}) {
+      allContentfulBlogPost(filter: {blogpost: {elemMatch: {categories: {elemMatch: {short: {eq: $short}}}}}}, sort: {fields: published, order: DESC}) {
         nodes {
           slug
           title

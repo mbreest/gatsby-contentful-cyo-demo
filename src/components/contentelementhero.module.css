@@ -1,0 +1,19 @@
+.cehero {
+    margin-bottom: 2em;
+}
+
+.cehero > h1 {
+    width: 100%;
+    text-align: center;  
+    margin-top: 1em;  
+}
+
+.cehero > h2 {
+    width: 100%;
+    text-align: center;    
+}
+
+.cehero > div {
+    width: 100%;
+    text-align: center;    
+}
