@@ -3,15 +3,12 @@ import {graphql, Link } from 'gatsby';
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { css } from "@emotion/core"
-import Breadcrumb from "../components/breadcrumb"
 import { rhythm } from "../utils/typography"
 
-export default ({ data }) => {  
-    var links = [{"url": "/", "title": "Home"}, {"url": "/produkte/", "title": "Produkte"}]
+export default ({ data }) => {      
   return (
-    <Layout>
+    <Layout page={{slug: "produkte", name: "Produkte"}}>
         <SEO title="Produkte" description="Produkte" />
-        <Breadcrumb links={links}/>
         <div>
           <div>
           <h1

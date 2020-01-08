@@ -2,7 +2,6 @@ import React from "react"
 import { css } from "@emotion/core"
 import { useStaticQuery, Link, graphql } from "gatsby"
 import { rhythm } from "../utils/typography"
-import logo from "../images/logo-blog.svg";
 export default ({ children }) => {
     const data = useStaticQuery(
         graphql`
@@ -34,17 +33,20 @@ export default ({ children }) => {
         >
           <header style={{ marginBottom: `1.5rem` }}>
             <Link to={`/blog/`}>
-              <img src={logo} css={css`
+              <img src="/images/logo-blog.svg" css={css`
               width: 200px;
               `} alt={data.site.siteMetadata.title}/>            
             </Link>   
-            <ul style={{ listStyle: `none`, float: `right` }}>
-            {(data.allContentfulBlogCategory.edges).map( (edge) => (        
-              <li style={{ display: `inline-block`, marginRight: `1rem` }}>
+            
+            <div style={{ width: `100%`, backgroundColor: `#f2f2f2`, paddingTop: `0.5em`}}>
+              <ul style={{ listStyle: `none`, marginLeft: `0` }}>
+              {(data.allContentfulBlogCategory.edges).map( (edge) => (        
+              <li style={{ display: `inline-block`, marginLeft: `1rem`, textDecoration: `none` }}>
                 <Link to={"/blog/kategorie/" + edge.node.short + "/"}>{edge.node.name}</Link>
               </li>
-            ))}                          
-            </ul>
+              ))}                          
+              </ul>
+            </div>
           </header>
           {children}        
         </div>

@@ -2,32 +2,18 @@ import React from 'react';
 import {graphql } from 'gatsby';
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Breadcrumb from "../components/breadcrumb"
 import ContentElementHero from "../components/contentelementhero"
 import ContentElementProductList from "../components/contentelementproductlist"
 import ContentElement3ColumnText from "../components/contentelement3columntext"
 import ContentElementCategoryList from "../components/contentelementcategorylist"
 
 export default ({ data }) => {  
-  const { name, slug, title, subtitle, action, hero, contentfulparent, contentElements } = data.contentfulCatalogCategory
-
-  let links = [];
-  if (contentfulparent) {
-    let s = "/";  
-    if (contentfulparent.slug !== "-") {
-        s = "/" + contentfulparent.slug + "/";
-    }
-    links.push({"url": s, "title": contentfulparent.name});
-  }
-  let s = "/";
-  if (slug !== "-") {
-      s = "/" + slug + "/";
-  }
-  links.push({"url": s, "title": name});
+  const { name, slug, title, subtitle, action, hero, contentElements } = data.contentfulCatalogCategory
+  
   return (
-    <Layout>
+    <Layout slug={slug} category={{slug: slug, name: name}}>
       <SEO title={title} description={subtitle} />
-      <Breadcrumb links={links}/>
+            
       <ContentElementHero  hero={hero} title={title} subtitle={subtitle} action={action}/>           
       {(contentElements || []).map( (node) => {
         if (node.internal) {
@@ -77,11 +63,7 @@ export const query = graphql`
                 srcSet
                 srcSetWebp
             }
-        }    
-        contentfulparent {
-            name
-            slug
-        }
+        }           
         contentElements {
             ... on ContentfulContentElement3ColumnText {
               headline1

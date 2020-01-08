@@ -7,9 +7,9 @@ function ContentElementCategoryList({ highlight, title, categories }) {
   return (   
     <div className={className}>
         <h2>{title}</h2>
-        <div>    
+        <div key="categories">    
         {(categories).map( (category) => (
-            <div>
+            <div key={category.category.slug}>
                 <Link to={"/" + category.category.slug + "/"}>{category.title}</Link>
             </div>
         ))}
