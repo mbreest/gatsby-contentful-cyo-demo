@@ -1,0 +1,20 @@
+.cecategorynavigation {
+    padding: 0em;
+    margin-bottom: 2em;
+}
+
+.cecategorynavigation > h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.cecategorynavigation > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.cecategorynavigation > div > div {
+    flex: 50%;
+    padding: 1em;
+}

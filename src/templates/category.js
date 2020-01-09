@@ -6,6 +6,7 @@ import ContentElementHero from "../components/contentelementhero"
 import ContentElementProductList from "../components/contentelementproductlist"
 import ContentElement3ColumnText from "../components/contentelement3columntext"
 import ContentElementCategoryList from "../components/contentelementcategorylist"
+import ContentElementCategoryNavigation from "../components/contentelementcategorynavigation"
 
 export default ({ data }) => {  
   const { name, slug, title, subtitle, action, hero, contentElements } = data.contentfulCatalogCategory
@@ -29,6 +30,10 @@ export default ({ data }) => {
             case "ContentfulContentElementCategoryList":
                 return (
                   <ContentElementCategoryList highlight="no" title={node.title} categories={node.categories}/>                  
+                )
+                case "ContentfulContentElementCategoryNavigation":
+                return (
+                  <ContentElementCategoryNavigation highlight="no" title={node.title} categories={node.categories} useHero={node.useHero}/>                  
                 )
             default:
                 return (
@@ -109,6 +114,31 @@ export const query = graphql`
                     slug
                   }
                 }
+                internal {
+                  type
+                }
+              }
+              ... on ContentfulContentElementCategoryNavigation {
+                id
+                title
+                categories {
+                  title
+                  category {
+                    name
+                    slug
+                    hero {
+                      title
+                      fluid(maxWidth: 500, quality: 80) {
+                        aspectRatio
+                        sizes
+                        src
+                        srcSet
+                        srcSetWebp
+                      }
+                    }
+                  }
+                }
+                useHero
                 internal {
                   type
                 }

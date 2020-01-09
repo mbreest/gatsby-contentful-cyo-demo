@@ -17,3 +17,23 @@
 .cecategorylist > div > div {
     flex: 25%;
 }
+
+.cecategorylist3 {
+    padding: 2em;
+    margin-bottom: 2em;
+}
+
+.cecategorylist3 > h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.cecategorylist3 > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.cecategorylist3 > div > div {
+    flex: 33%;
+}

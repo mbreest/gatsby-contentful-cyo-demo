@@ -4,6 +4,9 @@ import contentElementStyles from "./contentelementcategorylist.module.css"
 
 function ContentElementCategoryList({ highlight, title, categories }) {  
   let className = contentElementStyles.cecategorylist; 
+  if (categories.length < 8) {
+    className = contentElementStyles.cecategorylist3; 
+  }
   return (   
     <div className={className}>
         <h2>{title}</h2>
