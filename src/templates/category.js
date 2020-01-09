@@ -1,5 +1,5 @@
 import React from 'react';
-import {graphql } from 'gatsby';
+import {graphql} from 'gatsby';
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ContentElementHero from "../components/contentelementhero"
@@ -14,27 +14,49 @@ export default ({ data }) => {
   return (
     <Layout slug={slug} category={{slug: slug, name: name}}>
       <SEO title={title} description={subtitle} />
-            
-      <ContentElementHero  hero={hero} title={title} subtitle={subtitle} action={action}/>           
+                            
       {(contentElements || []).map( (node) => {
         if (node.internal) {
           switch (node.internal.type) {
+            case "ContentfulContentElementGenerated":
+              switch (node.title) {
+                case "HeroHeader": 
+                  return (
+                    <ContentElementHero hero={hero} title={title} subtitle={subtitle} action={action}/>           
+                  )
+                  default:
+                    return (
+                      <div/>
+                    )              
+              }            
             case "ContentfulContentElement3ColumnText":
                 return (
                   <ContentElement3ColumnText highlight="yes" title={node.title} headline1={ node.headline1 } text1={ node.text1 } headline2={ node.headline2 } text2={ node.text2 } headline3={ node.headline3 } text3={ node.text3 }/>
                 )
             case "ContentfulContentElementProductList":
-                return (
-                  <ContentElementProductList highlight="yes" title={node.title} products={node.products}/>                  
-                )
+                if (node.generated) {
+                  return (                  
+                    <ContentElementProductList highlight="yes" title={node.title} products={data.topProducts.nodes}/>                  
+                  )                    
+                } else {
+                  return (
+                    <ContentElementProductList highlight="yes" title={node.title} products={node.products}/>                  
+                  )
+                }                                  
             case "ContentfulContentElementCategoryList":
                 return (
                   <ContentElementCategoryList highlight="no" title={node.title} categories={node.categories}/>                  
                 )
-                case "ContentfulContentElementCategoryNavigation":
+            case "ContentfulContentElementCategoryNavigation":            
+              if (node.generated) {                       
+                return (                  
+                  <ContentElementCategoryNavigation highlight="no" title={node.title} highlightedCategories={[]} categories={data.topCategories.nodes} useHero={node.useHero} useIcon={node.useIcon}/>
+                )
+              } else {
                 return (
                   <ContentElementCategoryNavigation highlight="no" title={node.title} highlightedCategories={node.highlightedCategories} categories={node.categories} useHero={node.useHero} useIcon={node.useIcon}/>                  
                 )
+              }
             default:
                 return (
                   <div/>              
@@ -70,6 +92,12 @@ export const query = graphql`
             }
         }           
         contentElements {
+            ... on ContentfulContentElementGenerated {
+              title
+              internal {
+                type
+              }
+            }
             ... on ContentfulContentElement3ColumnText {
               headline1
               headline2
@@ -101,6 +129,7 @@ export const query = graphql`
                 contentfulid
               }
               title
+              generated
               internal {
                 type
               }
@@ -120,7 +149,8 @@ export const query = graphql`
               }
               ... on ContentfulContentElementCategoryNavigation {
                 id
-                title
+                title         
+                generated       
                 highlightedCategories {
                   title
                   category {
@@ -182,6 +212,48 @@ export const query = graphql`
                 }
               }
         }
+      }
+      topProducts: allContentfulCatalogProduct(filter: {contentfulparent: {slug: {eq: $slug}}}, sort: {order: ASC, fields: index}, limit: 100) {
+        nodes {          
+          name
+          slug
+          contentfulid
+        }
+      }
+      topCategories: allContentfulCatalogCategory(filter: {contentfulparent: {slug: {eq: $slug}}}, sort: {fields: index}) {      
+          nodes {
+            id
+            slug
+            name
+            icon {
+              fluid(maxWidth: 300, quality: 80) {
+                aspectRatio
+                sizes
+                src
+                srcSet
+                srcSetWebp
+              }
+            }
+            hero {
+              fluid(maxWidth: 500, quality: 80) {
+                aspectRatio
+                sizes
+                src
+                srcSet
+                srcSetWebp
+              }
+            }
+            iconLarge {
+              fluid(maxWidth: 500, quality: 80) {
+                aspectRatio
+                sizes
+                src
+                srcSet
+                srcSetWebp
+              }
+            }
+            index
+          }
       }
     }
 `

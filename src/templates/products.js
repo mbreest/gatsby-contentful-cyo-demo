@@ -53,7 +53,7 @@ export default ({ data }) => {
 
 export const query = graphql`
     query allCatalogProductsQuery {
-      allContentfulCatalogProduct (filter: {active: {eq: true}}, limit: 1000) {
+      allContentfulCatalogProduct (filter: {active: {eq: true}}, sort: {order: ASC, fields: index}, limit: 1000) {
         edges {
             node {
                 name                    

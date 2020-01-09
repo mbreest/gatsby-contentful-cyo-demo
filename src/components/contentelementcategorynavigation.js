@@ -4,7 +4,6 @@ import contentElementStyles from "./contentelementcategorynavigation.module.css"
 import Img from "gatsby-image";
 
 function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, highlightedCategories, categories }) {  
-  
   if (useHero) {
     let className = contentElementStyles.cecategorynavigationhero; 
     if (highlight === "yes") {
@@ -73,21 +72,32 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
     let className = contentElementStyles.cecategorynavigation; 
     if (highlight === "yes") {
         className += " highlight";
-    }
+    }    
     return (
         <div className={className}>
             <h2>{title}</h2>
             <div key="categories">    
-            {(categories).map( (category) => (
-                <div key={category.category.slug}>                    
-                    <Link to={"/" + category.category.slug + "/"}>
+            {(categories).map( (category) => {            
+                var slug = null;
+                var title = null;
+                if (category.category) {
+                    slug = category.category.slug;                    
+                    title = category.title;
+                } else {
+                    slug = category.slug;
+                    title = category.name;
+                }                                
+                console.log(category)
+                return (
+                <div key={slug}>                    
+                    <Link to={"/" + slug + "/"}>
                         <div>
-                            {category.title}
+                            {title}
                         </div>                          
                     </Link>
                 </div>
-                )            
-            )}
+                )      
+            })}
             </div>
         </div>
     )
