@@ -94,7 +94,7 @@ export default ({ slug, category, page, children }) => {
     }    
   }
 
-  links.unshift({url: "/", title: "Home"});
+  links.unshift({url: "/", title: "Gestalten"});
 
   return (
         <div 
