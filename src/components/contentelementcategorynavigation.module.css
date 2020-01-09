@@ -1,3 +1,59 @@
+.cecategorynavigationhero {
+    padding: 0em;
+    margin-bottom: 2em;
+}
+
+.cecategorynavigationhero > h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.cecategorynavigationhero > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.cecategorynavigationhero > div > div {
+    flex: 50%;
+    padding: 1em;
+}
+
+.cecategorynavigationicon {
+    padding: 0em;
+    margin-bottom: 2em;
+}
+
+.cecategorynavigationicon > h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.cecategorynavigationicon > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.cecategorynavigationicon > div > div {
+    flex: 10%;
+    padding: 0.5em;
+}
+
+.cecategorynavigationhighlightedcategory {
+    display: flex;    
+    align-items: flex-end;
+    background-color: #e6f6f8;
+}
+
+.cecategorynavigationcategory {
+    background-color: #F2F2F5;
+}
+
+.cecategorynavigationhighlightedcategory > div {
+    flex: 10%;
+}
+
 .cecategorynavigation {
     padding: 0em;
     margin-bottom: 2em;
@@ -10,11 +66,17 @@
 
 .cecategorynavigation > div {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: flex-start;    
 }
 
 .cecategorynavigation > div > div {
-    flex: 50%;
-    padding: 1em;
+    flex: 10%;
+}
+
+.cecategorynavigation > div > div > a > div {
+    background-color: #F2F2F5;
+    margin: 0.2em;
+    height: 100px;
+    padding: 0.5em;
+
 }

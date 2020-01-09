@@ -10,14 +10,17 @@
 
 .ceproductlist > div {
     display: flex;    
+    overflow: scroll;
 }
 
 .ceproductlist > div > div {
     margin-right: 1em;
-    flex: 150px;
+    flex: 10%;
+    
 }
 
 .ceproductlist > div > div > a > p {
     text-align: center;
     font-size: 15px;
+    width: 150px;   
 }

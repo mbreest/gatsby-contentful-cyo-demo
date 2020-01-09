@@ -33,7 +33,7 @@ export default ({ data }) => {
                 )
                 case "ContentfulContentElementCategoryNavigation":
                 return (
-                  <ContentElementCategoryNavigation highlight="no" title={node.title} categories={node.categories} useHero={node.useHero}/>                  
+                  <ContentElementCategoryNavigation highlight="no" title={node.title} highlightedCategories={node.highlightedCategories} categories={node.categories} useHero={node.useHero} useIcon={node.useIcon}/>                  
                 )
             default:
                 return (
@@ -121,6 +121,33 @@ export const query = graphql`
               ... on ContentfulContentElementCategoryNavigation {
                 id
                 title
+                highlightedCategories {
+                  title
+                  category {
+                    name
+                    slug
+                    hero {
+                      title
+                      fluid(maxWidth: 500, quality: 80) {
+                        aspectRatio
+                        sizes
+                        src
+                        srcSet
+                        srcSetWebp
+                      }
+                    }
+                    iconLarge {
+                      title
+                      fluid(maxWidth: 500, quality: 80) {
+                        aspectRatio
+                        sizes
+                        src
+                        srcSet
+                        srcSetWebp
+                      }
+                    }
+                  }
+                }
                 categories {
                   title
                   category {
@@ -136,9 +163,20 @@ export const query = graphql`
                         srcSetWebp
                       }
                     }
+                    icon {
+                      title
+                      fluid(maxWidth: 300, quality: 80) {
+                        aspectRatio
+                        sizes
+                        src
+                        srcSet
+                        srcSetWebp
+                      }
+                    }
                   }
                 }
                 useHero
+                useIcon                
                 internal {
                   type
                 }
