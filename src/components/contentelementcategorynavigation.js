@@ -87,7 +87,6 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
                     slug = category.slug;
                     title = category.name;
                 }                                
-                console.log(category)
                 return (
                 <div key={slug}>                    
                     <Link to={"/" + slug + "/"}>

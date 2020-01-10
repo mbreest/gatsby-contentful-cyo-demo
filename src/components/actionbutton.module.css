@@ -12,3 +12,15 @@
 .full {
     width: 100%;
 }
+
+.actionButtonButton {
+    background-color: #00b2a5;
+    color: #FFFFFF;
+    padding: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    display: inline-block;    
+    text-align: center;
+    cursor: pointer;
+}

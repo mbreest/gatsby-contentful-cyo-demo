@@ -9,8 +9,24 @@ function ContentElementHero({ title, subtitle, hero, action }) {
         actionTitle += action.title; 
     }
     let link = "/selbst-gestalten/";
-    if (action && action.product && action.product.contentfulid) {
-        link += "?productType=" + action.product.contentfulid; 
+    let queryParams = []
+    if (action) {
+        if (action.product && action.product.contentfulid) {
+            queryParams.push( "productType=" + action.product.contentfulid);    
+        }
+        if (action.designSearch) {
+            queryParams.push( "designSearch=" + action.designSearch);       
+        }
+        if (action.viewId) {
+            queryParams.push( "view=" + action.viewId);       
+        }
+        if (action.appearanceId) {
+            queryParams.push( "appearance=" + action.appearanceId);       
+        }
+    }
+    let queryString = queryParams.join("&");
+    if (queryString) {
+        link += "?" + queryString;
     }
     
     return (   
@@ -19,7 +35,7 @@ function ContentElementHero({ title, subtitle, hero, action }) {
         <h1>{title}</h1>
         <h2>{subtitle}</h2>
         <div>
-            {action && <ActionButton title={actionTitle} link={link}/>}
+            {action && <ActionButton title={actionTitle} link={link} hidden={true}/>}
         </div>        
     </div>
   )

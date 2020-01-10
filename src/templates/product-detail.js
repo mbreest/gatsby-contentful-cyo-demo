@@ -28,7 +28,7 @@ export default ({ data }) => {
         flex: 50%; margin: 1em;
         `}>
           <h1>{name}</h1>                          
-          <ActionButton title="Selbst gestalten" link={"/selbst-gestalten/?productType=" + contentfulid} full="yes"/> 
+          <ActionButton title="Selbst gestalten" link={"/selbst-gestalten/?productType=" + contentfulid} full="yes" hidden={true}/> 
         </div>        
       </div>
 

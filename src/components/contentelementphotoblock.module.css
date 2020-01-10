@@ -30,6 +30,7 @@
     flex: 50%;
     width: 500px;
     padding: 0.5em;
+    cursor: pointer;
 }
 
 .cephotoblockbox {
@@ -43,4 +44,5 @@
     flex: 50%;
     width: 300px;
     padding: 0.5em;
+    cursor: pointer;
 }

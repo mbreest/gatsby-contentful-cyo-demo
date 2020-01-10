@@ -22,7 +22,6 @@ class Designer extends React.Component {
                     myExternalLib: window.myExternalLib
                 });
                 let params = queryString.parse(window.location.search);
-                console.log(params);
                 let designerParams = {target: document.getElementById("app"), locale: "de_DE"}
                 if ("productType" in params) {
                     designerParams["productTypeId"] = params["productType"];
@@ -33,7 +32,12 @@ class Designer extends React.Component {
                 if ("view" in params) {
                     designerParams["viewId"] = params["view"];
                 }
-                console.log(designerParams);
+                if ("appearance" in params) {
+                    designerParams["appearanceId"] = params["appearance"];
+                }
+                if ("designSearch" in params) {
+                    designerParams["designSearch"] = params["designSearch"];
+                }
                 window.spreadshirt.create("sketchomat", designerParams);
             };
         }

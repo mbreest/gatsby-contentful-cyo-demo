@@ -1,6 +1,6 @@
 import React from "react"
 import Img from "gatsby-image";
-import {Link } from 'gatsby';
+import {Link, navigate } from 'gatsby';
 import contentElementStyles from "./contentelementphotoblock.module.css"
 
 function ContentElementPhotoBlock({ title, highlight, highlightedPhoto, photos, alignRight, singleBlock }) {              
@@ -17,18 +17,14 @@ function ContentElementPhotoBlock({ title, highlight, highlightedPhoto, photos, 
         {singleBlock && <h2>{title}</h2>}
         {!singleBlock && <h3>{title}</h3>}
         <div className={direction}>
-            {highlightedPhoto && <div className={contentElementStyles.cephotoblockhighlighted}>
-                <Link to={"/selbst-gestalten/?product=" + highlightedPhoto.productId + "&view=" + highlightedPhoto.viewId}>
-                    <Img fluid={highlightedPhoto.image.fluid}/>
-                </Link>
+            {highlightedPhoto && <div className={contentElementStyles.cephotoblockhighlighted} onClick={() => {navigate("/selbst-gestalten/?product=" + highlightedPhoto.productId + "&view=" + highlightedPhoto.viewId)}}>                
+                <Img fluid={highlightedPhoto.image.fluid}/>
             </div>        
             }            
             <div className={contentElementStyles.cephotoblockbox}>
             {photos && (photos).map( (photo) => (
-                <div>
-                    <Link to={"/selbst-gestalten/?product=" + photo.productId + "&view=" + photo.viewId}>
-                        <Img fluid={photo.image.fluid}/>
-                    </Link>
+                <div onClick={() => {navigate("/selbst-gestalten/?product=" + photo.productId + "&view=" + photo.viewId)}}>                    
+                    <Img fluid={photo.image.fluid}/>
                 </div>
             ))}
             </div>            

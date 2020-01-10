@@ -8,7 +8,6 @@ import ContentElementText from "../components/contentelementtext"
 import ContentElementLinkGallery from "../components/contentelementlinkgallery"
 
 export default ({ data }) => {    
-  //console.log(data)
   const { title, published, bannerImage, content, contentElements, author, relatedBlogPosts } = data.contentfulBlogPost
   const { html, excerpt } = content.childMarkdownRemark 
   const { name, short } = author 

@@ -85,7 +85,10 @@ export const query = graphql`
             product {
               contentfulid
             }
-            title
+            title            
+            appearanceId
+            viewId
+            designSearch
         }
         hero {
             fluid(maxWidth: 1200, quality: 80) {
