@@ -17,7 +17,7 @@ export default () => {
           >
             Selbst gestalten
           </h1>     
-          <Designer/>
+          <Designer type="sketchomat"/>
           </div>              
         </div>
     </Layout>

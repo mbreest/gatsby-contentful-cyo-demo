@@ -7,19 +7,23 @@ class Designer extends React.Component {
         super(props);
 
         this.state = {
-            myExternalLib: null
+            myExternalLib: null,
+            designerType: props.type
         };
+
 
         this.handleScriptInject = this.handleScriptInject.bind(this);
     }
 
-    handleScriptInject({ scriptTags }) {
+    handleScriptInject({ scriptTags, designerType }) {
         if (scriptTags) {
             const scriptTag = scriptTags[0];
             scriptTag.onload = () => {            
                 console.log(`myExternalLib loaded!`, window.myExternalLib);
+                var designerType = this.state.designerType;
                 this.setState({
-                    myExternalLib: window.myExternalLib
+                    myExternalLib: window.myExternalLib,
+                    designerType: designerType
                 });
                 let params = queryString.parse(window.location.search);
                 let designerParams = {target: document.getElementById("app"), locale: "de_DE"}
@@ -38,7 +42,7 @@ class Designer extends React.Component {
                 if ("designSearch" in params) {
                     designerParams["designSearch"] = params["designSearch"];
                 }
-                window.spreadshirt.create("sketchomat", designerParams);
+                window.spreadshirt.create(designerType, designerParams);
             };
         }
     }
