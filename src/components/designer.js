@@ -23,7 +23,18 @@ class Designer extends React.Component {
                 });
                 let params = queryString.parse(window.location.search);
                 console.log(params);
-                window.spreadshirt.create("sketchomat", { productTypeId: params["productType"], target: document.getElementById("app"), locale: "de_DE"});
+                let designerParams = {target: document.getElementById("app"), locale: "de_DE"}
+                if ("productType" in params) {
+                    designerParams["productTypeId"] = params["productType"];
+                }
+                if ("product" in params) {
+                    designerParams["productId"] = params["product"];
+                }
+                if ("view" in params) {
+                    designerParams["viewId"] = params["view"];
+                }
+                console.log(designerParams);
+                window.spreadshirt.create("sketchomat", designerParams);
             };
         }
     }

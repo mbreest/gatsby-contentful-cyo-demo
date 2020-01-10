@@ -1,0 +1,46 @@
+.cephotoblock {
+    padding: 0em;
+    margin-bottom: 2em;
+}
+
+.cephotoblock > h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.cephotoblock > h3 {
+    width: 100%;
+    text-align: center;
+}
+
+.cephotoblock > div {
+    display: flex;        
+    flex-wrap: wrap;
+}
+
+.cephotoblockleft {
+    flex-direction: row;    
+}
+
+.cephotoblockright {
+    flex-direction: row-reverse;        
+}
+
+.cephotoblockhighlighted {
+    flex: 50%;
+    width: 500px;
+    padding: 0.5em;
+}
+
+.cephotoblockbox {
+    flex: 50%;
+    display: flex;    
+    flex-direction: row;
+    flex-wrap: wrap;    
+}
+
+.cephotoblockbox > div {
+    flex: 50%;
+    width: 300px;
+    padding: 0.5em;
+}

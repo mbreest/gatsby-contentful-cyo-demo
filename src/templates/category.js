@@ -7,6 +7,7 @@ import ContentElementProductList from "../components/contentelementproductlist"
 import ContentElement3ColumnText from "../components/contentelement3columntext"
 import ContentElementCategoryList from "../components/contentelementcategorylist"
 import ContentElementCategoryNavigation from "../components/contentelementcategorynavigation"
+import ContentElementPhotoStory from "../components/contentelementphotostory"
 
 export default ({ data }) => {  
   const { name, slug, title, subtitle, action, hero, contentElements } = data.contentfulCatalogCategory
@@ -14,7 +15,7 @@ export default ({ data }) => {
   return (
     <Layout slug={slug} category={{slug: slug, name: name}}>
       <SEO title={title} description={subtitle} />
-                            
+      
       {(contentElements || []).map( (node) => {
         if (node.internal) {
           switch (node.internal.type) {
@@ -57,6 +58,10 @@ export default ({ data }) => {
                   <ContentElementCategoryNavigation highlight="no" title={node.title} highlightedCategories={node.highlightedCategories} categories={node.categories} useHero={node.useHero} useIcon={node.useIcon}/>                  
                 )
               }
+            case "ContentfulContentElementPhotoStory":            
+              return (
+                 <ContentElementPhotoStory highlight="no" title={node.title} photoBlocks={node.photoBlocks}/>
+              )            
             default:
                 return (
                   <div/>              
@@ -207,6 +212,45 @@ export const query = graphql`
                 }
                 useHero
                 useIcon                
+                internal {
+                  type
+                }
+              }              
+              ... on ContentfulContentElementPhotoStory {
+                title
+                photoBlocks {
+                  id
+                  title
+                  alignRight
+                  highlightedPhoto {
+                    image {
+                      fluid(maxWidth: 500, quality: 80) {
+                        aspectRatio
+                        sizes
+                        src
+                        srcSet
+                        srcSetWebp
+                      }
+                    }
+                    title
+                    viewId
+                    productId
+                  }
+                  photos {
+                    title
+                    image {
+                      fluid(maxWidth: 300, quality: 80) {
+                        aspectRatio
+                        sizes
+                        src
+                        srcSet
+                        srcSetWebp
+                      }
+                    }
+                    productId
+                    viewId
+                  }
+                }
                 internal {
                   type
                 }

@@ -1,0 +1,9 @@
+.cephotostory {
+    padding: 0em;
+    margin-bottom: 2em;
+}
+
+.cephotostory > h2 {
+    width: 100%;
+    text-align: center;
+}
