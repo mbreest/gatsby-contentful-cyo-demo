@@ -13,7 +13,6 @@
     
 }
 
-
 @media only screen and (max-width: 600px) {
     .productgrid > div > div {
         flex: 40%;
@@ -42,7 +41,6 @@
 
 .productgrid > div > div > a > p {
     padding: 0.2em 0 1em 0;
-    margin: 0em;
-    font-weight: bold;
+    margin: 0em;    
     color: #333;
 }
