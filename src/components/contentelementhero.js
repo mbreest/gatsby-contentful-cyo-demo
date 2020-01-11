@@ -31,12 +31,16 @@ function ContentElementHero({ title, subtitle, hero, action }) {
     
     return (   
     <div className={contentElementStyles.cehero}>
-        { hero && <Img fluid={hero.fluid}/>}
-        <h1>{title}</h1>
-        <h2>{subtitle}</h2>
-        <div>
-            {action && <ActionButton title={actionTitle} link={link} hidden={true}/>}
-        </div>        
+        { hero && <div>
+            <Img fluid={hero.fluid}/>
+        </div>}
+        <div className={contentElementStyles.text}>
+            <h1>{title}</h1>
+            {subtitle && <h2>{subtitle}</h2>}
+            <div>
+                {action && <ActionButton title={actionTitle} link={link} hidden={true}/>}
+            </div>        
+        </div>
     </div>
   )
 }

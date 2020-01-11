@@ -43,6 +43,10 @@ class Designer extends React.Component {
                 if (window.innerWidth <= 600) {
                     designerType = "smartomat";                                        
                     designerParams["height"] = window.innerHeight;
+                } else if (window.innerWidth <= 1024 && window.innerHeight <= 1024) {
+                    designerType = "sketchomat";                                        
+                    designerParams["height"] = window.innerHeight;
+                    designerParams["width"] = window.innerWidth;
                 }
                 window.spreadshirt.create(designerType, designerParams);
             };

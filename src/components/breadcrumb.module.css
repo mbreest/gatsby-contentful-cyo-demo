@@ -1,7 +1,6 @@
 .breadcrumb {        
-    margin-top: 0.5em;
-    margin-left: 0.5em;
-    margin-bottom: 0.2em;
+    margin: 0em;
+    padding: 0.7em;
     overflow: scroll;
 }
 
@@ -9,24 +8,22 @@
     list-style: none;
     display: inline-flex;
     margin: 0em;
+    padding: 0em;
 }
 
 .breadcrumb > ul > li {
     display: list-item;
+    margin: 0;
 }
 
 .breadcrumb > ul > li+li:before {
     padding: 8px;
-    color: black;
+    color: #666;
     content: ">";
 }
 
 .breadcrumb > ul > li a {
     white-space: nowrap;
-}
-
-.breadcrumb > ul > li a:hover {
-  color: #01447e;
-  text-decoration: underline;
-  
+    color: #666;
+    text-decoration: none;
 }

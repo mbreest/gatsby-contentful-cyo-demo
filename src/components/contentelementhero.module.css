@@ -1,6 +1,6 @@
 .cehero {
-    margin-top: 0.5em;
-    margin-bottom: 2em;
+    margin-top: 0em;
+    margin-bottom: 1em;
 }
 
 .cehero > h1 {
@@ -18,3 +18,7 @@
     width: 100%;
     text-align: center;    
 }
+
+.text {
+    padding: 1em 1em 0em 1em;    
+}  

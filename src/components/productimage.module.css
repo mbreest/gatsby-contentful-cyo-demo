@@ -1,0 +1,45 @@
+
+
+@media only screen and (max-width: 600px) {
+    .productimage {
+        display: block;        
+    }
+
+    .title {
+        display: none;
+    }
+
+    .image {
+        padding: 1em;
+        background-color: #f2f2f2;
+    }
+
+    .buttons {
+        padding: 1em;
+    }
+}
+
+@media only screen and (min-width: 601px) {
+    .productimage {
+        display: flex;
+        background-color: #f2f2f2;
+    }
+
+    .productimage > div {
+        flex: 50%;
+    }
+
+    .title {
+        font-weight: bold;
+        font-size: 24px;
+    }
+
+    .image {
+        padding: 1em;
+    }   
+    
+    .buttons {
+        padding: 1em;
+    }
+}
+

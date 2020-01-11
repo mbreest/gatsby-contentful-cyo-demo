@@ -17,7 +17,7 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
                 <div key={category.category.slug}>                    
                     <Link to={"/" + category.category.slug + "/"}>
                           {category.category.hero && <Img fluid={category.category.hero.fluid}/>}    
-                          {category.title}
+                          <p>{category.title}</p>
                     </Link>
                 </div>
                 )            
@@ -38,12 +38,10 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
                 <h2>{title}</h2>
                 <div key="highlightedCategories">
                 {highlightedCategories && (highlightedCategories).map( (category) => { return (
-                    <div key={category.category.slug}>                    
+                    <div className={contentElementStyles.highlightedclass}>                    
                         <Link to={"/" + category.category.slug + "/"}>
                             <div className={highlightedCategoryClassName}>
-                                <div>
-                                    {category.title}
-                                </div>
+                                <div className={contentElementStyles.highlightedlink}>{category.title}</div>
                                 <div>
                                     {category.category.iconLarge && <Img fluid={category.category.iconLarge.fluid}/>}                                    
                                 </div>                                
@@ -55,12 +53,12 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
                 </div>
                 <div key="categories">    
                 {(categories).map( (category) => { return (
-                    <div key={category.category.slug}>                    
+                    <div className={contentElementStyles.defaultclass}>                    
                         <Link to={"/" + category.category.slug + "/"}>
                             <div className={categoryClassName}>
                                 {category.category.icon && <Img fluid={category.category.icon.fluid}/>}                                
-                            </div>                          
-                            {category.title}
+                            </div>             
+                            <div className={contentElementStyles.defaultlink}>{category.title}</div>
                         </Link>
                     </div>
                     )            

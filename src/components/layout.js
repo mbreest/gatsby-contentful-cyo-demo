@@ -1,8 +1,11 @@
 import React from "react"
 import { css } from "@emotion/core"
-import { useStaticQuery, Link, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import { rhythm } from "../utils/typography"
 import Breadcrumb from "../components/breadcrumb"
+import Logo from "../components/logo"
+import Menu from "../components/menu"
+import contentElementStyles from "./layout.module.css"
 
 export default ({ slug, category, page, children }) => {    
   const data = useStaticQuery(
@@ -101,6 +104,13 @@ export default ({ slug, category, page, children }) => {
   menu.children.push({slug: "/produkte/", name: "Produkte", children: []})
   menu.children.push({slug: "/blog/", name: "News", children: []})
   
+  var hideMenuClass = "";
+  if (page && page.slug === "selbst-gestalten") {
+    hideMenuClass = " mobilehide";
+  }
+
+  console.log(slug);
+
   return (        
         <div 
           css={css`
@@ -109,36 +119,13 @@ export default ({ slug, category, page, children }) => {
             padding: ${rhythm(0)};
             padding-top: ${rhythm(0)};
           `}
-        >          
-            <Link to={`/`}>
-              <img src="/images/logo.svg" css={css`
-              width: 300px; margin-bottom: 0;
-              `} alt={data.site.siteMetadata.title}/>            
-            </Link>   
-            <div style={{ width: `100%`, backgroundColor: `#f2f2f2`, margin: `0`, padding: `0.5em`, overflow: `scroll`}}>
-              <ul style={{ listStyle: `none`, margin: `0`, display: `inline-flex` }}>                            
-                {(menu.children).map( (menuItem) => {
-                  return(
-                    <li key={menuItem.slug} style={{ display: `list-item`, marginRight: `1em`, whiteSpace: `nowrap` }}>
-                      <Link to={"/" + menuItem.slug + "/"}>{menuItem.name}</Link>
-                    </li>  
-                  ) 
-                })}               
-              </ul>
-            </div>
-            {submenu && <div style={{ width: `100%`, backgroundColor: `#fcfcfc`, margin: `0`, padding: `0.5em`, overflow: `scroll`}}>
-              <ul style={{ listStyle: `none`, margin: `0`, display: `inline-flex` }}>          
-                {(submenu.children).map( (menuItem) => {  
-                  return(
-                    <li key={menuItem.slug} style={{ display: `list-item`, marginRight: `1em`, whiteSpace: `nowrap` }}>
-                      <Link to={"/" + menuItem.slug + "/"}>{menuItem.name}</Link>
-                    </li>  
-                  )
-                })}
-              </ul>
-              </div>
-              }            
-            {links.length > 1 && <Breadcrumb links={links}/> }
+        >       
+            <div className={contentElementStyles.header + " " + hideMenuClass}>
+              <Logo/>
+              <Menu type="main" menuItems={menu.children}/>                          
+              {submenu && <Menu type="sub" menuItems={submenu.children}/> }            
+            </div>                    
+            {links.length > 1 && <Breadcrumb links={links} mod={hideMenuClass}/> }
           {children}                  
         </div>
     )

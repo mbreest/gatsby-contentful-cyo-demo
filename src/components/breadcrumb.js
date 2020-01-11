@@ -2,9 +2,9 @@ import React from "react"
 import { Link } from "gatsby"
 import breadcrumbStyles from "./breadcrumb.module.css"
 
-function Breadcrumb({ links }) {                           
+function Breadcrumb({ links, mod }) {                           
     return (   
-        <div className={breadcrumbStyles.breadcrumb}>
+        <div className={breadcrumbStyles.breadcrumb + " " + mod }>
             <ul >            
             {links.length > 1 && links.map( (link) => {     
                 return (

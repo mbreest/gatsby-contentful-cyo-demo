@@ -1,8 +1,8 @@
 
 @media only screen and (max-width: 600px) {
     .cecategorylist {
-        padding: 2em;
-        margin-bottom: 2em;
+        padding: 1em;
+        margin-bottom: 1em;
     }
 
     .cecategorylist a {
@@ -18,12 +18,17 @@
         width: 100%;
         text-align: center;
     }
+
+    .cecategorylist a {
+        text-decoration: none;
+        color: #00b2a5;
+    }  
 }
 
 @media only screen and (min-width: 601px) {
     .cecategorylist {
         padding: 2em;
-        margin-bottom: 2em;
+        margin-bottom: 1em;
     }
 
     .cecategorylist > h2 {
@@ -40,12 +45,17 @@
     .cecategorylist > div > div {
         flex: 25%;
     }
+
+    .cecategorylist a {
+        text-decoration: none;
+        color: #00b2a5;
+    }
 }
 
 @media only screen and (max-width: 600px) {
      .cecategorylist3 {
-        padding: 2em;
-        margin-bottom: 2em;
+        padding: 1em;
+        margin-bottom: 1em;
     }
         
     .cecategorylist3 > h2 {
@@ -57,12 +67,17 @@
         width: 100%;
         text-align: center;
     }
+
+    .cecategorylist3 a {
+        text-decoration: none;
+        color: #00b2a5;
+    }
 }
 
 @media only screen and (min-width: 601px) {
     .cecategorylist3 {
         padding: 2em;
-        margin-bottom: 2em;
+        margin-bottom: 1em;
     }
         
     .cecategorylist3 > h2 {
@@ -78,5 +93,10 @@
         
     .cecategorylist3 > div > div {
         flex: 33%;
+    }
+
+    .cecategorylist3 a {
+        text-decoration: none;
+        color: #00b2a5;
     }
 }
