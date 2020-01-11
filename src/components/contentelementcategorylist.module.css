@@ -1,39 +1,82 @@
-.cecategorylist {
-    padding: 2em;
-    margin-bottom: 2em;
+
+@media only screen and (max-width: 600px) {
+    .cecategorylist {
+        padding: 2em;
+        margin-bottom: 2em;
+    }
+
+    .cecategorylist a {
+        white-space: nowrap;
+    }
+
+    .cecategorylist > h2 {
+        width: 100%;
+        text-align: center;
+    }    
+
+    .cecategorylist > div {
+        width: 100%;
+        text-align: center;
+    }
 }
 
-.cecategorylist > h2 {
-    width: 100%;
-    text-align: center;
+@media only screen and (min-width: 601px) {
+    .cecategorylist {
+        padding: 2em;
+        margin-bottom: 2em;
+    }
+
+    .cecategorylist > h2 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .cecategorylist > div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .cecategorylist > div > div {
+        flex: 25%;
+    }
 }
 
-.cecategorylist > div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+@media only screen and (max-width: 600px) {
+     .cecategorylist3 {
+        padding: 2em;
+        margin-bottom: 2em;
+    }
+        
+    .cecategorylist3 > h2 {
+        width: 100%;
+        text-align: center;
+    }       
+    
+    .cecategorylist3 > div {
+        width: 100%;
+        text-align: center;
+    }
 }
 
-.cecategorylist > div > div {
-    flex: 25%;
-}
-
-.cecategorylist3 {
-    padding: 2em;
-    margin-bottom: 2em;
-}
-
-.cecategorylist3 > h2 {
-    width: 100%;
-    text-align: center;
-}
-
-.cecategorylist3 > div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
-
-.cecategorylist3 > div > div {
-    flex: 33%;
+@media only screen and (min-width: 601px) {
+    .cecategorylist3 {
+        padding: 2em;
+        margin-bottom: 2em;
+    }
+        
+    .cecategorylist3 > h2 {
+        width: 100%;
+        text-align: center;
+    }
+        
+    .cecategorylist3 > div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+        
+    .cecategorylist3 > div > div {
+        flex: 33%;
+    }
 }

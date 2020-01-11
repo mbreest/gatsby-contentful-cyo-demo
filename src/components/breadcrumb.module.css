@@ -1,24 +1,32 @@
-.breadcrumb {
+.breadcrumb {        
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    margin-bottom: 0.2em;
+    overflow: scroll;
+}
+
+.breadcrumb > ul {
     list-style: none;
-    margin-top: 1em;
-    margin-left: 0;
-    margin-bottom: 1em;
+    display: inline-flex;
+    margin: 0em;
 }
 
-.breadcrumb li {
-    display: inline;
+.breadcrumb > ul > li {
+    display: list-item;
 }
 
-.breadcrumb li+li:before {
+.breadcrumb > ul > li+li:before {
     padding: 8px;
     color: black;
-    content: "/\00a0";
+    content: ">";
 }
 
-.breadcrumb li a {
+.breadcrumb > ul > li a {
+    white-space: nowrap;
 }
 
-.breadcrumb li a:hover {
+.breadcrumb > ul > li a:hover {
   color: #01447e;
   text-decoration: underline;
+  
 }

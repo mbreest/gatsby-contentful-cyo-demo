@@ -1,18 +1,32 @@
-.ce3columntext {
-    padding: 2em;
-    margin-bottom: 2em;
+@media only screen and (min-width: 601px) {
+    .ce3columntext {
+        padding: 2em;
+        margin-bottom: 2em;
+    }
+
+    .ce3columntext > h2 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .ce3columntext > div {
+        display: flex;
+    }
+
+    .ce3columntext > div > div {
+        flex: 33%;
+        margin-right: 1em;
+    }
 }
 
-.ce3columntext > h2 {
-    width: 100%;
-    text-align: center;
-}
+@media only screen and (max-width: 600px) {
+    .ce3columntext {
+        padding: 2em;
+        margin-bottom: 2em;
+    }
 
-.ce3columntext > div {
-    display: flex;
-}
-
-.ce3columntext > div > div {
-    flex: 33%;
-    margin-right: 1em;
+    .ce3columntext > h2 {
+        width: 100%;
+        text-align: center;
+    }
 }

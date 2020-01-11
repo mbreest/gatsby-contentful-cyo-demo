@@ -1,6 +1,6 @@
 import React from "react"
 import Img from "gatsby-image";
-import {Link, navigate } from 'gatsby';
+import { navigate } from 'gatsby';
 import contentElementStyles from "./contentelementphotoblock.module.css"
 
 function ContentElementPhotoBlock({ title, highlight, highlightedPhoto, photos, alignRight, singleBlock }) {              

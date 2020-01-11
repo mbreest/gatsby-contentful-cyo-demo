@@ -3,6 +3,7 @@ import { css } from "@emotion/core"
 import { useStaticQuery, Link, graphql } from "gatsby"
 import { rhythm } from "../utils/typography"
 import Breadcrumb from "../components/breadcrumb"
+
 export default ({ slug, category, page, children }) => {    
   const data = useStaticQuery(
     graphql`
@@ -95,57 +96,49 @@ export default ({ slug, category, page, children }) => {
   }
 
   links.unshift({url: "/", title: "Gestalten"});
-
-  return (
+  
+  menu.children.unshift({slug: "/selbst-gestalten/", name: "Jetzt Gestalten", children: []})
+  menu.children.push({slug: "/produkte/", name: "Produkte", children: []})
+  menu.children.push({slug: "/blog/", name: "News", children: []})
+  
+  return (        
         <div 
           css={css`
             margin: 0 auto;
             max-width: 1024px;
-            padding: ${rhythm(2)};
-            padding-top: ${rhythm(1.5)};
+            padding: ${rhythm(0)};
+            padding-top: ${rhythm(0)};
           `}
-        >
-          <header>
+        >          
             <Link to={`/`}>
               <img src="/images/logo.svg" css={css`
-              width: 300px;
+              width: 300px; margin-bottom: 0;
               `} alt={data.site.siteMetadata.title}/>            
             </Link>   
-            <div style={{ width: `100%`, backgroundColor: `#f2f2f2`, margin: `0`, padding: `0.5em`}}>
-              <ul style={{ listStyle: `none`, margin: `0` }}>            
-                <li style={{ display: `inline-block`, marginRight: `1em` }}>
-                  <Link to="/selbst-gestalten/">Jetzt Gestalten</Link>
-                </li>
+            <div style={{ width: `100%`, backgroundColor: `#f2f2f2`, margin: `0`, padding: `0.5em`, overflow: `scroll`}}>
+              <ul style={{ listStyle: `none`, margin: `0`, display: `inline-flex` }}>                            
                 {(menu.children).map( (menuItem) => {
                   return(
-                    <li key={menuItem.slug} style={{ display: `inline-block`, marginRight: `1em` }}>
+                    <li key={menuItem.slug} style={{ display: `list-item`, marginRight: `1em`, whiteSpace: `nowrap` }}>
                       <Link to={"/" + menuItem.slug + "/"}>{menuItem.name}</Link>
                     </li>  
                   ) 
-                })}
-                <li style={{ display: `inline-block`, marginRight: `1em` }}>
-                  <Link to="/produkte/">Produkte</Link>
-                </li>
-                <li style={{ display: `inline-block`, marginRight: `1em` }}>
-                  <Link to="/blog/">News</Link>
-                </li>
+                })}               
               </ul>
-              </div>
-              {submenu && <div style={{ width: `100%`, backgroundColor: `#fcfcfc`, margin: `0`, padding: `0.5em`}}>
-              <ul style={{ listStyle: `none`, margin: `0` }}>          
+            </div>
+            {submenu && <div style={{ width: `100%`, backgroundColor: `#fcfcfc`, margin: `0`, padding: `0.5em`, overflow: `scroll`}}>
+              <ul style={{ listStyle: `none`, margin: `0`, display: `inline-flex` }}>          
                 {(submenu.children).map( (menuItem) => {  
                   return(
-                    <li key={menuItem.slug} style={{ display: `inline-block`, marginRight: `1em` }}>
+                    <li key={menuItem.slug} style={{ display: `list-item`, marginRight: `1em`, whiteSpace: `nowrap` }}>
                       <Link to={"/" + menuItem.slug + "/"}>{menuItem.name}</Link>
                     </li>  
                   )
                 })}
               </ul>
               </div>
-              }
-            
-          </header>
-            {links.length > 0 && <Breadcrumb links={links}/> }
+              }            
+            {links.length > 1 && <Breadcrumb links={links}/> }
           {children}                  
         </div>
     )

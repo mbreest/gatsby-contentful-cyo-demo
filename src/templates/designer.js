@@ -9,15 +9,8 @@ export default () => {
     <Layout page={{slug: "selbst-gestalten", name: "Selbst gestalten"}}>                        
         <SEO title="Selbst gestalten" description="Selbst gestalten" />        
         <div>
-          <div>
-          <h1
-            css={css`
-              display: inline-block;              
-            `}
-          >
-            Selbst gestalten
-          </h1>     
-          <Designer type="sketchomat"/>
+          <div>        
+          <Designer/>
           </div>              
         </div>
     </Layout>
