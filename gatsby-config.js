@@ -77,7 +77,7 @@ module.exports = {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Spreadshirt CYO Demo`,
-        short_name: `Spreadshirt CYO`,
+        short_name: `Spreadshirt`,
         start_url: `/`,
         background_color: `##00b2a5`,
         theme_color: `##00b2a5`,

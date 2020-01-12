@@ -40,12 +40,12 @@ class Designer extends React.Component {
                     designerParams["designSearch"] = params["designSearch"];
                 }                
                 var designerType = "sketchomat";
-                if (window.innerWidth <= 600) {
+                if (window.innerWidth <= 600) {                    
                     designerType = "smartomat";                                        
-                    designerParams["height"] = window.innerHeight;
+                    designerParams["height"] = window.innerHeight - document.getElementById("header").offsetHeight;
                 } else if (window.innerWidth <= 1024 && window.innerHeight <= 1024) {
                     designerType = "sketchomat";                                        
-                    designerParams["height"] = window.innerHeight;
+                    designerParams["height"] = window.innerHeight - document.getElementById("header").offsetHeight;
                     designerParams["width"] = window.innerWidth;
                 }
                 window.spreadshirt.create(designerType, designerParams);
