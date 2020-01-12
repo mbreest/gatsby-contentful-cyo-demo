@@ -3,7 +3,7 @@ require('dotenv').config();
 module.exports = {
   siteMetadata: {
     title: `Spreadshirt`,
-    description: `Spreadshirt Create Your Own Demo`,
+    description: `Spreadshirt CYO Demo`,
     author: `mbs`,
     siteUrl: `https://gatsby-contentful-cyo-demo.netlify.com`
   },
@@ -76,11 +76,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Spreadshirt Create Blog`,
-        short_name: `cyo-blog`,
+        name: `Spreadshirt CYO Demo`,
+        short_name: `Spreadshirt CYO`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `##00b2a5`,
+        theme_color: `##00b2a5`,
         display: `standalone`,
         icon: `src/images/icon.png`,
       },
