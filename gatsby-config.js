@@ -78,7 +78,7 @@ module.exports = {
       options: {
         name: `Spreadshirt Create Blog`,
         short_name: `cyo-blog`,
-        start_url: `/designer/`,
+        start_url: `/`,
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `standalone`,
