@@ -1,8 +1,6 @@
 import React from "react"
 import { Link } from 'gatsby';
 import contentElementStyles from "./productgrid.module.css"
-import { css } from "@emotion/core"
-import { rhythm } from "../utils/typography"
 
 function ProductGrid({ products }) {  
   return (   

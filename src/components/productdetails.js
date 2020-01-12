@@ -1,6 +1,5 @@
 import React from "react"
 import contentElementStyles from "./productdetails.module.css"
-import { css } from "@emotion/core"
 
 function ProductDetails({ highlight, title, text }) {  
   let className = contentElementStyles.productdetails;  

@@ -1,6 +1,5 @@
 import React from "react"
 import contentElementStyles from "./productimage.module.css"
-import { css } from "@emotion/core"
 import ActionButton from "../components/actionbutton"
 
 function ProductImage({ title, id }) {  

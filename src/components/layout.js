@@ -6,6 +6,8 @@ import Breadcrumb from "../components/breadcrumb"
 import Logo from "../components/logo"
 import Menu from "../components/menu"
 import contentElementStyles from "./layout.module.css"
+import Helmet from "react-helmet"
+import favicon from '../images/favicon.ico'
 
 export default ({ slug, category, page, children }) => {    
   const data = useStaticQuery(
@@ -104,12 +106,11 @@ export default ({ slug, category, page, children }) => {
   menu.children.push({slug: "/produkte/", name: "Produkte", children: []})
   menu.children.push({slug: "/blog/", name: "News", children: []})
   
+
   var hideMenuClass = "";
   if (page && page.slug === "selbst-gestalten") {
     hideMenuClass = " mobilehide";
   }
-
-  console.log(slug);
 
   return (        
         <div 
@@ -120,6 +121,9 @@ export default ({ slug, category, page, children }) => {
             padding-top: ${rhythm(0)};
           `}
         >       
+            <Helmet>
+              <link rel="icon" href={favicon} />
+            </Helmet>
             <div className={contentElementStyles.header + " " + hideMenuClass}>
               <Logo/>
               <Menu type="main" menuItems={menu.children}/>                          

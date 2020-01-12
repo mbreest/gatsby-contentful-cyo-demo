@@ -2,9 +2,9 @@ require('dotenv').config();
 
 module.exports = {
   siteMetadata: {
-    title: `Spreadshirt Create Blog`,
-    description: `Create Blog - Inspiration. Lifestyle. Weihnachtswahnsinn.`,
-    author: `Heiko Stute`,
+    title: `Spreadshirt`,
+    description: `Spreadshirt Create Your Own Demo`,
+    author: `mbs`,
     siteUrl: `https://gatsby-contentful-cyo-demo.netlify.com`
   },
   plugins: [
@@ -82,7 +82,7 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `standalone`,
-        icon: `src/images/gatsby-icon.png`,
+        icon: `src/images/icon.png`,
       },
     },  
     `gatsby-plugin-emotion`,
