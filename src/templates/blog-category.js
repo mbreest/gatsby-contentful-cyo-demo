@@ -1,53 +1,17 @@
 import React from 'react';
-import {Link, graphql } from 'gatsby';
-import Img from "gatsby-image";
-import Layout from "../components/layout-blog"
+import {graphql } from 'gatsby';
+import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { css } from "@emotion/core"
-import { rhythm } from "../utils/typography"
+import BlogHeader from "../components/blogheader"
+import BlogGrid from "../components/bloggrid"
 
 export default ({ data }) => {  
+  console.log(data.allContentfulBlogPost.nodes);
   return (
-    <Layout>
+    <Layout type="blog" page={{name: data.contentfulBlogCategory.name, slug: "/blog/kategorie/" + data.contentfulBlogCategory.short + "/" }}>
       <SEO title={data.contentfulBlogCategory.name} description={data.contentfulBlogCategory.description.childMarkdownRemark.html} />
-      <div>
-        <h1>{data.contentfulBlogCategory.name}</h1>                
-        <div dangerouslySetInnerHTML={{ __html: data.contentfulBlogCategory.description.childMarkdownRemark.html }} />  
-      </div>
-      <h2>Aktuelle Artikel</h2>
-      {(data.allContentfulBlogPost.nodes || []).map( (data) => (        
-            <div key={data.id}>
-              <Link
-                to={ "/blog/" + data.slug + "/" }
-                css={css`
-                  text-decoration: none;
-                  color: inherit;
-                `}
-              >
-                <h3
-                    css={css`
-                    margin-bottom: ${rhythm(1 / 4)};
-                    `}
-                >
-                    {data.title}{" "}                                       
-                </h3>
-              </Link>              
-              <p>{data.published} | <Link to={"/blog/autor/" + data.author.short + "/"}>{data.author.name}</Link></p>
-              <Link
-                to={ "/blog/" + data.slug + "/" }
-                css={css`
-                  text-decoration: none;
-                  color: inherit;
-                `}
-              >
-                <Img fluid={data.bannerImage.fluid} />
-              </Link>                                                            
-              <p>{data.content.childMarkdownRemark.excerpt} <Link
-                to={ "/blog/" + data.slug + "/" }
-              >Weiterlesen</Link></p>
-              
-            </div>
-          ))}
+      <BlogHeader title={data.contentfulBlogCategory.name} text={data.contentfulBlogCategory.description.childMarkdownRemark.html}/>            
+      <BlogGrid type="simple" title="Aktuelle Artikel" blogPosts={data.allContentfulBlogPost.nodes}/>                  
     </Layout>
   )
 }

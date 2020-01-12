@@ -1,26 +1,32 @@
 import React from 'react';
 import {Link, graphql } from 'gatsby';
 import Img from "gatsby-image";
-import Layout from "../components/layout-blog"
+import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { css } from "@emotion/core" 
 import ContentElementText from "../components/contentelementtext"
 import ContentElementLinkGallery from "../components/contentelementlinkgallery"
+import BlogHeader from "../components/blogheader"
+import BlogGrid from "../components/bloggrid"
+import BlogText from "../components/blogtext"
 
 export default ({ data }) => {    
-  const { title, published, bannerImage, content, contentElements, author, relatedBlogPosts } = data.contentfulBlogPost
+  const { title, slug, published, bannerImage, content, contentElements, author, relatedBlogPosts } = data.contentfulBlogPost
   const { html, excerpt } = content.childMarkdownRemark 
   const { name, short } = author 
   return (
-    <Layout>
-      <SEO title={title} description={excerpt} />
+    <Layout type="blog" page={{name: title, slug: "/blog/" + slug + "/"}}>
+      <SEO title={title} description={excerpt} />      
       <div>
-        <h1>{title}</h1>
-        <p>{published} | <Link to={"/blog/autor/" + short + "/"}>{name}</Link></p>
         <div>
           <Img fluid={bannerImage.fluid} />
         </div>
-        <div dangerouslySetInnerHTML={{ __html: html }} />  
+        <BlogHeader title={title}>       
+          <p>{published} | <Link to={"/blog/autor/" + short + "/"}>{name}</Link></p>
+        </BlogHeader>
+        
+        <BlogText>
+          <div dangerouslySetInnerHTML={{ __html: html }} />  
+        </BlogText>        
         {(contentElements || []).map( (node) => {
           switch (node.internal.type) {
             case "ContentfulContentElementText":
@@ -39,24 +45,7 @@ export default ({ data }) => {
         }        
         )}      
       </div>
-      <div css={css`
-        clear: left;            
-        `}>
-        <h1>Mehr für Dich</h1>
-        {(relatedBlogPosts || []).map( (node) => (        
-            <div key={node.id} css={css`
-            float: left; width:300px; padding: 24px 12px 12px 0px;            
-            `}>
-              <Link
-                to={ "/blog/" + node.slug + "/" }                
-              >                
-                <Img fluid={node.bannerImage.fluid} />
-                <p>{node.title}</p>
-              </Link>              
-            </div>
-          ))}
-      </div>
-
+      <BlogGrid title="Mehr für Dich" blogPosts={relatedBlogPosts}/>
     </Layout>
   )
 }
@@ -65,6 +54,7 @@ export const query = graphql`
     query blogPostQuery($slug: String!){
         contentfulBlogPost(slug: {eq: $slug}) {
             title
+            slug
             published(formatString: "MMMM DD, YYYY")
             bannerImage {
                 fluid(maxWidth: 1200, quality: 80) {
@@ -87,7 +77,7 @@ export const query = graphql`
                 name
                 links {
                   image {
-                    fluid(maxHeight: 200, maxWidth: 300, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {
+                    fluid(maxHeight: 400, maxWidth: 600, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {
                       aspectRatio
                       sizes
                       src
@@ -125,7 +115,7 @@ export const query = graphql`
               slug
               title
               bannerImage {
-                fluid(maxHeight: 200, maxWidth: 300, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {                  
+                fluid(maxHeight: 200, maxWidth: 350, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {                  
                   aspectRatio
                   sizes
                   src

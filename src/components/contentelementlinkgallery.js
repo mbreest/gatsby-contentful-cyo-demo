@@ -1,14 +1,13 @@
 import React from "react"
 import Img from "gatsby-image";
 import { css } from "@emotion/core" 
+import contentElementStyles from "./contentelementlinkgallery.module.css"
 
 function ContentElementLinkGallery({ links}) {  
   return (   
-    <div>
+    <div className={contentElementStyles.gallery}>
         {(links).map( (link) => (
-            <div key={link.id} css={css`
-                float: left; width:33%; padding: 24px 24px 12px 0px;            
-                `}>
+            <div key={link.id}>
                 <a href={link.url} alt={link.title}>
                     <Img fluid={link.image.fluid} />
                 </a>

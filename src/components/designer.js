@@ -38,7 +38,7 @@ class Designer extends React.Component {
                 }
                 if ("designSearch" in params) {
                     designerParams["designSearch"] = params["designSearch"];
-                }                
+                }                                
                 var designerType = "sketchomat";
                 if (window.innerWidth <= 600) {                    
                     designerType = "smartomat";                                        

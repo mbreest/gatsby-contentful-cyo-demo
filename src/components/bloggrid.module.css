@@ -1,0 +1,58 @@
+.bloggrid{
+    padding: 0.7em;
+    margin-bottom: 1em;
+}
+
+.bloggrid p {
+    margin-bottom: 0.4em;
+}
+
+.headline {
+    font-weight: bold;
+    font-size: larger;
+    color: #333;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.date {
+    font-style: italic;
+}
+
+@media only screen and (max-width: 600px) {
+    .bloggrid > div {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .bloggrid > div > div {
+        flex: 100%;
+        margin-bottom: 1em;
+    }
+}
+
+@media only screen and (min-width: 601px) {
+    .bloggrid > div {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .bloggrid > div > div {
+        flex: 30%;
+        margin-bottom: 1em;
+        margin-right: 1em;
+    }
+}
+
+.bloggridsimple{
+    padding: 0.7em;
+    margin-bottom: 1em;
+}
+
+.bloggridsimple p {
+    margin-bottom: 0.4em;
+}
+
+.bloggridsimple > div > div {
+    margin-bottom: 1em;
+}

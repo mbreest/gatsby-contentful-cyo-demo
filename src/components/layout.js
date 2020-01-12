@@ -9,7 +9,7 @@ import contentElementStyles from "./layout.module.css"
 import Helmet from "react-helmet"
 import favicon from '../images/favicon.ico'
 
-export default ({ slug, category, page, children }) => {    
+export default ({ slug, category, page, children, type }) => {    
   const data = useStaticQuery(
     graphql`
       query {
@@ -25,6 +25,14 @@ export default ({ slug, category, page, children }) => {
             }
             name
             slug
+          }
+        }
+        allContentfulBlogCategory(filter: {default: {eq: false}}, sort: {fields: index, order: ASC}) {
+          edges {
+            node {
+              name
+              short
+            }
           }
         }
       }
@@ -64,6 +72,10 @@ export default ({ slug, category, page, children }) => {
   
   var [menu, lookup] = createMenu(data.allContentfulCatalogCategory.nodes)
 
+  menu.children.unshift({slug: "/selbst-gestalten/", name: "Jetzt Gestalten", children: []})
+  menu.children.push({slug: "/produkte/", name: "Produkte", children: []})
+  menu.children.push({slug: "/blog/", name: "News", children: []})
+  
   function createSubmenu(menu, lookup) {
     if (slug) {
       var current = lookup[slug];    
@@ -83,30 +95,40 @@ export default ({ slug, category, page, children }) => {
     return null;
   }
 
-  var submenu = createSubmenu(menu, lookup);
-  
-  var links = [];    
-  if (page) {
-    links.unshift({url: "/" + page.slug + "/", title: page.name});
-  }
+  if (type === "blog") {   
+    var submenu = {children: data.allContentfulBlogCategory.edges.map( (edge) => ({name: edge.node.name, slug: "/blog/kategorie/" + edge.node.short + "/"}))};     
+    submenu.children.unshift({name: "Alle", slug: "/blog/"})
 
-  if (category) {
-    var node = lookup[category.slug];
-    if (node) {
-      while (node.parent) {
-        links.unshift({url: "/" + node.slug + "/", title: node.name});
-        node = node.parent;
-      }            
+
+    var links = [];
+    if (page) {
+      links.unshift({url: "/" + page.slug + "/", title: page.name});
     }    
+    links.unshift({url: "/blog/", title: "News"})
+    links.unshift({url: "/", title: "Gestalten"});
+    
+  } else {
+    var submenu = createSubmenu(menu, lookup);
+  
+    var links = [];    
+    if (page) {
+      links.unshift({url: "/" + page.slug + "/", title: page.name});
+    }
+  
+    if (category) {
+      var node = lookup[category.slug];
+      if (node) {
+        while (node.parent) {
+          links.unshift({url: "/" + node.slug + "/", title: node.name});
+          node = node.parent;
+        }            
+      }    
+    }
+  
+    links.unshift({url: "/", title: "Gestalten"});
   }
 
-  links.unshift({url: "/", title: "Gestalten"});
   
-  menu.children.unshift({slug: "/selbst-gestalten/", name: "Jetzt Gestalten", children: []})
-  menu.children.push({slug: "/produkte/", name: "Produkte", children: []})
-  menu.children.push({slug: "/blog/", name: "News", children: []})
-  
-
   var hideMenuClass = "";
   if (page && page.slug === "selbst-gestalten") {
     hideMenuClass = " mobilehide";
@@ -129,7 +151,7 @@ export default ({ slug, category, page, children }) => {
               <Menu type="main" menuItems={menu.children}/>                          
               {submenu && <Menu type="sub" menuItems={submenu.children}/> }            
             </div>                    
-            {links.length > 1 && <Breadcrumb links={links} mod={hideMenuClass}/> }
+            {links && links.length > 1 && <Breadcrumb links={links} mod={hideMenuClass}/> }
           {children}                  
         </div>
     )
