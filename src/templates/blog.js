@@ -97,7 +97,7 @@ export default ({ data }) => {
                     <p>{entry.node.published} | <Link to={"/blog/autor/" + entry.node.author.short + "/"}>{entry.node.author.name}</Link></p>
                       
                     <p>{entry.node.content.childMarkdownRemark.excerpt} <Link
-                      to={ "/blog/" + entry.node.slug }            
+                      to={ "/blog/" + entry.node.slug + "/" }            
                     >
                       Weiterlesen
                     </Link></p>
