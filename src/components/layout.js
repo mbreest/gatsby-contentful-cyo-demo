@@ -146,7 +146,7 @@ export default ({ slug, category, page, children, type }) => {
             <Helmet>
               <link rel="icon" href={favicon} />
             </Helmet>
-            <div id="header" className={contentElementStyles.header  }>
+            <div id="header" className={contentElementStyles.header + " " + hideMenuClass}>
               <Logo/>
               <Menu type="main" menuItems={menu.children}/>                          
               {submenu && <Menu type="sub" menuItems={submenu.children}/> }            
