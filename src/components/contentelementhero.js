@@ -32,7 +32,7 @@ function ContentElementHero({ title, subtitle, hero, action }) {
     return (   
     <div className={contentElementStyles.cehero}>
         { hero && <div>
-            <Img fluid={hero.fluid} loading={"eager"} fadeIn={false}/>
+            <Img fluid={hero.fluid}/>
         </div>}
         <div className={contentElementStyles.text}>
             <h1>{title}</h1>
