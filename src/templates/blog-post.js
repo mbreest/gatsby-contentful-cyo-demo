@@ -8,6 +8,7 @@ import ContentElementLinkGallery from "../components/contentelementlinkgallery"
 import BlogHeader from "../components/blogheader"
 import BlogGrid from "../components/bloggrid"
 import BlogText from "../components/blogtext"
+import BlogCategories from "../components/blogcategories"
 
 export default ({ data }) => {    
   const { title, slug, published, bannerImage, content, contentElements, author, categories, relatedBlogPosts } = data.contentfulBlogPost
@@ -22,18 +23,7 @@ export default ({ data }) => {
         </div>
         <BlogHeader title={title}>       
           <p>{published} | <Link to={"/blog/autor/" + short + "/"}>{name}</Link></p>
-          <p>Kategorien:&nbsp;
-          {categories && categories.length > 0 && (categories).map( (category) => { 
-            var name = category.name;
-            var link = "/blog/kategorie/" + category.short + "/";
-            if (category.short === "create_blog") {
-                name = "Alle";
-                link = "/blog/";
-            }
-            return (              
-              <span><Link to={link}>{name}</Link>&nbsp;&nbsp;</span>
-            )
-          })}</p>
+          {categories && categories.length > 0 && <BlogCategories title="Kategorien" categories={categories}/>}
         </BlogHeader>
         
         <BlogText>

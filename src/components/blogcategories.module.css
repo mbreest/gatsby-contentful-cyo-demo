@@ -1,0 +1,25 @@
+.blogcategory {
+    margin-top: 0.5em;
+}
+
+.blogcategory > span{
+    margin-right: 0.5em;
+}
+
+.blogcategory > ul {
+    list-style: none;
+    display: inline-flex;
+    margin: 0em;
+    padding: 0em;
+}
+
+.blogcategory > ul > li {
+    display: list-item;
+    margin: 0;
+    padding: 0em;
+}
+
+.blogcategory > ul > li+li:before {    
+    content: ",";
+    margin-right: 0.4em;
+}
