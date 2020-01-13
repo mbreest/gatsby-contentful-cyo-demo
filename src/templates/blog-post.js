@@ -10,7 +10,7 @@ import BlogGrid from "../components/bloggrid"
 import BlogText from "../components/blogtext"
 
 export default ({ data }) => {    
-  const { title, slug, published, bannerImage, content, contentElements, author, relatedBlogPosts } = data.contentfulBlogPost
+  const { title, slug, published, bannerImage, content, contentElements, author, categories, relatedBlogPosts } = data.contentfulBlogPost
   const { html, excerpt } = content.childMarkdownRemark 
   const { name, short } = author 
   return (
@@ -22,6 +22,18 @@ export default ({ data }) => {
         </div>
         <BlogHeader title={title}>       
           <p>{published} | <Link to={"/blog/autor/" + short + "/"}>{name}</Link></p>
+          <p>Kategorien:&nbsp;
+          {categories && categories.length > 0 && (categories).map( (category) => { 
+            var name = category.name;
+            var link = "/blog/kategorie/" + category.short + "/";
+            if (category.short === "create_blog") {
+                name = "Alle";
+                link = "/blog/";
+            }
+            return (              
+              <span><Link to={link}>{name}</Link>&nbsp;&nbsp;</span>
+            )
+          })}</p>
         </BlogHeader>
         
         <BlogText>
@@ -123,6 +135,10 @@ export const query = graphql`
                   srcSetWebp
                 }
               }
+            }
+            categories {
+              name
+              short
             }
         }
     }
