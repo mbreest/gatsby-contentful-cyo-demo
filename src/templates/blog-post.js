@@ -19,7 +19,7 @@ export default ({ data }) => {
       <SEO title={title} description={excerpt} />      
       <div>
         <div>
-          <Img fluid={bannerImage.fluid} />
+          <Img fluid={bannerImage.fluid} loading={"eager"} fadeIn={false} />
         </div>
         <BlogHeader title={title}>       
           <p>{published} | <Link to={"/blog/autor/" + short + "/"}>{name}</Link></p>
