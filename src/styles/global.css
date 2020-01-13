@@ -32,9 +32,14 @@ html {
     margin: 0;
 } 
 
-
 @media only screen and (max-width: 1024px) and (max-height: 1024px) {
     .mobilehide {
         display: none;
     }    
+
+    #app {        
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
 }
