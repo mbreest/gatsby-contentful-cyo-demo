@@ -36,7 +36,7 @@ export default ({ data }) => {
             case "ContentfulContentElementLinkGallery":
                 return (
                   <ContentElementLinkGallery links={node.links }/>                  
-                )
+                )        
             default:
                 return (
                   <div/>              
@@ -76,6 +76,7 @@ export const query = graphql`
                 id
                 name
                 links {
+                  title
                   image {
                     fluid(maxHeight: 400, maxWidth: 600, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {
                       aspectRatio
@@ -84,10 +85,9 @@ export const query = graphql`
                       srcSet
                       srcSetWebp
                     }
-                    title
                   }
-                  url
-                  title
+                  productId
+                  viewId                                    
                 }
                 internal {
                   type
@@ -104,7 +104,7 @@ export const query = graphql`
                 internal {
                   type
                 }
-              }
+              }              
             }
             author {
               name
