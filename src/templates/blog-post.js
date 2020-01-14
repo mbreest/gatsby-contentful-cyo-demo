@@ -60,12 +60,7 @@ export const query = graphql`
             published(formatString: "MMMM DD, YYYY")
             bannerImage {
                 fluid(maxWidth: 1200, quality: 80) {
-                  ...Gatsby
-                    aspectRatio
-                    sizes
-                    src
-                    srcSet
-                    srcSetWebp
+                  ...GatsbyContentfulFluid_withWebp_noBase64
                 }
             }
             content {
@@ -82,11 +77,7 @@ export const query = graphql`
                   title
                   image {
                     fluid(maxHeight: 400, maxWidth: 600, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {
-                      aspectRatio
-                      sizes
-                      src
-                      srcSet
-                      srcSetWebp
+                      ...GatsbyContentfulFluid_withWebp_noBase64
                     }
                   }
                   productId
@@ -119,11 +110,7 @@ export const query = graphql`
               title
               bannerImage {
                 fluid(maxHeight: 200, maxWidth: 350, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {                  
-                  aspectRatio
-                  sizes
-                  src
-                  srcSet   
-                  srcSetWebp
+                  ...GatsbyContentfulFluid_withWebp_noBase64
                 }
               }
             }

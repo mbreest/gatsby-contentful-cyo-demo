@@ -34,11 +34,7 @@ export const query = graphql`
           published(formatString: "MMMM DD, YYYY")
           bannerImage {
             fluid(maxWidth: 1200, quality: 80) {
-              aspectRatio
-              sizes
-              src
-              srcSet
-              srcSetWebp
+              ...GatsbyContentfulFluid_withWebp_noBase64
             }
           }
           content {

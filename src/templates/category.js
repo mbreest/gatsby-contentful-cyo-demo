@@ -94,11 +94,7 @@ export const query = graphql`
         }
         hero {
             fluid(maxWidth: 1200, quality: 80) {
-                aspectRatio
-                sizes
-                src
-                srcSet
-                srcSetWebp
+              ...GatsbyContentfulFluid_withWebp_noBase64
             }
         }           
         contentElements {
@@ -169,21 +165,13 @@ export const query = graphql`
                     hero {
                       title
                       fluid(maxWidth: 500, quality: 80) {
-                        aspectRatio
-                        sizes
-                        src
-                        srcSet
-                        srcSetWebp
+                        ...GatsbyContentfulFluid_withWebp_noBase64
                       }
                     }
                     iconLarge {
                       title
                       fluid(maxWidth: 500, quality: 80) {
-                        aspectRatio
-                        sizes
-                        src
-                        srcSet
-                        srcSetWebp
+                        ...GatsbyContentfulFluid_withWebp_noBase64
                       }
                     }
                   }
@@ -196,21 +184,13 @@ export const query = graphql`
                     hero {
                       title
                       fluid(maxWidth: 500, quality: 80) {
-                        aspectRatio
-                        sizes
-                        src
-                        srcSet
-                        srcSetWebp
+                        ...GatsbyContentfulFluid_withWebp_noBase64
                       }
                     }
                     icon {
                       title
                       fluid(maxWidth: 300, quality: 80) {
-                        aspectRatio
-                        sizes
-                        src
-                        srcSet
-                        srcSetWebp
+                        ...GatsbyContentfulFluid_withWebp_noBase64
                       }
                     }
                   }
@@ -230,11 +210,7 @@ export const query = graphql`
                   highlightedPhoto {
                     image {
                       fluid(maxWidth: 500, quality: 80) {
-                        aspectRatio
-                        sizes
-                        src
-                        srcSet
-                        srcSetWebp
+                        ...GatsbyContentfulFluid_withWebp_noBase64
                       }
                     }
                     title
@@ -245,11 +221,7 @@ export const query = graphql`
                     title
                     image {
                       fluid(maxWidth: 300, quality: 80) {
-                        aspectRatio
-                        sizes
-                        src
-                        srcSet
-                        srcSetWebp
+                        ...GatsbyContentfulFluid_withWebp_noBase64
                       }
                     }
                     productId
@@ -276,29 +248,17 @@ export const query = graphql`
             name
             icon {
               fluid(maxWidth: 300, quality: 80) {
-                aspectRatio
-                sizes
-                src
-                srcSet
-                srcSetWebp
+                ...GatsbyContentfulFluid_withWebp_noBase64
               }
             }
             hero {
               fluid(maxWidth: 500, quality: 80) {
-                aspectRatio
-                sizes
-                src
-                srcSet
-                srcSetWebp
+                ...GatsbyContentfulFluid_withWebp_noBase64
               }
             }
             iconLarge {
               fluid(maxWidth: 500, quality: 80) {
-                aspectRatio
-                sizes
-                src
-                srcSet
-                srcSetWebp
+                ...GatsbyContentfulFluid_withWebp_noBase64
               }
             }
             index
