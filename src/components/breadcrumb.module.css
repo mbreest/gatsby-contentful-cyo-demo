@@ -1,7 +1,8 @@
 .breadcrumb {        
     margin: 0em;
     padding: 0.7em;
-    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .breadcrumb > ul {

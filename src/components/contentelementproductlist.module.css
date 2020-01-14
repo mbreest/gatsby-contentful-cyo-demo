@@ -10,7 +10,8 @@
 }
 
 .ceproductlist > div {
-    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
     text-align: center;
 }
 
