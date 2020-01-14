@@ -41,26 +41,7 @@ export const query = graphql`
         ) {
             totalCount
             nodes {
-                    title
-                    slug
-                    published(formatString: "MMMM DD, YYYY")
-                    bannerImage {
-                        fluid(maxWidth: 600, quality: 80) {
-                          ...GatsbyContentfulFluid_withWebp_noBase64
-                        }
-                    }
-                    content {
-                        childMarkdownRemark {
-                            excerpt
-                        }
-                    }
-                    author {
-                        name
-                        short
-                    }
-                    categories {
-                      short
-                    }
+              ...BlogPostFields  
             }
         }
         more: allContentfulBlogPost(
@@ -87,27 +68,54 @@ export const query = graphql`
         ) {
             totalCount
             nodes {
-                    title
-                    slug
-                    published(formatString: "MMMM DD, YYYY")
-                    bannerImage {
-                        fluid(maxWidth: 600, quality: 80) {
-                          ...GatsbyContentfulFluid_withWebp_noBase64
-                        }
-                    }
-                    content {
-                        childMarkdownRemark {
-                            excerpt
-                        }
-                    }
-                    author {
-                        name
-                        short
-                    }
-                    categories {
-                      short
-                    }
+              ...BlogPostFields 
             }
         }
     }
+`
+
+export const blogPostFields = graphql`
+  fragment BlogPostFields on ContentfulBlogPost {
+    title
+    slug
+    published(formatString: "MMMM DD, YYYY")
+    bannerImage {
+      fluid(maxWidth: 1200, quality: 80) {
+        ...GatsbyContentfulFluid_withWebp_noBase64
+      }
+    }
+    content {
+      childMarkdownRemark {
+        excerpt
+      }
+    }
+    author {
+      name
+      short
+    }
+    categories {
+      short
+    }
+  }
+`
+
+export const blogPostFieldsNoAuthor = graphql`
+  fragment BlogPostFields_no_author on ContentfulBlogPost {
+    title
+    slug
+    published(formatString: "MMMM DD, YYYY")
+    bannerImage {
+      fluid(maxWidth: 1200, quality: 80) {
+        ...GatsbyContentfulFluid_withWebp_noBase64
+      }
+    }
+    content {
+      childMarkdownRemark {
+        excerpt
+      }
+    }   
+    categories {
+      short
+    }
+  }
 `

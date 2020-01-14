@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from 'gatsby';
 import contentElementStyles from "./contentelementtext.module.css"
 
 function ContentElementText({ html}) {  
@@ -9,3 +10,16 @@ function ContentElementText({ html}) {
   )
 }
 export default ContentElementText
+
+export const textFields = graphql`
+  fragment TextFields on ContentfulContentElementText {
+    id
+    name
+    text {
+      childMarkdownRemark {
+        html
+      }
+    }
+  }
+`
+

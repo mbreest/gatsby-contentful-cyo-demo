@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from 'gatsby';
 import contentElementStyles from "./contentelement3columntext.module.css"
 
 function ContentElement3ColumnText({ highlight, title, headline1, text1, headline2, text2, headline3, text3 }) {  
@@ -27,3 +28,27 @@ function ContentElement3ColumnText({ highlight, title, headline1, text1, headlin
   )
 }
 export default ContentElement3ColumnText
+
+export const threeColumnTextFields = graphql`
+  fragment ThreeColumnTextFields on ContentfulContentElement3ColumnText {
+    headline1
+    headline2
+    headline3
+    text1 {
+      childMarkdownRemark {
+        html
+      }
+    }
+    text2 {
+      childMarkdownRemark {
+        html
+      }
+    }
+    text3 {
+      childMarkdownRemark {
+        html
+      }
+    }
+    title
+  }
+`

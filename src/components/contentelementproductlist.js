@@ -1,5 +1,5 @@
 import React from "react"
-import {Link } from 'gatsby';
+import {Link, graphql} from 'gatsby';
 import contentElementStyles from "./contentelementproductlist.module.css"
 
 function ContentElementProductList({ highlight, title, products }) {  
@@ -28,3 +28,15 @@ function ContentElementProductList({ highlight, title, products }) {
   )
 }
 export default ContentElementProductList
+
+export const productListFields = graphql`
+  fragment ProductListFields on ContentfulContentElementProductList {
+    products {
+      name
+      slug
+      contentfulid
+    }
+    title
+    generated
+  }
+`

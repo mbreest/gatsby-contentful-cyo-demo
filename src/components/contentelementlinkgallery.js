@@ -1,6 +1,6 @@
 import React from "react"
+import { graphql, navigate } from 'gatsby';
 import Img from "gatsby-image";
-import { navigate } from 'gatsby';
 import contentElementStyles from "./contentelementlinkgallery.module.css"
 
 function ContentElementLinkGallery({ links}) {  
@@ -32,3 +32,20 @@ function ContentElementLinkGallery({ links}) {
   )
 }
 export default ContentElementLinkGallery
+
+export const linkGalleryFields = graphql`
+  fragment LinkGalleryFields on ContentfulContentElementLinkGallery {
+    id
+    name
+    links {
+      title
+      image {
+        fluid(maxHeight: 400, maxWidth: 600, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {
+          ...GatsbyContentfulFluid_withWebp_noBase64
+        }
+      }
+      productId
+      viewId                                    
+    }
+  }
+`

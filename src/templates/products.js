@@ -10,7 +10,7 @@ export default ({ data }) => {
     <Layout page={{slug: "produkte", name: "Produkte"}}>
         <SEO title="Produkte" description="Produkte" />
         <div>
-          <ProductGrid products={data.allContentfulCatalogProduct.edges}/>
+          <ProductGrid products={data.allContentfulCatalogProduct.nodes}/>
         </div>
     </Layout>
   )
@@ -19,12 +19,10 @@ export default ({ data }) => {
 export const query = graphql`
     query allCatalogProductsQuery {
       allContentfulCatalogProduct (filter: {active: {eq: true}}, sort: {order: ASC, fields: index}, limit: 1000) {
-        edges {
-            node {
-                name                    
-                slug
-                contentfulid
-            }
+        nodes {
+          name                    
+          slug
+          contentfulid
         }
       }
     }

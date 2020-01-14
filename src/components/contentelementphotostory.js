@@ -1,6 +1,7 @@
 import React from "react"
-import contentElementStyles from "./contentelementphotostory.module.css"
+import { graphql } from 'gatsby';
 import ContentElementPhotoBlock from "../components/contentelementphotoblock"
+import contentElementStyles from "./contentelementphotostory.module.css"
 
 function ContentElementPhotoStory({ title, highlight, photoBlocks}) {              
     var className = contentElementStyles.cephotostory;
@@ -17,3 +18,13 @@ function ContentElementPhotoStory({ title, highlight, photoBlocks}) {
   )
 }
 export default ContentElementPhotoStory
+
+
+export const photoStoryFields = graphql`
+  fragment PhotoStoryFields on ContentfulContentElementPhotoStory {
+    title
+    photoBlocks {
+      ...PhotoBlockFields
+    } 
+  }
+`

@@ -29,23 +29,7 @@ export const query = graphql`
       }
       allContentfulBlogPost(filter: {blogpost: {elemMatch: {categories: {elemMatch: {short: {eq: $short}}}}}}, sort: {fields: published, order: DESC}) {
         nodes {
-          slug
-          title
-          published(formatString: "MMMM DD, YYYY")
-          bannerImage {
-            fluid(maxWidth: 1200, quality: 80) {
-              ...GatsbyContentfulFluid_withWebp_noBase64
-            }
-          }
-          content {
-            childMarkdownRemark {
-              excerpt
-            }
-          }
-          author {
-            name
-            short
-          }
+          ...BlogPostFields 
         }
       }   
     }

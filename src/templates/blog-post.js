@@ -71,30 +71,13 @@ export const query = graphql`
             }
             contentElements {
               ... on ContentfulContentElementLinkGallery {
-                id
-                name
-                links {
-                  title
-                  image {
-                    fluid(maxHeight: 400, maxWidth: 600, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {
-                      ...GatsbyContentfulFluid_withWebp_noBase64
-                    }
-                  }
-                  productId
-                  viewId                                    
-                }
+                ...LinkGalleryFields
                 internal {
                   type
                 }
               }
               ... on ContentfulContentElementText {
-                id
-                name
-                text {
-                  childMarkdownRemark {
-                    html
-                  }
-                }
+                ...TextFields
                 internal {
                   type
                 }

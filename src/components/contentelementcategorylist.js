@@ -1,5 +1,5 @@
 import React from "react"
-import {Link } from 'gatsby';
+import { Link, graphql } from 'gatsby';
 import contentElementStyles from "./contentelementcategorylist.module.css"
 
 function ContentElementCategoryList({ highlight, title, categories }) {  
@@ -21,3 +21,16 @@ function ContentElementCategoryList({ highlight, title, categories }) {
   )
 }
 export default ContentElementCategoryList
+
+export const categoryListFields = graphql`
+  fragment CategoryListFields on ContentfulContentElementCategoryList {
+    id
+    title
+    categories {
+      title
+      category {
+        slug
+      }
+    }
+  }
+`

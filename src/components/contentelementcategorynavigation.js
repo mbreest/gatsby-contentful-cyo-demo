@@ -1,5 +1,5 @@
 import React from "react"
-import {Link } from 'gatsby';
+import {graphql, Link} from 'gatsby';
 import contentElementStyles from "./contentelementcategorynavigation.module.css"
 import Img from "gatsby-image";
 
@@ -102,3 +102,51 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
   
 }
 export default ContentElementCategoryNavigation
+
+export const categoryNavigationFields = graphql`
+    fragment CategoryNavigationFields on ContentfulContentElementCategoryNavigation {
+        id
+        title         
+        generated       
+        highlightedCategories {
+            title
+            category {
+                name
+                slug
+                hero {
+                    title
+                    fluid(maxWidth: 500, quality: 80) {
+                        ...GatsbyContentfulFluid_withWebp_noBase64
+                    }
+                }
+                iconLarge {
+                    title
+                    fluid(maxWidth: 500, quality: 80) {
+                        ...GatsbyContentfulFluid_withWebp_noBase64
+                    }
+                }
+            }
+        }
+        categories {
+            title
+            category {
+                name
+                slug
+                hero {
+                    title
+                    fluid(maxWidth: 500, quality: 80) {
+                        ...GatsbyContentfulFluid_withWebp_noBase64
+                    }
+                }
+                icon {
+                    title
+                    fluid(maxWidth: 300, quality: 80) {
+                        ...GatsbyContentfulFluid_withWebp_noBase64
+                    }
+                }
+            }
+        }
+        useHero
+        useIcon  
+    }
+`

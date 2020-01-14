@@ -1,6 +1,6 @@
 import React from "react"
 import Img from "gatsby-image";
-import { navigate } from 'gatsby';
+import { graphql, navigate } from 'gatsby';
 import contentElementStyles from "./contentelementphotoblock.module.css"
 
 function ContentElementPhotoBlock({ title, highlight, highlightedPhoto, photos, alignRight, singleBlock }) {              
@@ -33,3 +33,31 @@ function ContentElementPhotoBlock({ title, highlight, highlightedPhoto, photos, 
   )
 }
 export default ContentElementPhotoBlock
+
+export const photoBlockFields = graphql`
+  fragment PhotoBlockFields on ContentfulContentElementPhotoBlock {
+    id
+    title
+    alignRight
+    highlightedPhoto {
+        image {
+            fluid(maxWidth: 500, quality: 80) {
+                ...GatsbyContentfulFluid_withWebp_noBase64
+            }
+        }
+        title
+        viewId
+        productId
+    }
+    photos {
+        title
+        image {
+            fluid(maxWidth: 300, quality: 80) {
+                ...GatsbyContentfulFluid_withWebp_noBase64
+            }
+        }
+        productId
+        viewId
+    }
+  }
+`

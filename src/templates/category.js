@@ -84,13 +84,13 @@ export const query = graphql`
         title
         subtitle    
         action {
-            product {
-              contentfulid
-            }
-            title            
-            appearanceId
-            viewId
-            designSearch
+          product {
+            contentfulid
+          }
+          title            
+          appearanceId
+          viewId
+          designSearch
         }
         hero {
             fluid(maxWidth: 1200, quality: 80) {
@@ -105,129 +105,31 @@ export const query = graphql`
               }
             }
             ... on ContentfulContentElement3ColumnText {
-              headline1
-              headline2
-              headline3
-              text1 {
-                childMarkdownRemark {
-                  html
-                }
-              }
-              text2 {
-                childMarkdownRemark {
-                  html
-                }
-              }
-              text3 {
-                childMarkdownRemark {
-                  html
-                }
-              }
-              title
+              ...ThreeColumnTextFields              
               internal {
                 type
               }
             }
             ... on ContentfulContentElementProductList {
-              products {
-                name
-                slug
-                contentfulid
-              }
-              title
-              generated
+              ...ProductListFields
               internal {
                 type
               }
             }
             ... on ContentfulContentElementCategoryList {
-                id
-                title
-                categories {
-                  title
-                  category {
-                    slug
-                  }
-                }
+                ...CategoryListFields
                 internal {
                   type
                 }
               }
               ... on ContentfulContentElementCategoryNavigation {
-                id
-                title         
-                generated       
-                highlightedCategories {
-                  title
-                  category {
-                    name
-                    slug
-                    hero {
-                      title
-                      fluid(maxWidth: 500, quality: 80) {
-                        ...GatsbyContentfulFluid_withWebp_noBase64
-                      }
-                    }
-                    iconLarge {
-                      title
-                      fluid(maxWidth: 500, quality: 80) {
-                        ...GatsbyContentfulFluid_withWebp_noBase64
-                      }
-                    }
-                  }
-                }
-                categories {
-                  title
-                  category {
-                    name
-                    slug
-                    hero {
-                      title
-                      fluid(maxWidth: 500, quality: 80) {
-                        ...GatsbyContentfulFluid_withWebp_noBase64
-                      }
-                    }
-                    icon {
-                      title
-                      fluid(maxWidth: 300, quality: 80) {
-                        ...GatsbyContentfulFluid_withWebp_noBase64
-                      }
-                    }
-                  }
-                }
-                useHero
-                useIcon                
+                ...CategoryNavigationFields              
                 internal {
                   type
                 }
               }              
               ... on ContentfulContentElementPhotoStory {
-                title
-                photoBlocks {
-                  id
-                  title
-                  alignRight
-                  highlightedPhoto {
-                    image {
-                      fluid(maxWidth: 500, quality: 80) {
-                        ...GatsbyContentfulFluid_withWebp_noBase64
-                      }
-                    }
-                    title
-                    viewId
-                    productId
-                  }
-                  photos {
-                    title
-                    image {
-                      fluid(maxWidth: 300, quality: 80) {
-                        ...GatsbyContentfulFluid_withWebp_noBase64
-                      }
-                    }
-                    productId
-                    viewId
-                  }
-                }
+                ...PhotoStoryFields
                 internal {
                   type
                 }

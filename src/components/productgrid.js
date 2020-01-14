@@ -7,12 +7,12 @@ function ProductGrid({ products }) {
     <div className={contentElementStyles.productgrid}>            
       <h1>Produkte</h1>
       <div>
-      {products.map( (data) => {                        
+      {products.map( (product) => {                        
         return (        
           <div>            
-            <Link to={ "/detail/" + data.node.slug + "/" }>
-              <img src={ "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + data.node.contentfulid + ",width=300,height=300,backgroundColor=e8e8e8.jpg" } alt={data.node.name}/>                
-              <p>{data.node.name}</p>
+            <Link to={ "/detail/" + product.slug + "/" }>
+              <img src={ "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + product.contentfulid + ",width=300,height=300,backgroundColor=e8e8e8.jpg" } alt={product.name}/>                
+              <p>{product.name}</p>
             </Link>                  
           </div>
         )              
