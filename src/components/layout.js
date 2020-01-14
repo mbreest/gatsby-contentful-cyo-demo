@@ -35,6 +35,18 @@ export default ({ slug, category, page, children, type }) => {
             }
           }
         }
+        designer: contentfulPage(key: {eq: "designer"}) {
+          short     
+          name
+        }
+        products: contentfulPage(key: {eq: "products"}) {
+          short     
+          name
+        }
+        blog: contentfulPage(key: {eq: "blog"}) {
+          short     
+          name
+        }
       }
     `
   )
@@ -72,9 +84,9 @@ export default ({ slug, category, page, children, type }) => {
   
   var [menu, lookup] = createMenu(data.allContentfulCatalogCategory.nodes)
 
-  menu.children.unshift({slug: "/selbst-gestalten/", name: "Jetzt Gestalten", children: []})
-  menu.children.push({slug: "/produkte/", name: "Produkte", children: []})
-  menu.children.push({slug: "/blog/", name: "News", children: []})
+  menu.children.unshift({slug: "/" + data.designer.short + "/", name: data.designer.name, children: []})
+  menu.children.push({slug: "/" + data.products.short + "/", name: data.products.name, children: []})
+  menu.children.push({slug: "/" + data.blog.short + "/", name: data.blog.name, children: []})
   
   function createSubmenu(menu, lookup) {
     if (slug) {

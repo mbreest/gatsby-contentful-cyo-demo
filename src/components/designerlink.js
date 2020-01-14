@@ -1,4 +1,4 @@
-export const designerlink = (action) => {    
+export const designerlink = (path, action) => {        
     let queryParams = []
     if (action) {
         if (action.product && action.product.contentfulid) {
@@ -19,7 +19,7 @@ export const designerlink = (action) => {
     }
     let queryString = queryParams.join("&");
     
-    let url = "/selbst-gestalten/";
+    let url = "/" + path + "/";
     if (queryString) {
         url += "?" + queryString;
     }

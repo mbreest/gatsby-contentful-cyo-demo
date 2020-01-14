@@ -108,12 +108,24 @@ exports.createPages = ({ graphql, actions }) => {
 
   const products = new Promise((resolve, reject) => {
     const productsTemplate = path.resolve('src/templates/products.js');
-    resolve(              
-      createPage({
-        path: "/produkte",
-        component: productsTemplate
-      })
-    );
+    resolve(
+      graphql(`
+        {
+          contentfulPage(key: {eq: "products"}) {
+            short          
+          }
+        }
+          `).then((result) => {
+          if (result.errors) {
+            reject(result.errors);
+          }
+          createPage({
+            path: result.data.contentfulPage.short,
+            component: productsTemplate
+          });
+          return;
+        }),        
+    );        
   });
 
   const productDetails = new Promise((resolve, reject) => {
@@ -149,12 +161,24 @@ exports.createPages = ({ graphql, actions }) => {
 
   const designer = new Promise((resolve, reject) => {
     const designerTemplate = path.resolve('src/templates/designer.js');
-    resolve(              
-      createPage({
-        path: "/selbst-gestalten",
-        component: designerTemplate
-      })
-    );
+    resolve(
+      graphql(`
+        {
+          contentfulPage(key: {eq: "designer"}) {
+            short          
+          }
+        }
+          `).then((result) => {
+          if (result.errors) {
+            reject(result.errors);
+          }
+          createPage({
+            path: result.data.contentfulPage.short,
+            component: designerTemplate
+          });
+          return;
+        }),        
+    );    
   });
   
   const catalogCategory = new Promise((resolve, reject) => {

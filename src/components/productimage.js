@@ -1,9 +1,11 @@
 import React from "react"
-import {designerlink} from "./designerlink"
+import {designerlink} from "./designerlink"
+import {useDesignerData} from "./pagedata"
 import ActionButton from "../components/actionbutton"
 import contentElementStyles from "./productimage.module.css"
 
 function ProductImage({ title, id }) {  
+  const designerPath = useDesignerData().short;
   return (   
     <div className={contentElementStyles.productimage}>        
         <div className={contentElementStyles.image}>
@@ -11,7 +13,7 @@ function ProductImage({ title, id }) {
         </div>
         <div className={contentElementStyles.buttons}>
           <div className={contentElementStyles.title}>{title}</div>
-          <ActionButton title="Selbst gestalten" link={designerlink({productTypeId: id})} full="yes" hidden={true}/> 
+          <ActionButton title="Selbst gestalten" link={designerlink(designerPath, {productTypeId: id})} full="yes" hidden={true}/> 
         </div>        
     </div>
   )
