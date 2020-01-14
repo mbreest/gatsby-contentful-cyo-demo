@@ -1,6 +1,7 @@
 import React from "react"
 import Img from "gatsby-image";
 import { graphql, navigate } from 'gatsby';
+import { designerlink } from './designerlink'
 import contentElementStyles from "./contentelementphotoblock.module.css"
 
 function ContentElementPhotoBlock({ title, highlight, highlightedPhoto, photos, alignRight, singleBlock }) {              
@@ -17,13 +18,13 @@ function ContentElementPhotoBlock({ title, highlight, highlightedPhoto, photos, 
         {singleBlock && <h2>{title}</h2>}
         {!singleBlock && <h3>{title}</h3>}
         <div className={direction}>
-            {highlightedPhoto && <div tabindex="0" role="button" className={contentElementStyles.cephotoblockhighlighted} onClick={() => {navigate("/selbst-gestalten/?product=" + highlightedPhoto.productId + "&view=" + highlightedPhoto.viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate("/selbst-gestalten/?product=" + highlightedPhoto.productId + "&view=" + highlightedPhoto.viewId)} }}>                
+            {highlightedPhoto && <div tabIndex="0" role="button" className={contentElementStyles.cephotoblockhighlighted} onClick={() => {navigate(designerlink(highlightedPhoto))}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate(designerlink(highlightedPhoto))} }}>                
                 <Img fluid={highlightedPhoto.image.fluid}/>
             </div>        
             }            
             <div className={contentElementStyles.cephotoblockbox}>
             {photos && (photos).map( (photo) => (
-                <div tabindex="0" role="button" onClick={() => {navigate("/selbst-gestalten/?product=" + photo.productId + "&view=" + photo.viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate("/selbst-gestalten/?product=" + photo.productId + "&view=" + photo.viewId) } }}>                    
+                <div tabIndex="0" role="button" onClick={() => {navigate(designerlink(photo))}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate(designerlink(photo)) } }}>                    
                     <Img fluid={photo.image.fluid}/>
                 </div>
             ))}

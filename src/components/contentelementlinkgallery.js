@@ -1,6 +1,7 @@
 import React from "react"
 import { graphql, navigate } from 'gatsby';
 import Img from "gatsby-image";
+import { designerlink} from "./designerlink"
 import contentElementStyles from "./contentelementlinkgallery.module.css"
 
 function ContentElementLinkGallery({ links}) {  
@@ -15,9 +16,9 @@ function ContentElementLinkGallery({ links}) {
   return (   
     <div className={contentElementStyles.gallery}>
         {(links).map( (link) => {
-          if (link.image) {
+          if (link.image) {            
             return (
-              <div tabindex="0" role="button" onClick={() => {navigate("/selbst-gestalten/?product=" + link.productId + "&view=" + link.viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate("/selbst-gestalten/?product=" + link.productId + "&view=" + link.viewId)} }}>
+              <div tabIndex="0" role="button" onClick={() => {navigate(designerlink(link))}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate(designerlink(link))} }}>
                   <Img fluid={link.image.fluid} />                  
               </div>                                  
             )

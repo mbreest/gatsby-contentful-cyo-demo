@@ -1,6 +1,7 @@
 import React from "react"
-import contentElementStyles from "./productimage.module.css"
+import {designerlink} from "./designerlink"
 import ActionButton from "../components/actionbutton"
+import contentElementStyles from "./productimage.module.css"
 
 function ProductImage({ title, id }) {  
   return (   
@@ -10,7 +11,7 @@ function ProductImage({ title, id }) {
         </div>
         <div className={contentElementStyles.buttons}>
           <div className={contentElementStyles.title}>{title}</div>
-          <ActionButton title="Selbst gestalten" link={"/selbst-gestalten/?productType=" + id} full="yes" hidden={true}/> 
+          <ActionButton title="Selbst gestalten" link={designerlink({productTypeId: id})} full="yes" hidden={true}/> 
         </div>        
     </div>
   )
