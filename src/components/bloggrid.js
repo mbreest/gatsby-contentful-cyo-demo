@@ -18,6 +18,7 @@ function BlogGrid({ title, blogPosts, type }) {
       }
   }
   if (blogPosts) {
+    var count = 0;
     return (   
         <div className={className}>        
             {title && <h2>{title}</h2>}
@@ -25,7 +26,7 @@ function BlogGrid({ title, blogPosts, type }) {
             {blogPosts && blogPosts.map( (entry) => {                        
                 if (entry.slug) {            
                     return (        
-                      <div>
+                      <div key={"bpitem" + (count++)}>
                            <Link to={ "/blog/" + entry.slug + "/"}>
                           <Img fluid={entry.bannerImage.fluid}  />                    
                           <p className={contentElementStyles.headline}>{entry.title}{" "}</p>
@@ -41,7 +42,7 @@ function BlogGrid({ title, blogPosts, type }) {
                       </div>
                     )
                 } else {
-                    return (<div></div>)
+                    return (<div key={"bpitem" + (count++)}></div>)
                 }
             })}
             </div>

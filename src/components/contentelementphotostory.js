@@ -8,11 +8,12 @@ function ContentElementPhotoStory({ title, highlight, photoBlocks}) {
     if (highlight === "yes") {
         className += " highlight";
     }   
+    var count = 0;
     return (   
     <div className={className}>               
         {<h2>{title}</h2>}        
         {photoBlocks && (photoBlocks).map( (photoBlock) => (
-            <ContentElementPhotoBlock highlight="no" title={photoBlock.title} highlightedPhoto={photoBlock.highlightedPhoto} photos={photoBlock.photos} alignRight={photoBlock.alignRight} singleBlock={false}/>
+            <ContentElementPhotoBlock key={"psitem" + (count++)} highlight="no" title={photoBlock.title} highlightedPhoto={photoBlock.highlightedPhoto} photos={photoBlock.photos} alignRight={photoBlock.alignRight} singleBlock={false}/>
         ))}
     </div>
   )

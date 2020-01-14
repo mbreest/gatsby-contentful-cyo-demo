@@ -11,7 +11,8 @@ import ContentElementPhotoStory from "../components/contentelementphotostory"
 
 export default ({ data }) => {  
   const { name, slug, title, subtitle, action, hero, contentElements } = data.contentfulCatalogCategory
-  
+  var count = 0;
+
   return (
     <Layout slug={slug} category={{slug: slug, name: name}}>
       <SEO title={title} description={subtitle} />
@@ -23,44 +24,44 @@ export default ({ data }) => {
               switch (node.title) {
                 case "HeroHeader": 
                   return (
-                    <ContentElementHero hero={hero} title={title} subtitle={subtitle} action={action}/>           
+                    <ContentElementHero key={"ce" + (count++)} hero={hero} title={title} subtitle={subtitle} action={action}/>           
                   )
                   default:
                     return (
-                      <div/>
+                      <div key={"ce" + (count++)}/>
                     )              
               }            
             case "ContentfulContentElement3ColumnText":
                 return (
-                  <ContentElement3ColumnText highlight="yes" title={node.title} headline1={ node.headline1 } text1={ node.text1 } headline2={ node.headline2 } text2={ node.text2 } headline3={ node.headline3 } text3={ node.text3 }/>
+                  <ContentElement3ColumnText key={"ce" + (count++)} highlight="yes" title={node.title} headline1={ node.headline1 } text1={ node.text1 } headline2={ node.headline2 } text2={ node.text2 } headline3={ node.headline3 } text3={ node.text3 }/>
                 )
             case "ContentfulContentElementProductList":
                 if (node.generated) {
                   return (                  
-                    <ContentElementProductList highlight="yes" title={node.title} products={data.topProducts.nodes}/>                  
+                    <ContentElementProductList key={"ce" + (count++)} highlight="yes" title={node.title} products={data.topProducts.nodes}/>                  
                   )                    
                 } else {
                   return (
-                    <ContentElementProductList highlight="yes" title={node.title} products={node.products}/>                  
+                    <ContentElementProductList key={"ce" + (count++)} highlight="yes" title={node.title} products={node.products}/>                  
                   )
                 }                                  
             case "ContentfulContentElementCategoryList":
                 return (
-                  <ContentElementCategoryList highlight="no" title={node.title} categories={node.categories}/>                  
+                  <ContentElementCategoryList key={"ce" + (count++)} highlight="no" title={node.title} categories={node.categories}/>                  
                 )
             case "ContentfulContentElementCategoryNavigation":            
               if (node.generated) {                       
                 return (                  
-                  <ContentElementCategoryNavigation highlight="no" title={node.title} highlightedCategories={[]} categories={data.topCategories.nodes} useHero={node.useHero} useIcon={node.useIcon}/>
+                  <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" title={node.title} highlightedCategories={[]} categories={data.topCategories.nodes} useHero={node.useHero} useIcon={node.useIcon}/>
                 )
               } else {
                 return (
-                  <ContentElementCategoryNavigation highlight="no" title={node.title} highlightedCategories={node.highlightedCategories} categories={node.categories} useHero={node.useHero} useIcon={node.useIcon}/>                  
+                  <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" title={node.title} highlightedCategories={node.highlightedCategories} categories={node.categories} useHero={node.useHero} useIcon={node.useIcon}/>                  
                 )
               }
             case "ContentfulContentElementPhotoStory":            
               return (
-                 <ContentElementPhotoStory highlight="no" title={node.title} photoBlocks={node.photoBlocks}/>
+                 <ContentElementPhotoStory key={"ce" + (count++)} highlight="no" title={node.title} photoBlocks={node.photoBlocks}/>
               )            
             default:
               return (

@@ -3,18 +3,20 @@ import {graphql, Link} from 'gatsby';
 import contentElementStyles from "./contentelementcategorynavigation.module.css"
 import Img from "gatsby-image";
 
-function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, highlightedCategories, categories }) {  
+function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, highlightedCategories, categories }) {   
+  var count = 0;
   if (useHero) {
     let className = contentElementStyles.cecategorynavigationhero; 
     if (highlight === "yes") {
         className += " highlight";
     }
+    
     return (      
         <div className={className}>
             <h2>{title}</h2>
             <div key="categories">    
             {(categories).map( (category) => (
-                <div key={category.category.slug}>                    
+                <div key={"pnitem" + (count++)}>                    
                     <Link to={"/" + category.category.slug + "/"}>
                           {category.category.hero && <Img fluid={category.category.hero.fluid}/>}    
                           <p>{category.title}</p>
@@ -38,7 +40,7 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
                 <h2>{title}</h2>
                 <div key="highlightedCategories">
                 {highlightedCategories && (highlightedCategories).map( (category) => { return (
-                    <div className={contentElementStyles.highlightedclass}>                    
+                    <div  key={"pnitem" + (count++)} className={contentElementStyles.highlightedclass}>                    
                         <Link to={"/" + category.category.slug + "/"}>
                             <div className={highlightedCategoryClassName}>
                                 <div className={contentElementStyles.highlightedlink}>{category.title}</div>
@@ -53,7 +55,7 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
                 </div>
                 <div key="categories">    
                 {(categories).map( (category) => { return (
-                    <div className={contentElementStyles.defaultclass}>                    
+                    <div  key={"pnitem" + (count++)} className={contentElementStyles.defaultclass}>                    
                         <Link to={"/" + category.category.slug + "/"}>
                             <div className={categoryClassName}>
                                 {category.category.icon && <Img fluid={category.category.icon.fluid}/>}                                
@@ -86,7 +88,7 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
                     title = category.name;
                 }                                
                 return (
-                <div key={slug}>                    
+                <div key={"pnitem" + (count++)}>                    
                     <Link to={"/" + slug + "/"}>
                         <div>
                             {title}

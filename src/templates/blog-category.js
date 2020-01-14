@@ -5,8 +5,7 @@ import SEO from "../components/seo"
 import BlogHeader from "../components/blogheader"
 import BlogGrid from "../components/bloggrid"
 
-export default ({ data }) => {  
-  console.log(data.allContentfulBlogPost.nodes);
+export default ({ data }) => {    
   return (
     <Layout type="blog" page={{name: data.contentfulBlogCategory.name, slug: "/blog/kategorie/" + data.contentfulBlogCategory.short + "/" }}>
       <SEO title={data.contentfulBlogCategory.name} description={data.contentfulBlogCategory.description.childMarkdownRemark.html} />

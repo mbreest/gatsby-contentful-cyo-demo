@@ -9,13 +9,14 @@ function ContentElementProductList({ highlight, title, products }) {
       className += " highlight";
       backgroundColor = ",backgroundColor=f2f2f2";
   }
+  var count = 0;
   return (   
     <div className={className}>
         <h2>{title}</h2>
         <div>
           <ul>    
           {products && (products).map( (product) => (
-            <li>
+            <li key={"cepliitem" + (count++)}>
                 <Link to={"/detail/" + product.slug + "/"}>
                 <img src={"https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + product.contentfulid + ",width=150,height=150" + backgroundColor + ".jpg"}  alt={product.name}/>
                 <p>{product.name}</p>

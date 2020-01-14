@@ -3,6 +3,7 @@ import contentElementStyles from "./blogcategories.module.css"
 import {Link} from 'gatsby';
 
 function BlogCategories({ title, categories }) {  
+  var count = 0;
   return (   
     <div className={contentElementStyles.blogcategory}>        
         <span>Kategorien:</span>
@@ -15,7 +16,7 @@ function BlogCategories({ title, categories }) {
             link = "/blog/";
           }
           return (              
-            <li><Link to={link}>{name}</Link></li>
+            <li key={"bcitem" + count}><Link to={link}>{name}</Link></li>
           )
         })}        
         </ul>
