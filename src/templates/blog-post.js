@@ -60,6 +60,7 @@ export const query = graphql`
             published(formatString: "MMMM DD, YYYY")
             bannerImage {
                 fluid(maxWidth: 1200, quality: 80) {
+                  ...Gatsby
                     aspectRatio
                     sizes
                     src

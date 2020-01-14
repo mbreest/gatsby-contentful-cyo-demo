@@ -63,13 +63,15 @@ export default ({ data }) => {
                  <ContentElementPhotoStory highlight="no" title={node.title} photoBlocks={node.photoBlocks}/>
               )            
             default:
-                return (
-                  <div/>              
-                )            
+              return (
+                <div/>              
+              )            
             }
           }          
-        }        
-        )}      
+          else {
+            return (<div/>)
+          }
+        })}      
     </Layout>
   )
 }

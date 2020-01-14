@@ -94,13 +94,14 @@ export default ({ slug, category, page, children, type }) => {
     } 
     return null;
   }
-
+  
+  var submenu = null;
+  var links = null;
   if (type === "blog") {   
-    var submenu = {children: data.allContentfulBlogCategory.edges.map( (edge) => ({name: edge.node.name, slug: "/blog/kategorie/" + edge.node.short + "/"}))};     
+    submenu = {children: data.allContentfulBlogCategory.edges.map( (edge) => ({name: edge.node.name, slug: "/blog/kategorie/" + edge.node.short + "/"}))};     
     submenu.children.unshift({name: "Alle", slug: "/blog/"})
 
-
-    var links = [];
+    links = [];
     if (page) {
       links.unshift({url: "/" + page.slug + "/", title: page.name});
     }    
@@ -108,9 +109,9 @@ export default ({ slug, category, page, children, type }) => {
     links.unshift({url: "/", title: "Gestalten"});
     
   } else {
-    var submenu = createSubmenu(menu, lookup);
+    submenu = createSubmenu(menu, lookup);
   
-    var links = [];    
+    links = [];    
     if (page) {
       links.unshift({url: "/" + page.slug + "/", title: page.name});
     }

@@ -17,13 +17,13 @@ function ContentElementLinkGallery({ links}) {
         {(links).map( (link) => {
           if (link.image) {
             return (
-              <div onClick={() => {navigate("/selbst-gestalten/?product=" + link.productId + "&view=" + link.viewId)}}>
+              <div tabindex="0" role="button" onClick={() => {navigate("/selbst-gestalten/?product=" + link.productId + "&view=" + link.viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate("/selbst-gestalten/?product=" + link.productId + "&view=" + link.viewId)} }}>
                   <Img fluid={link.image.fluid} />                  
               </div>                                  
             )
           } else {
             return (
-              <div></div>
+              <div/>
             )
           }
           } 

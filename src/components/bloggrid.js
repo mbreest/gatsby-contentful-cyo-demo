@@ -1,14 +1,12 @@
 import React from "react"
 import {Link } from 'gatsby';
-import { css } from "@emotion/core"
-import { rhythm } from "../utils/typography"
 import Img from "gatsby-image";
 import contentElementStyles from "./bloggrid.module.css"
 
 function BlogGrid({ title, blogPosts, type }) {  
   var className = contentElementStyles.bloggrid;
   if (type === "simple") {
-    var className = contentElementStyles.bloggridsimple;
+    className = contentElementStyles.bloggridsimple;
   }
 
   if (contentElementStyles.bloggrid) {    
