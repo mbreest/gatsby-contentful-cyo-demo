@@ -1,4 +1,4 @@
-export const designerlink = (path, action) => {        
+export const designerlink = (path, action) => {    
     let queryParams = []
     if (action) {
         if (action.product && action.product.contentfulid) {
@@ -9,6 +9,9 @@ export const designerlink = (path, action) => {
         }
         if (action.viewId) {
             queryParams.push( "view=" + action.viewId);       
+        }
+        if (action.productTypeId) {
+            queryParams.push("productType=" + action.productTypeId);       
         }
         if (action.productId) {
             queryParams.push("product=" + action.productId);       

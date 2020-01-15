@@ -18,7 +18,6 @@ class Designer extends React.Component {
         if (scriptTags) {
             const scriptTag = scriptTags[0];
             scriptTag.onload = () => {            
-                console.log(`myExternalLib loaded!`, window.myExternalLib);
                 this.setState({
                     myExternalLib: window.myExternalLib,                    
                 });

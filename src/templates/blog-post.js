@@ -14,6 +14,8 @@ export default ({ data }) => {
   const { title, slug, published, bannerImage, content, contentElements, author, categories, relatedBlogPosts } = data.contentfulBlogPost
   const { html, excerpt } = content.childMarkdownRemark 
   const { name, short } = author 
+
+  var count = 0;
   return (
     <Layout type="blog" page={{name: title, slug: "/blog/" + slug + "/"}}>
       <SEO title={title} description={excerpt} />      
@@ -33,15 +35,15 @@ export default ({ data }) => {
           switch (node.internal.type) {
             case "ContentfulContentElementText":
                 return (
-                  <ContentElementText html={node.text.childMarkdownRemark.html }/>
+                  <ContentElementText key={"bpce" + (count++)} html={node.text.childMarkdownRemark.html }/>
                 )
             case "ContentfulContentElementLinkGallery":
                 return (
-                  <ContentElementLinkGallery links={node.links }/>                  
+                  <ContentElementLinkGallery key={"bpce" + (count++)} links={node.links }/>                  
                 )        
             default:
                 return (
-                  <div/>              
+                  <div key={"bpce" + (count++)}/>              
                 )            
           }          
         }        

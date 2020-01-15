@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import contentElementStyles from "./productgrid.module.css"
 
 function ProductGrid({ products }) {  
@@ -12,7 +12,7 @@ function ProductGrid({ products }) {
         return (        
           <div key={"pgitem" + count++}>            
             <Link to={ "/detail/" + product.slug + "/" }>
-              <img src={ "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + product.contentfulid + ",width=300,height=300,backgroundColor=e8e8e8.jpg" } alt={product.name}/>                
+              <img src={product.mainImage} alt={product.name}/>                
               <p>{product.name}</p>
             </Link>                  
           </div>
@@ -23,3 +23,12 @@ function ProductGrid({ products }) {
   )
 }
 export default ProductGrid
+
+export const productGridFields = graphql`
+  fragment ProductGridFields on ContentfulCatalogProduct {
+    name                    
+    slug
+    contentfulid
+    mainImage(size: 300, backgroundColor: "f2f2f2")    
+  }
+`

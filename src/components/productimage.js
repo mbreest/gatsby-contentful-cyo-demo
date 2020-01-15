@@ -4,16 +4,16 @@ import {useDesignerData} from "./pagedata"
 import ActionButton from "../components/actionbutton"
 import contentElementStyles from "./productimage.module.css"
 
-function ProductImage({ title, id }) {  
+function ProductImage({ product }) {  
   const designerPath = useDesignerData().short;
   return (   
     <div className={contentElementStyles.productimage}>        
         <div className={contentElementStyles.image}>
-            <img src={ "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + id + ",width=450,height=450,backgroundColor=f2f2f2.jpg" } alt={title}/>
+            <img src={product.mainImage} alt={product.name}/>
         </div>
         <div className={contentElementStyles.buttons}>
-          <div className={contentElementStyles.title}>{title}</div>
-          <ActionButton title="Selbst gestalten" link={designerlink(designerPath, {productTypeId: id})} full="yes" hidden={true}/> 
+          <div className={contentElementStyles.title}>{product.name}</div>
+          <ActionButton title="Selbst gestalten" link={designerlink(designerPath, {productTypeId: product.contentfulid})} full="yes" hidden={true}/> 
         </div>        
     </div>
   )

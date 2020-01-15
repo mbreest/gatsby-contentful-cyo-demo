@@ -139,9 +139,7 @@ export const query = graphql`
       }
       topProducts: allContentfulCatalogProduct(filter: {contentfulparent: {slug: {eq: $slug}}}, sort: {order: ASC, fields: index}, limit: 100) {
         nodes {          
-          name
-          slug
-          contentfulid
+          ...ProductListProductFields
         }
       }
       topCategories: allContentfulCatalogCategory(filter: {contentfulparent: {slug: {eq: $slug}}}, sort: {fields: index}) {      

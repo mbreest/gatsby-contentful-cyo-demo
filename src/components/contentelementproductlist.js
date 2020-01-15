@@ -3,11 +3,9 @@ import {Link, graphql} from 'gatsby';
 import contentElementStyles from "./contentelementproductlist.module.css"
 
 function ContentElementProductList({ highlight, title, products }) {  
-  let className = contentElementStyles.ceproductlist;
-  let backgroundColor = "";
+  let className = contentElementStyles.ceproductlist;  
   if (highlight === "yes") {
       className += " highlight";
-      backgroundColor = ",backgroundColor=f2f2f2";
   }
   var count = 0;
   return (   
@@ -18,7 +16,7 @@ function ContentElementProductList({ highlight, title, products }) {
           {products && (products).map( (product) => (
             <li key={"cepliitem" + (count++)}>
                 <Link to={"/detail/" + product.slug + "/"}>
-                <img src={"https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + product.contentfulid + ",width=150,height=150" + backgroundColor + ".jpg"}  alt={product.name}/>
+                <img src={product.mainImage}  alt={product.name}/>
                 <p>{product.name}</p>
                 </Link>
             </li>
@@ -33,11 +31,17 @@ export default ContentElementProductList
 export const productListFields = graphql`
   fragment ProductListFields on ContentfulContentElementProductList {
     products {
-      name
-      slug
-      contentfulid
+      ...ProductListProductFields
     }
     title
     generated
+  }
+`
+
+export const productListProductFields = graphql`
+  fragment ProductListProductFields on ContentfulCatalogProduct {    
+    name
+    slug
+    mainImage(size: 150, backgroundColor: "f2f2f2")  
   }
 `

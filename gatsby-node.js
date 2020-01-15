@@ -1,5 +1,32 @@
 const path = require('path');
 
+exports.createResolvers = ({ createResolvers }) => {
+  const resolvers = {
+    ContentfulCatalogProduct: {
+      mainImage: {
+        type: 'String',
+        args: {
+          size: {
+            type: 'Int',
+            defaultValue: 450,
+          },
+          backgroundColor: {
+            type: 'String'
+          }
+        },
+        resolve(source, args, context, info) {
+          var backgroundColorParam = "";
+          if (args.backgroundColor) {
+            backgroundColorParam += ",backgroundColor=" + args.backgroundColor;
+          }
+          return "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + source.contentfulid + ",width=" + args.size + ",height=" + args.size + backgroundColorParam + ".jpg";          
+        },
+      },
+    },
+  }
+  createResolvers(resolvers)
+}
+
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
     

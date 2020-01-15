@@ -5,19 +5,17 @@ import SEO from "../components/seo"
 import ProductImage from "../components/productimage"
 import ProductDetails from "../components/productdetails"
 
-export default ({ data }) => {    
-  const { name, slug, description, contentfulid, contentfulparent } = data.contentfulCatalogProduct
-
+export default ({ data }) => {      
   var category = null;
-  if (contentfulparent) {
-    category = {slug: contentfulparent.slug, name: contentfulparent.name};
+  if (data.contentfulCatalogProduct.contentfulparent) {
+    category = {slug: data.contentfulCatalogProduct.contentfulparent.slug, name: data.contentfulCatalogProduct.contentfulparent.name};
   }
 
   return (
-    <Layout page={{slug: "detail/" + slug, name: name}} category={category}>
-      <SEO title={name} description={description.childMarkdownRemark.html} />            
-      <ProductImage title={name} id={contentfulid}/>      
-      <ProductDetails title={name} text={description.childMarkdownRemark.html}/>      
+    <Layout page={{slug: "detail/" + data.contentfulCatalogProduct.slug, name: data.contentfulCatalogProduct.name}} category={category}>
+      <SEO title={data.contentfulCatalogProduct.name} description={data.contentfulCatalogProduct.description.childMarkdownRemark.html} />            
+      <ProductImage product={data.contentfulCatalogProduct}/>      
+      <ProductDetails product={data.contentfulCatalogProduct}/>      
     </Layout>
   )
 }
@@ -27,6 +25,7 @@ export const query = graphql`
       contentfulCatalogProduct(slug: {eq: $slug}) {             
         name
         slug
+        mainImage(size: 450, backgroundColor: "f2f2f2")
         description {
           childMarkdownRemark {
             html

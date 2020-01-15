@@ -15,18 +15,19 @@ function ContentElementLinkGallery({ links}) {
     }
   }
   
+  var count = 0;
   return (   
     <div className={contentElementStyles.gallery}>
         {(links).map( (link) => {
           if (link.image) {            
             return (
-              <div tabIndex="0" role="button" onClick={() => {navigate(designerlink(designerPath, link))}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate(designerlink(designerPath, link))} }}>
+              <div key={"celg" + (count++)} tabIndex="0" role="button" onClick={() => {navigate(designerlink(designerPath, link))}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate(designerlink(designerPath, link))} }}>
                   <Img fluid={link.image.fluid} />                  
               </div>                                  
             )
           } else {
             return (
-              <div/>
+              <div key={"celg" + (count++)} />
             )
           }
           } 
