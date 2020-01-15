@@ -16,7 +16,7 @@ function BlogCategories({ title, categories }) {
             link = "/blog/";
           }
           return (              
-            <li key={"bcitem" + count}><Link to={link}>{name}</Link></li>
+            <li key={"bcitem" + (count++)}><Link to={link}>{name}</Link></li>
           )
         })}        
         </ul>
