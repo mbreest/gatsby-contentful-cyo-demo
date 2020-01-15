@@ -1,4 +1,6 @@
 const path = require('path');
+const axios = require('axios');
+const crypto = require('crypto');
 
 exports.createResolvers = ({ createResolvers }) => {
   const resolvers = {
@@ -27,7 +29,29 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers(resolvers)
 }
 
-exports.createPages = ({ graphql, actions }) => {
+exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => {
+  const { createNode } = actions
+
+  // TODD resolve different languages
+  const res = await axios.get("https://designer.spreadshirt.de/api/v1/shops/1133169/productTypes?mediaType=json&fullData=true&locale=de_DE&limit=1000");
+
+  res.data.productTypes.map((productType) => {
+    const contentDigest = crypto.createHash(`md5`).update(JSON.stringify(productType.id)).digest(`hex`);        
+    const nodeMeta = {
+      id: createNodeId(`pt-${productType.id}`),
+      parent: null,
+      children: [],
+      internal: {
+        type: `ProductType`,        
+        contentDigest: contentDigest
+      }
+    }
+    
+    createNode(Object.assign({}, productType, nodeMeta))
+  })  
+}
+
+exports.createPages =  async ({ graphql, actions }) => {
   const { createPage } = actions;
     
   const blog = new Promise((resolve, reject) => {
