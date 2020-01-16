@@ -1,5 +1,6 @@
 import React from "react"
 import {Link, graphql} from 'gatsby';
+import {imageServerUrl} from "./imageserver"
 import contentElementStyles from "./contentelementproductlist.module.css"
 
 function ContentElementProductList({ highlight, title, products }) {  
@@ -16,7 +17,7 @@ function ContentElementProductList({ highlight, title, products }) {
           {products && (products).map( (product) => (
             <li key={"cepliitem" + (count++)}>
                 <Link to={"/detail/" + product.slug + "/"}>
-                <img src={product.mainImage}  alt={product.name}/>
+                <img src={imageServerUrl(product.contentfulid, product.defaultValues.view, product.defaultValues.color, 150, "f2f2f2")}  alt={product.name}/>
                 <p>{product.name}</p>
                 </Link>
             </li>
@@ -42,6 +43,10 @@ export const productListProductFields = graphql`
   fragment ProductListProductFields on ContentfulCatalogProduct {    
     name
     slug
-    mainImage(size: 150, backgroundColor: "f2f2f2")  
+    contentfulid
+    defaultValues{
+      view
+      color
+    }
   }
 `

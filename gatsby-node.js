@@ -7,14 +7,16 @@ exports.createSchemaCustomization = ({ actions }) => {
   const typeDefs = `   
     type Color {
       name: String!,
-      hex: String
+      hex: String,
+      id: String!
     }
     type Size {
       name: String!
     }
-    type Size {
-      name: String!
-    }    
+    type Defaults {
+      view: String,
+      color: String
+    } 
   `
   createTypes(typeDefs)
 }
@@ -44,52 +46,32 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => 
 
 exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {  
   if (type.name === `ContentfulCatalogProduct`) {
-    return {      
-      mainImage: {
-        type: 'String',
-        args: {
-          size: {
-            type: 'Int',
-            defaultValue: 450,
-          },
-          backgroundColor: {
-            type: 'String'
-          }
-        },
-        resolve(source, args, context, info) {
-          var backgroundColorParam = "";
-          if (args.backgroundColor) {
-            backgroundColorParam += ",backgroundColor=" + args.backgroundColor;
-          }
-          return "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + source.contentfulid + ",width=" + args.size + ",height=" + args.size + backgroundColorParam + ".jpg";          
-        },
-      },        
-      viewImages: {
-        type: '[String!]!',
-        args: {
-          size: {
-            type: 'Int',
-            defaultValue: 450,
-          },
-          backgroundColor: {
-            type: 'String'
-          }
-        },
+    return {           
+      views: {
+        type: '[String!]!',        
         resolve(source, args, context, info) {
           var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
-          if (productType && productType.views) {       
-            var backgroundColorParam = "";
-            if (args.backgroundColor) {
-              backgroundColorParam += ",backgroundColor=" + args.backgroundColor;
-            }
-            return productType.views.map((view) => (
-              "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + source.contentfulid + "/views/" + view.id + ",width=" + args.size + ",height=" + args.size + backgroundColorParam + ".jpg"
-            ))                        
+          if (productType && productType.views) {                   
+            return productType.views.map((view) => (view.id))                        
           } else {
             return [];
           }        
         },
-      },        
+      },    
+      defaultValues:{
+        type: 'Defaults!',        
+        async resolve(source, args, context, info) {                           
+          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
+          if (productType && productType.defaultValues) {                         
+            return {
+              view: productType.defaultValues.defaultView.id, 
+              color: productType.defaultValues.defaultAppearance.id
+            };
+          } else {
+            return {};
+          }          
+        }
+      },   
       available: {
         type: 'Boolean!',        
         async resolve(source, args, context, info) {                 
@@ -116,10 +98,12 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
             return productType.appearances.map((appearance) => {
               var name = appearance.name;
               var hex = "#fff";
+              var id = null;
               if (appearance.colors && appearance.colors.length > 0) {
                 hex = appearance.colors[0].value;
+                id = appearance.id;
               }
-              return ({name: name, hex: hex});
+              return ({name: name, hex: hex, id: id});
             })
           } else {
             return [];

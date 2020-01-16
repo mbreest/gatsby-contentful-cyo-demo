@@ -1,23 +1,30 @@
-import React from "react"
+import React, { useState }   from "react"
 import {designerlink} from "./designerlink"
 import {useDesignerData} from "./pagedata"
+import {imageServerUrl} from "./imageserver"
 import ActionButton from "../components/actionbutton"
 import contentElementStyles from "./productimage.module.css"
 
 function ProductImage({ product }) {  
   const designerPath = useDesignerData().short;  
   var count = 0;
+
+  const backgroundColor = "f2f2f2";
+  const [id] = useState(product.contentfulid);
+  const [view, setView] = useState(product.defaultValues.view);  
+  const [color, setColor] = useState(product.defaultValues.color);  
+
   return (   
     <div className={contentElementStyles.productimage}>        
         {product.available && <div className={contentElementStyles.viewImages}>
           <ul>
-            {(product.viewImages).map((image) => (
-              <li><img src={image} alt={product.name}/></li>
+            {(product.views).map((viewId) => (
+              <li><img src={imageServerUrl(id, viewId, color, 450, backgroundColor)} alt={product.name} onClick={() => {setView(viewId)}}/></li>
             ))}
           </ul>
         </div>}
         <div className={contentElementStyles.mainImage}>
-            <img src={product.mainImage} alt={product.name}/>
+            <img src={imageServerUrl(id, view, color, 450, backgroundColor)} alt={product.name}/>
         </div>
         <div className={contentElementStyles.buttons}>
           <div key="piname" className={contentElementStyles.title}>{product.name}</div>
@@ -25,7 +32,7 @@ function ProductImage({ product }) {
           {product.available && <div key="picolors" className={contentElementStyles.colors}>          
             <ul>
             {(product.colors).map((color) => (
-              <li key={"picolor" + (count++)}><div style={{backgroundColor: color.hex}}></div></li>
+              <li key={"picolor" + (count++)}><div style={{backgroundColor: color.hex}} onClick={() => {setColor(color.id)}}></div></li>
               ))}
             </ul>
           </div>}
@@ -36,7 +43,7 @@ function ProductImage({ product }) {
               ))}
             </ul>
           </div>}
-          <ActionButton title="Selbst gestalten" link={designerlink(designerPath, {productTypeId: product.contentfulid})} full="yes" hidden={true}/> 
+          <ActionButton title="Selbst gestalten" link={designerlink(designerPath, {productTypeId: product.contentfulid, appearanceId: color, viewId: view} )} full="yes" hidden={true}/> 
         </div>             
     </div>
   )

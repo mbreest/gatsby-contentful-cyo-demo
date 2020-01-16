@@ -25,14 +25,18 @@ export const query = graphql`
       contentfulCatalogProduct(slug: {eq: $slug}) {             
         name
         slug
-        mainImage(size: 450, backgroundColor: "f2f2f2")
-        viewImages(size: 450, backgroundColor: "f2f2f2")
+        views
+        defaultValues {
+          view
+          color
+        }
         sizes {
           name
         }
         colors {
           name
           hex
+          id
         }
         available
         description {

@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql, Link } from 'gatsby';
+import {imageServerUrl} from "./imageserver"
 import contentElementStyles from "./productgrid.module.css"
 
 function ProductGrid({ products }) {  
@@ -12,7 +13,7 @@ function ProductGrid({ products }) {
         return (        
           <div key={"pgitem" + count++}>            
             <Link to={ "/detail/" + product.slug + "/" }>
-              <img src={product.mainImage} alt={product.name}/>                
+              <img src={imageServerUrl(product.contentfulid, product.defaultValues.view, product.defaultValues.color, 300, "f2f2f2")} alt={product.name}/>                
               <p>{product.name}</p>
             </Link>                  
           </div>
@@ -29,6 +30,9 @@ export const productGridFields = graphql`
     name                    
     slug
     contentfulid
-    mainImage(size: 300, backgroundColor: "f2f2f2")    
+    defaultValues {
+      view
+      color
+    }    
   }
 `
