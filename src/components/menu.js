@@ -9,7 +9,7 @@ function Menu({type, menuItems}) {
   }
   return ( 
         <div className={className}>
-            <ul style={{  }}>                            
+            <ul>                            
                 {(menuItems).map( (menuItem) => {
                   return(
                     <li key={menuItem.slug}>

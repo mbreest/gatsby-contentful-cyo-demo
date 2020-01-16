@@ -2,9 +2,49 @@ const path = require('path');
 const axios = require('axios');
 const crypto = require('crypto');
 
-exports.createResolvers = ({ createResolvers }) => {
-  const resolvers = {
-    ContentfulCatalogProduct: {
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `   
+    type Color {
+      name: String!,
+      hex: String
+    }
+    type Size {
+      name: String!
+    }
+    type Size {
+      name: String!
+    }    
+  `
+  createTypes(typeDefs)
+}
+
+exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => {
+  const { createNode } = actions
+
+  // TODD resolve different languages
+  const res = await axios.get("https://designer.spreadshirt.de/api/v1/shops/1133169/productTypes?mediaType=json&fullData=true&locale=de_DE&limit=1000");
+
+  res.data.productTypes.map((productType) => {
+    productType.ptid = productType.id;
+    const contentDigest = crypto.createHash(`md5`).update(JSON.stringify(productType.id)).digest(`hex`);        
+    const nodeMeta = {
+      id: createNodeId("ProductType-" + productType.id),
+      parent: null,
+      children: [],
+      internal: {
+        type: `ProductType`,        
+        contentDigest: contentDigest
+      }
+    }
+    
+    createNode(Object.assign({}, productType, nodeMeta))
+  })  
+}
+
+exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {  
+  if (type.name === `ContentfulCatalogProduct`) {
+    return {      
       mainImage: {
         type: 'String',
         args: {
@@ -23,33 +63,73 @@ exports.createResolvers = ({ createResolvers }) => {
           }
           return "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + source.contentfulid + ",width=" + args.size + ",height=" + args.size + backgroundColorParam + ".jpg";          
         },
-      },          
-    },
-  }
-  createResolvers(resolvers)
-}
-
-exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => {
-  const { createNode } = actions
-
-  // TODD resolve different languages
-  const res = await axios.get("https://designer.spreadshirt.de/api/v1/shops/1133169/productTypes?mediaType=json&fullData=true&locale=de_DE&limit=1000");
-
-  res.data.productTypes.map((productType) => {
-    productType.ptid = productType.id;
-    const contentDigest = crypto.createHash(`md5`).update(JSON.stringify(productType.id)).digest(`hex`);        
-    const nodeMeta = {
-      id: createNodeId(productType.id),
-      parent: null,
-      children: [],
-      internal: {
-        type: `ProductType`,        
-        contentDigest: contentDigest
+      },        
+      viewImages: {
+        type: '[String!]!',
+        args: {
+          size: {
+            type: 'Int',
+            defaultValue: 450,
+          },
+          backgroundColor: {
+            type: 'String'
+          }
+        },
+        resolve(source, args, context, info) {
+          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
+          if (productType && productType.views) {       
+            var backgroundColorParam = "";
+            if (args.backgroundColor) {
+              backgroundColorParam += ",backgroundColor=" + args.backgroundColor;
+            }
+            return productType.views.map((view) => (
+              "https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/" + source.contentfulid + "/views/" + view.id + ",width=" + args.size + ",height=" + args.size + backgroundColorParam + ".jpg"
+            ))                        
+          } else {
+            return [];
+          }        
+        },
+      },        
+      available: {
+        type: 'Boolean!',        
+        async resolve(source, args, context, info) {                 
+          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
+          return (productType != null)
+        },
+      },
+      sizes: {
+        type: '[Size!]!',        
+        async resolve(source, args, context, info) {                 
+          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
+          if (productType && productType.sizes) {
+            return productType.sizes.map((size) => ({name: size.name}));
+          } else {
+            return [];
+          }          
+        },
+      },
+      colors: {
+        type: '[Color!]!',        
+        async resolve(source, args, context, info) {                           
+          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
+          if (productType && productType.sizes) {                         
+            return productType.appearances.map((appearance) => {
+              var name = appearance.name;
+              var hex = "#fff";
+              if (appearance.colors && appearance.colors.length > 0) {
+                hex = appearance.colors[0].value;
+              }
+              return ({name: name, hex: hex});
+            })
+          } else {
+            return [];
+          }          
+        },
       }
     }
-    
-    createNode(Object.assign({}, productType, nodeMeta))
-  })  
+  }
+  
+  return {}
 }
 
 exports.createPages =  async ({ graphql, actions }) => {

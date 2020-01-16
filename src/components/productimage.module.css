@@ -1,32 +1,113 @@
 
-
 @media only screen and (max-width: 600px) {
     .productimage {
-        display: block;        
+        display: block;            
     }
-
+    
     .title {
         display: none;
     }
 
-    .image {
+    .mainImage {
         padding: 1em;
         background-color: #f2f2f2;
+        text-align: center;
+        display: none;
+    }
+    
+    .mainImage > img {
+        margin-bottom: 0;
+        height: 300px;        
     }
 
     .buttons {
         padding: 1em;
+    }
+
+    .sizes {
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+
+    .sizes > ul {
+        list-style: none;
+        display: inline-flex;
+        margin: 0em;
+        padding: 0em;
+    }
+
+    .sizes > ul > li {
+        display: list-item;            
+    }
+
+    .sizes > ul > li > div {        
+        padding: 0.5em;
+        border: 1px solid #666;
+        color: #666;
+        min-width: 3em;
+        text-align: center;
+        margin-right: 0.4em;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .colors {
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+
+    .colors > ul {
+        list-style: none;
+        display: inline-flex;
+        margin: 0em;
+        padding: 0em;
+    }
+
+    .colors > ul > li {
+        display: list-item;            
+    }
+
+    .colors > ul > li > div {        
+        padding: 0.5em;
+        border: 1px solid #666;
+        color: #666;
+        height: 2.5em;
+        width: 2.5em;
+        text-align: center;
+        margin-right: 0.4em;
+        white-space: nowrap;
+        cursor: pointer;
+        border-radius: 2.5em;
+    }
+
+    .viewImages {        
+        overflow-y: hidden;
+        overflow-x: scroll;
+        background-color: #f2f2f2;
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+
+    .viewImages > ul {
+        display: inline-flex;
+        list-style: none;        
+        margin: 0; 
+        padding: 0;
+    }
+
+    .viewImages > ul > li {
+        display: list-item;
+        padding: 0px;
+        margin: 0.5em 0 0 0;
+        width: 300px;
+        height: 300px;
     }
 }
 
 @media only screen and (min-width: 601px) {
     .productimage {
         display: flex;
-        background-color: #f2f2f2;
-    }
-
-    .productimage > div {
-        flex: 50%;
+        background-color: #f2f2f2;        
     }
 
     .title {
@@ -34,12 +115,98 @@
         font-size: 24px;
     }
 
-    .image {
+    .mainImage {
         padding: 1em;
+        flex: 50%;
     }   
     
     .buttons {
         padding: 1em;
+        flex: 40%;
     }
+
+    .sizes {        
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+
+    .sizes > ul {
+        list-style: none;
+        display: inline-flex;
+        flex-wrap: wrap;
+        margin: 0em;
+        padding: 0em;
+    }    
+
+    .sizes > ul > li {
+        display: list-item;            
+    }
+
+    .sizes > ul > li > div {        
+        padding: 0.5em;
+        border: 1px solid #666;
+        color: #666;
+        min-width: 3em;
+        text-align: center;
+        margin-right: 0.5em;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .colors {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+
+    .colors > ul {
+        list-style: none;
+        display: inline-flex;
+        flex-wrap: wrap;
+        margin: 0em;
+        padding: 0em;
+    }
+
+    .colors > ul > li {
+        display: list-item;            
+    }
+
+    .colors > ul > li > div {        
+        padding: 0.5em;
+        border: 1px solid #666;
+        color: #666;
+        height: 2.5em;
+        width: 2.5em;
+        text-align: center;
+        margin-right: 0.5em;
+        white-space: nowrap;
+        cursor: pointer;
+        border-radius: 2.5em;
+    }
+
+    .viewImages {
+        margin: 1em;        
+    }
+
+    .viewImages > ul {
+        list-style: none;        
+        margin: 0; 
+        padding: 0;
+    }
+
+    .viewImages > ul > li {
+        width: 50px;
+        border: 1px solid #666;
+        padding: 0px;
+        margin: 0.5em 0 0 0;
+        cursor: pointer;
+    }
+}
+
+.available {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border: 1px darkred solid;
+    color: darkred;
+    padding: 0.5em 1em 0.5em 1em;
 }
 

@@ -26,6 +26,15 @@ export const query = graphql`
         name
         slug
         mainImage(size: 450, backgroundColor: "f2f2f2")
+        viewImages(size: 450, backgroundColor: "f2f2f2")
+        sizes {
+          name
+        }
+        colors {
+          name
+          hex
+        }
+        available
         description {
           childMarkdownRemark {
             html
