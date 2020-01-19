@@ -19,8 +19,8 @@ function ProductImage({ product }) {
         {product.available && <div className={contentElementStyles.viewImages}>
           <ul>
             {(product.views).map((viewId) => (
-              <li><img src={imageServerUrl(id, viewId, color, 450, backgroundColor)} alt={product.name} onClick={() => {setView(viewId)}}/></li>
-            ))}
+              <li><div tabIndex="0" role="button" onClick={() => {setView(viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { setView(viewId)} }}><img src={imageServerUrl(id, viewId, color, 450, backgroundColor)} alt={product.name}/></div></li>
+            ))}     
           </ul>
         </div>}
         <div className={contentElementStyles.mainImage}>
@@ -32,7 +32,7 @@ function ProductImage({ product }) {
           {product.available && <div key="picolors" className={contentElementStyles.colors}>          
             <ul>
             {(product.colors).map((color) => (
-              <li key={"picolor" + (count++)}><div style={{backgroundColor: color.hex}} onClick={() => {setColor(color.id)}}></div></li>
+              <li key={"picolor" + (count++)}><div tabIndex="0" role="button" style={{backgroundColor: color.hex}} onClick={() => {setColor(color.id)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { setColor(color.id) } }}></div></li>
               ))}
             </ul>
           </div>}
