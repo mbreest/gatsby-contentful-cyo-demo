@@ -9,6 +9,29 @@ import contentElementStyles from "./layout.module.css"
 import Helmet from "react-helmet"
 import favicon from '../images/favicon.ico'
 
+import './layout.css';
+
+import algoliasearch from 'algoliasearch/lite';
+import {
+  InstantSearch, SearchBox, Hits, Configure,
+} from 'react-instantsearch-dom';
+import { CustomHits } from './search/instantsearch';
+const algoliaClient = algoliasearch(process.env.GATSBY_ALGOLIA_APP_ID, process.env.GATSBY_ALGOLIA_SEARCH_API_KEY);
+const ClickOutHandler = require('react-onclickout');
+
+const searchClient = {
+  search(requests) {
+    const newRequests = requests.map((request) => {
+      // test for empty string and change request parameter: analytics
+      if (!request.params.query || request.params.query.length === 0) {
+        request.params.analytics = false;
+      }
+      return request;
+    });
+    return algoliaClient.search(newRequests);
+  },
+};
+
 export default ({ slug, category, page, children, type }) => {    
   const data = useStaticQuery(
     graphql`
@@ -147,6 +170,59 @@ export default ({ slug, category, page, children, type }) => {
     hideMenuClass = " mobilehide";
   }
 
+  class Search extends React.Component {
+    constructor(props) {
+      super(props);      
+  
+      this.state = {
+        hasInput: false,
+        refresh: false,
+      };
+    }
+
+    onClickOut = (e) => {    
+      document.getElementsByClassName('ais-SearchBox-input')[0].value = "";      
+      this.setState({
+        hasInput: false,
+      });
+    }
+
+    render() {
+      const { refresh, hasInput } = this.state;
+      return (
+       <div>
+        <InstantSearch
+          searchClient={searchClient}
+          indexName="Products"
+          refresh={refresh}
+        >
+        <Configure hitsPerPage={10} />
+
+        {/* forcefeed className because component does not accept natively as prop */}
+        <SearchBox
+          className={contentElementStyles.searchbox}
+          class="ais-SearchBox-input"
+          submit={<></>}
+          reset={<></>}
+          translations={{
+            placeholder: 'Search Products',
+          }}
+          onKeyUp={(event) => {
+            this.setState({
+              hasInput: event.currentTarget.value !== '',
+            });
+          }}
+          />
+
+          <div className={!hasInput ? "input-empty" : "input-value"}>
+            <CustomHits hitComponent={Hits} />                  
+          </div>
+        </InstantSearch>   
+       </div>   
+      )
+    }
+  }
+
   return (        
         <div 
           css={css`
@@ -158,9 +234,12 @@ export default ({ slug, category, page, children, type }) => {
         >       
             <Helmet>
               <link rel="icon" href={favicon} />
-            </Helmet>
-            <div id="header" className={contentElementStyles.header + " " + hideMenuClass}>
-              <Logo/>
+            </Helmet>            
+            <div id="header" className={contentElementStyles.header + " " + hideMenuClass}>              
+              <div className={contentElementStyles.searchContainer}>
+                <Logo/>
+                <Search/>
+              </div>              
               <Menu type="main" menuItems={menu.children}/>                          
               {submenu && <Menu type="sub" menuItems={submenu.children}/> }            
             </div>                    

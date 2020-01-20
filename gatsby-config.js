@@ -1,4 +1,5 @@
 require('dotenv').config();
+const queries = require("./src/utils/algolia")
 
 module.exports = {
   siteMetadata: {
@@ -99,5 +100,15 @@ module.exports = {
       }
     },
     `gatsby-plugin-sitemap`,  
+    {
+      resolve: `gatsby-plugin-algolia`,
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_ADMIN_API_KEY,
+        queries,
+        chunkSize: 10000, // default: 1000
+      },
+    },
+    `gatsby-plugin-styled-components`,
   ],
 }

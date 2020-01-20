@@ -1,9 +1,11 @@
+require('dotenv').config();
 const path = require('path');
 const axios = require('axios');
 const crypto = require('crypto');
 
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
+
   const typeDefs = `   
     type Color {
       name: String!,
