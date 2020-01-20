@@ -15,9 +15,11 @@ import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch, SearchBox, Hits, Configure,
 } from 'react-instantsearch-dom';
-import { CustomHits } from './search/instantsearch';
+import { CustomHits } from './instantsearch';
+
+import onClickOutside from "react-onclickoutside";
+
 const algoliaClient = algoliasearch(process.env.GATSBY_ALGOLIA_APP_ID, process.env.GATSBY_ALGOLIA_SEARCH_API_KEY);
-const ClickOutHandler = require('react-onclickout');
 
 const searchClient = {
   search(requests) {
@@ -180,12 +182,12 @@ export default ({ slug, category, page, children, type }) => {
       };
     }
 
-    onClickOut = (e) => {    
+    handleClickOutside = evt => {
       document.getElementsByClassName('ais-SearchBox-input')[0].value = "";      
       this.setState({
         hasInput: false,
       });
-    }
+    };    
 
     render() {
       const { refresh, hasInput } = this.state;
@@ -223,6 +225,8 @@ export default ({ slug, category, page, children, type }) => {
     }
   }
 
+  var EnhancedSearch = onClickOutside(Search);
+
   return (        
         <div 
           css={css`
@@ -238,7 +242,7 @@ export default ({ slug, category, page, children, type }) => {
             <div id="header" className={contentElementStyles.header + " " + hideMenuClass}>              
               <div className={contentElementStyles.searchContainer}>
                 <Logo/>
-                <Search/>
+                <EnhancedSearch/>
               </div>              
               <Menu type="main" menuItems={menu.children}/>                          
               {submenu && <Menu type="sub" menuItems={submenu.children}/> }            
