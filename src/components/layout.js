@@ -23,14 +23,25 @@ const algoliaClient = algoliasearch(process.env.GATSBY_ALGOLIA_APP_ID, process.e
 
 const searchClient = {
   search(requests) {
-    const newRequests = requests.map((request) => {
-      // test for empty string and change request parameter: analytics
-      if (!request.params.query || request.params.query.length === 0) {
-        request.params.analytics = false;
-      }
-      return request;
-    });
-    return algoliaClient.search(newRequests);
+    if (requests.every(({ params }) => !params.query)) {
+      return Promise.resolve({
+        results: requests.map(() => ({
+          hits: [],
+          nbHits: 0,
+          nbPages: 0,
+          processingTimeMS: 0,
+        })),
+      });
+    } else {
+      const newRequests = requests.map((request) => {
+        // test for empty string and change request parameter: analytics
+        if (!request.params.query || request.params.query.length === 0) {
+          request.params.analytics = false;
+        }
+        return request;
+      });
+      return algoliaClient.search(newRequests);
+    }    
   },
 };
 
