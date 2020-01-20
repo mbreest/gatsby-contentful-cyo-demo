@@ -22,7 +22,7 @@ const productQuery = `{
 
 const createEntry = (node) => {
     return {
-        "objectId": node.contentfulid,
+        "objectID": node.contentfulid,
         "name": node.name,
         "slug": node.slug,
         "sizes": node.sizes,

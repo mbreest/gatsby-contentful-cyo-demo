@@ -25,8 +25,15 @@ const Hits = ({ hits }) => (
     {hits.map((hit) => (          
       <li key={hit.title}>
         <a href={"/detail/" + hit.slug}>
-          <Highlight attribute="name" hit={hit} />
-        </a>
+          <div style={{display: "flex"}}>
+            <div>
+              <img width="80" height="80" src={hit.imageUrl}/>
+            </div>
+            <div>            
+              <Highlight attribute="name" hit={hit} />            
+            </div>          
+          </div>
+        </a>        
       </li>
     ))}
   </ul>
