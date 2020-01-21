@@ -1,7 +1,8 @@
 const productQuery = `{
   products: allContentfulCatalogProduct {
     edges {
-      node {        
+      node {  
+        index      
         name
         slug
         contentfulid
@@ -26,7 +27,8 @@ const createEntry = (node) => {
         "name": node.name,
         "slug": node.slug,
         "sizes": node.sizes,
-        "colors": node.colors,        
+        "colors": node.colors,
+        "index": node.index,
         "imageUrl": `https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/${node.contentfulid},width=300,height=300.jpg`,
         "url": `https://gatsby-contentful-cyo-demo.netlify.com/detail/${node.slug}/`
     }
