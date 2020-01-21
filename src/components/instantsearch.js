@@ -27,7 +27,7 @@ const Hits = ({ hits }) => (
         <a href={"/detail/" + hit.slug}>
           <div style={{display: "flex"}}>
             <div>
-              <img width="80" height="80" src={hit.imageUrl}/>
+              <img width="80" height="80" src={hit.imageUrl} alt={hit.title}/>
             </div>
             <div>            
               <Highlight attribute="name" hit={hit} />            
