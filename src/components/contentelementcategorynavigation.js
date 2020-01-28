@@ -15,14 +15,21 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
         <div className={className}>
             <h2>{title}</h2>
             <div key="categories">    
-            {(categories).map( (category) => (
+            {(categories).map( (category) => { 
+                var hero = category.category.hero;
+                if (Array.isArray(hero) && hero.length > 0) {
+                    hero = hero[0];
+                }
+
+                return (
                 <div key={"pnitem" + (count++)}>                    
                     <Link to={"/" + category.category.slug + "/"}>
-                          {category.category.hero && <Img fluid={category.category.hero.fluid}/>}    
+                          {hero && <Img fluid={hero.fluid}/>}    
                           <p>{category.title}</p>
                     </Link>
                 </div>
-                )            
+                )  
+            }          
             )}
             </div>
         </div>  
@@ -114,12 +121,14 @@ export const categoryNavigationFields = graphql`
             title
             category {
                 name
-                slug
+                slug               
                 hero {
-                    title
-                    fluid(maxWidth: 500, quality: 80) {
-                        ...GatsbyContentfulFluid_withWebp_noBase64
-                    }
+                    fluid(maxWidth: 500, sizes: "250,500") {
+                        aspectRatio
+                        src
+                        srcSet
+                        sizes
+                    }                    
                 }
                 iconLarge {
                     title
@@ -133,12 +142,14 @@ export const categoryNavigationFields = graphql`
             title
             category {
                 name
-                slug
+                slug                
                 hero {
-                    title
-                    fluid(maxWidth: 500, quality: 80) {
-                        ...GatsbyContentfulFluid_withWebp_noBase64
-                    }
+                    fluid(maxWidth: 500, sizes: "250,500") {
+                        aspectRatio
+                        src
+                        srcSet
+                        sizes
+                    }                    
                 }
                 icon {
                     title

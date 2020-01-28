@@ -26,10 +26,10 @@ export default ({ data }) => {
                   return (
                     <ContentElementHero key={"ce" + (count++)} hero={hero} title={title} subtitle={subtitle} action={action}/>           
                   )
-                  default:
-                    return (
-                      <div key={"ce" + (count++)}/>
-                    )              
+                default:
+                  return (
+                    <div key={"ce" + (count++)}/>
+                  )              
               }            
             case "ContentfulContentElement3ColumnText":
                 return (
@@ -92,12 +92,15 @@ export const query = graphql`
           appearanceId
           viewId
           designSearch
-        }
+        }                   
         hero {
-            fluid(maxWidth: 1200, quality: 80) {
-              ...GatsbyContentfulFluid_withWebp_noBase64
-            }
-        }           
+          fluid(maxWidth: 1200, sizes: "400,800,1200") {
+            aspectRatio
+            src
+            srcSet
+            sizes
+          } 
+        }
         contentElements {
             ... on ContentfulContentElementGenerated {
               title
@@ -153,9 +156,12 @@ export const query = graphql`
               }
             }
             hero {
-              fluid(maxWidth: 500, quality: 80) {
-                ...GatsbyContentfulFluid_withWebp_noBase64
-              }
+              fluid(maxWidth: 1200, sizes: "400,800,1200") {
+                aspectRatio
+                src
+                srcSet
+                sizes
+              } 
             }
             iconLarge {
               fluid(maxWidth: 500, quality: 80) {

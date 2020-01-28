@@ -109,6 +109,6 @@ module.exports = {
         chunkSize: 10000, // default: 1000
       },
     },
-    `gatsby-plugin-styled-components`,
+    `gatsby-plugin-styled-components`
   ],
 }

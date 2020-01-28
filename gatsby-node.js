@@ -2,6 +2,8 @@ require('dotenv').config();
 const path = require('path');
 const axios = require('axios');
 const crypto = require('crypto');
+const { getImageURL } = require('./src/utils/cloudinary.js')
+
 
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
@@ -19,6 +21,14 @@ exports.createSchemaCustomization = ({ actions }) => {
       view: String,
       color: String
     } 
+
+    type CloudinaryFluid {
+      aspectRatio: Float!,
+      base64: String!,
+      sizes: String!,
+      src: String!,
+      srcSet: String!,
+    }
   `
   createTypes(typeDefs)
 }
@@ -111,6 +121,71 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
             return [];
           }          
         },
+      }      
+    }
+  } else if (type.name.startsWith("contentful") && type.name.endsWith("JsonNode") && type.nodes && type.nodes.length > 0 && type.nodes[0].public_id) {      
+    return {
+      fluid: {
+        type: 'CloudinaryFluid',
+        args: {
+          maxWidth: {
+            type: "Int"
+          },
+          sizes: {
+            type: "String"
+          }
+        },      
+        async resolve(source, args, context, info) {                                  
+          if (source) {                                          
+            var baseTransformations = []
+            if (source.derived && source.derived.length > 0) {
+              baseTransformations.push(source.derived[0].raw_transformation)
+            }
+
+            const maxWidth = args.maxWidth ? args.maxWidth : 1200;
+            const breakpoints = args.sizes ? args.sizes.split(",").map(Number) : [400, 800, 1200];
+
+            const max = Math.min(maxWidth, 1200);
+            const sizes = `(max-width: ${max}px) 100vw, ${max}px`;
+            const cleaned = breakpoints
+              .concat(max) 
+              .filter(w => w <= max)
+              .sort((a, b) => a - b);
+            const deduped = [...new Set(cleaned)];
+              
+            const src = getImageURL({
+              public_id: source.public_id, 
+              cloudName: "cyo-demo", 
+              baseTransformations: baseTransformations,
+              transformations: [`w_${max}`],
+              format: source.format
+            })
+          
+            const srcSet = deduped.map(breakpointWidth => {                
+              const url = getImageURL({                  
+                public_id: source.public_id, 
+                cloudName: "cyo-demo", 
+                baseTransformations: baseTransformations,
+                transformations: [`w_${breakpointWidth}`],
+                format: source.format
+              });
+        
+              return `${url} ${breakpointWidth}w`;
+            })
+            .join();
+
+            return {
+              aspectRatio: 2.0,
+              base64: "",
+              sizes: sizes,
+              src: src,
+              srcSet: srcSet
+            }
+              
+          } else{
+            return null;
+          }                                          
+        }
       }
     }
   }

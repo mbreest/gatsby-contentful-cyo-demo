@@ -11,10 +11,13 @@ function ContentElementHero({ title, subtitle, hero, action }) {
     if (action && action.title) {
         actionTitle += action.title; 
     }    
-    
+    if (Array.isArray(hero) && hero.length > 0) {
+        hero = hero[0];        
+    }
+
     return (   
     <div className={contentElementStyles.cehero}>
-        { hero && <div>
+        { hero && hero.fluid && <div>
             <Img fluid={hero.fluid}/>
         </div>}
         <div className={contentElementStyles.text}>
