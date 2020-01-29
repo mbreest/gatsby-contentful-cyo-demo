@@ -8,9 +8,17 @@
         z-index: 3;
         background-color: white;
         border: 1px solid #d9d9d9;
-        background: #fff;
-        display: flex;
+        background: #fff;        
         width: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: 85vh;        
+    }
+
+    .powered {
+        margin-left: 1em;
+        margin-right: 1em;        
+        font-size: 0.8em;
     }
 
     .ais-SearchBox-input {    
@@ -32,9 +40,17 @@
         z-index: 3;
         background-color: white;
         border: 1px solid #d9d9d9;
-        background: #fff;
-        display: flex;
-        width: 300px;    
+        background: #fff;        
+        width: 300px;   
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: 50vh; 
+    }    
+
+    .powered {
+        margin-left: 1em;
+        margin-right: 1em;       
+        font-size: 0.8em;        
     }
 
     .ais-SearchBox-input {    

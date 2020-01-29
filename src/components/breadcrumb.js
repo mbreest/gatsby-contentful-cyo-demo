@@ -7,9 +7,10 @@ function Breadcrumb({ links, mod }) {
         <div className={breadcrumbStyles.breadcrumb + " " + mod }>
             <ul >            
             {links.length > 1 && links.map( (link) => {     
+                var l = link.url === "" ? "/" : link.url.startsWith("/") ? link.url : "/" + link.url + "/";
                 return (
                     <li key={link.url}>
-                        <Link to={link.url}>{link.title}</Link>
+                        <Link to={l}>{link.title}</Link>
                     </li>
                 )
             })}

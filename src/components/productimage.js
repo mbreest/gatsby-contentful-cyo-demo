@@ -8,6 +8,7 @@ import contentElementStyles from "./productimage.module.css"
 function ProductImage({ product }) {  
   const designerPath = useDesignerData().short;  
   var count = 0;
+  var viewCount = 0;
 
   const backgroundColor = "f2f2f2";
   const [id] = useState(product.contentfulid);
@@ -19,7 +20,7 @@ function ProductImage({ product }) {
         {product.available && <div className={contentElementStyles.viewImages}>
           <ul>
             {(product.views).map((viewId) => (
-              <li><div tabIndex="0" role="button" onClick={() => {setView(viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { setView(viewId)} }}><img src={imageServerUrl(id, viewId, color, 450, backgroundColor)} alt={product.name}/></div></li>
+              <li key={"piview" + (count++)}><div tabIndex="0" role="button" onClick={() => {setView(viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { setView(viewId)} }}><img src={imageServerUrl(id, viewId, color, 450, backgroundColor)} alt={product.name}/></div></li>
             ))}     
           </ul>
         </div>}

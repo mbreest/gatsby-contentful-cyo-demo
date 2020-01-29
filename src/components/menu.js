@@ -11,9 +11,10 @@ function Menu({type, menuItems}) {
         <div className={className}>
             <ul>                            
                 {(menuItems).map( (menuItem) => {
+                  const l = menuItem.slug === "" ? "/" : "/" + menuItem.slug + "/";
                   return(
                     <li key={menuItem.slug}>
-                      <Link to={"/" + menuItem.slug + "/"}>{menuItem.name}</Link>
+                      <Link to={l}>{menuItem.name}</Link>
                     </li>  
                   ) 
                 })}               

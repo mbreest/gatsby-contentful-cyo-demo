@@ -16,6 +16,7 @@ import {
   InstantSearch, SearchBox, Hits, Configure,
 } from 'react-instantsearch-dom';
 import { CustomHits } from './instantsearch';
+import { Algolia } from 'styled-icons/fa-brands/Algolia'
 
 import onClickOutside from "react-onclickoutside";
 
@@ -120,9 +121,9 @@ export default ({ slug, category, page, children, type }) => {
   
   var [menu, lookup] = createMenu(data.allContentfulCatalogCategory.nodes)
 
-  menu.children.unshift({slug: "/" + data.designer.short + "/", name: data.designer.name, children: []})
-  menu.children.push({slug: "/" + data.products.short + "/", name: data.products.name, children: []})
-  menu.children.push({slug: "/" + data.blog.short + "/", name: data.blog.name, children: []})
+  menu.children.unshift({slug: data.designer.short, name: data.designer.name, children: []})
+  menu.children.push({slug: data.products.short, name: data.products.name, children: []})
+  menu.children.push({slug: data.blog.short, name: data.blog.name, children: []})
   
   function createSubmenu(menu, lookup) {
     if (slug) {
@@ -146,35 +147,35 @@ export default ({ slug, category, page, children, type }) => {
   var submenu = null;
   var links = null;
   if (type === "blog") {   
-    submenu = {children: data.allContentfulBlogCategory.edges.map( (edge) => ({name: edge.node.name, slug: "/blog/kategorie/" + edge.node.short + "/"}))};     
-    submenu.children.unshift({name: "Alle", slug: "/blog/"})
+    submenu = {children: data.allContentfulBlogCategory.edges.map( (edge) => ({name: edge.node.name, slug: "blog/kategorie/" + edge.node.short}))};     
+    submenu.children.unshift({name: "Alle", slug: "blog"})
 
     links = [];
     if (page) {
-      links.unshift({url: "/" + page.slug + "/", title: page.name});
+      links.unshift({url: page.slug, title: page.name});
     }    
-    links.unshift({url: "/blog/", title: "News"})
-    links.unshift({url: "/", title: "Gestalten"});
+    links.unshift({url: "blog", title: "News"})
+    links.unshift({url: "", title: "Gestalten"});
     
   } else {
     submenu = createSubmenu(menu, lookup);
   
     links = [];    
     if (page) {
-      links.unshift({url: "/" + page.slug + "/", title: page.name});
+      links.unshift({url: page.slug, title: page.name});
     }
   
     if (category) {
       var node = lookup[category.slug];
       if (node) {
         while (node.parent) {
-          links.unshift({url: "/" + node.slug + "/", title: node.name});
+          links.unshift({url: node.slug, title: node.name});
           node = node.parent;
         }            
       }    
     }
   
-    links.unshift({url: "/", title: "Gestalten"});
+    links.unshift({url: "", title: "Gestalten"});
   }
 
   
@@ -228,7 +229,15 @@ export default ({ slug, category, page, children, type }) => {
           />
 
           <div className={!hasInput ? "input-empty" : "input-value"}>
-            <CustomHits hitComponent={Hits} />                  
+            <div className="result">
+              <CustomHits hitComponent={Hits} />    
+            </div>            
+            <div className="powered">
+              Powered by{` `}
+              <a href="https://algolia.com">
+                <Algolia size="1em" /> Algolia
+              </a>
+            </div>
           </div>
         </InstantSearch>   
        </div>   
