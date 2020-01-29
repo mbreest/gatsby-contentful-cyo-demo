@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/core"
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, navigate } from "gatsby"
 import Breadcrumb from "../components/breadcrumb"
 import Logo from "../components/logo"
 import Menu from "../components/menu"
@@ -218,12 +218,22 @@ export default ({ slug, category, page, children, type }) => {
           submit={<></>}
           reset={<></>}
           translations={{
-            placeholder: 'Search Products',
+            placeholder: 'Search Products',          
+          }}
+          onKeyDown={(event) => {
+            if (event.keyCode === 13) { 
+              const searchValue = document.getElementsByClassName('ais-SearchBox-input')[0].value;
+              document.getElementsByClassName('ais-SearchBox-input')[0].value = "";      
+              this.setState({
+                hasInput: false,
+              });
+              navigate("/produkte/?search=" + searchValue) 
+            }
           }}
           onKeyUp={(event) => {
             this.setState({
               hasInput: event.currentTarget.value !== '',
-            });
+            });            
           }}
           />
 
