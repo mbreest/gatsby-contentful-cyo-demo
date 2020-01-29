@@ -1,7 +1,6 @@
 import React from "react"
 import { css } from "@emotion/core"
 import { useStaticQuery, graphql } from "gatsby"
-import { rhythm } from "../utils/typography"
 import Breadcrumb from "../components/breadcrumb"
 import Logo from "../components/logo"
 import Menu from "../components/menu"
@@ -251,9 +250,7 @@ export default ({ slug, category, page, children, type }) => {
         <div 
           css={css`
             margin: 0 auto;
-            max-width: 1024px;
-            padding: ${rhythm(0)};
-            padding-top: ${rhythm(0)};
+            max-width: 1024px;           
           `}
         >       
             <Helmet>

@@ -2,6 +2,7 @@ import React from "react"
 import {Link, graphql} from 'gatsby';
 import {imageServerUrl} from "./imageserver"
 import contentElementStyles from "./contentelementproductlist.module.css"
+import Img from "gatsby-image";
 
 function ContentElementProductList({ highlight, title, products }) {  
   let className = contentElementStyles.ceproductlist;  
