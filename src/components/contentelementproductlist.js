@@ -14,14 +14,22 @@ function ContentElementProductList({ highlight, title, products }) {
         <h2>{title}</h2>
         <div>
           <ul>    
-          {products && (products).map( (product) => (
-            <li key={"cepliitem" + (count++)}>
+          {products && (products).map( (product) => {
+            const fluid = {
+              aspectRatio: 1,
+              src: imageServerUrl(product.contentfulid, product.defaultValues.view, product.defaultValues.color, 150, "f2f2f2"),
+              srcSet: imageServerUrl(product.contentfulid, product.defaultValues.view, product.defaultValues.color, 150, "f2f2f2") + " 150w",
+              sizes: "(max-width: 150px) 100vw, 150px"
+            }
+            return (
+              <li key={"cepliitem" + (count++)}>
                 <Link to={"/detail/" + product.slug + "/"}>
-                <img src={imageServerUrl(product.contentfulid, product.defaultValues.view, product.defaultValues.color, 150, "f2f2f2")}  alt={product.name}/>
+                <Img fluid={fluid}  alt={product.name}/>
                 <p>{product.name}</p>
                 </Link>
-            </li>
-          ))}
+              </li>
+            )
+          })}
           </ul>
         </div>
     </div>

@@ -20,7 +20,7 @@ function ProductImage({ product }) {
         {product.available && <div className={contentElementStyles.viewImages}>
           <ul>
             {(product.views).map((viewId) => (
-              <li key={"piview" + (count++)}><div tabIndex="0" role="button" onClick={() => {setView(viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { setView(viewId)} }}><img src={imageServerUrl(id, viewId, color, 450, backgroundColor)} alt={product.name}/></div></li>
+              <li key={"piview" + (viewCount++)}><div tabIndex="0" role="button" onClick={() => {setView(viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { setView(viewId)} }}><img src={imageServerUrl(id, viewId, color, 450, backgroundColor)} alt={product.name}/></div></li>
             ))}     
           </ul>
         </div>}
