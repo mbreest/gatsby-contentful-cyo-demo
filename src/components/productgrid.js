@@ -31,7 +31,6 @@ const MyHit = ({ hit }) => {
 
 function ProductGrid(location) {  
   const search = qs.parse(location.location.search.slice(1));
-  console.log(search);
   const query = search.query ? search.query : "";  
 
   return (   
@@ -40,7 +39,7 @@ function ProductGrid(location) {
       <InstantSearch searchClient={searchClient} 
         indexName="Products" >        
         <Configure hitsPerPage={500} />
-        <SearchBox submit={<></>} reset={<></>} class="pi-searchBox" defaultRefinement={query}/>              
+        <SearchBox submit={<></>} reset={<></>} class="pi-searchBox" defaultRefinement={query} translations={{ placeholder: 'Search Products'}}/>              
         <Hits hitComponent={MyHit} class="pi-Hits"/>                    
         <div className="powered">
               Powered by{` `}
