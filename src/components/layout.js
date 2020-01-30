@@ -1,6 +1,6 @@
 import React from "react"
 import { css } from "@emotion/core"
-import { useStaticQuery, graphql, navigate } from "gatsby"
+import { useStaticQuery, graphql  } from "gatsby"
 import Breadcrumb from "../components/breadcrumb"
 import Logo from "../components/logo"
 import Menu from "../components/menu"
@@ -11,9 +11,7 @@ import favicon from '../images/favicon.ico'
 import './layout.css';
 
 import algoliasearch from 'algoliasearch/lite';
-import {
-  InstantSearch, SearchBox, Hits, Configure,
-} from 'react-instantsearch-dom';
+import { InstantSearch, SearchBox, Hits, Configure } from 'react-instantsearch-dom';
 import { CustomHits } from './instantsearch';
 import { Algolia } from 'styled-icons/fa-brands/Algolia'
 
@@ -221,14 +219,14 @@ export default ({ slug, category, page, children, type }) => {
             placeholder: 'Search Products',          
           }}
           onKeyDown={(event) => {
-            if (event.keyCode === 13) { 
-              const searchValue = document.getElementsByClassName('ais-SearchBox-input')[0].value;
-              document.getElementsByClassName('ais-SearchBox-input')[0].value = "";      
-              this.setState({
-                hasInput: false,
-              });
-              navigate("/produkte/?search=" + searchValue) 
-            }
+            // if (event.keyCode === 13) { 
+            //   const searchValue = document.getElementsByClassName('ais-SearchBox-input')[0].value;
+            //   document.getElementsByClassName('ais-SearchBox-input')[0].value = "";      
+            //   this.setState({
+            //     hasInput: false,
+            //   });
+            //   navigate("/produkte/?search=" + searchValue) 
+            // }
           }}
           onKeyUp={(event) => {
             this.setState({
@@ -243,7 +241,7 @@ export default ({ slug, category, page, children, type }) => {
             </div>            
             <div className="powered">
               Powered by{` `}
-              <a href="https://algolia.com">
+              <a href="https://www.algolia.com/?utm_source=react-instantsearch&utm_medium=website&utm_content=localhost&utm_campaign=poweredby">
                 <Algolia size="1em" /> Algolia
               </a>
             </div>

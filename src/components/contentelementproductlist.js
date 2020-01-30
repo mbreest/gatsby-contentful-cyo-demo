@@ -3,13 +3,20 @@ import {Link, graphql} from 'gatsby';
 import {imageServerUrl} from "./imageserver"
 import contentElementStyles from "./contentelementproductlist.module.css"
 import Img from "gatsby-image";
+import ActionButton from "./actionbutton"
 
-function ContentElementProductList({ highlight, title, products }) {  
+function ContentElementProductList({ highlight, title, products, actionButton }) {  
   let className = contentElementStyles.ceproductlist;  
   if (highlight === "yes") {
       className += " highlight";
   }
   var count = 0;
+
+  var link = "/produkte/";
+  if (actionButton && actionButton.query) {
+    link += "?query=" + actionButton.query;
+  }
+
   return (   
     <div className={className}>
         <h2>{title}</h2>
@@ -33,6 +40,7 @@ function ContentElementProductList({ highlight, title, products }) {
           })}
           </ul>
         </div>
+        {actionButton && <div><ActionButton title={actionButton.title} link={link} hidden={true}/></div>}
     </div>
   )
 }
@@ -45,6 +53,10 @@ export const productListFields = graphql`
     }
     title
     generated
+    actionButton {
+      query
+      title
+    }
   }
 `
 

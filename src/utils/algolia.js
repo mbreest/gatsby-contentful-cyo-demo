@@ -4,7 +4,7 @@ const productQuery = `{
       node {  
         index      
         name
-        slug
+        slug       
         contentfulid
         defaultValues {
             view
@@ -23,13 +23,15 @@ const productQuery = `{
 
 const createEntry = (node) => {
     return {
-        "objectID": node.contentfulid,
+        "objectID": node.contentfulid,        
         "name": node.name,
         "slug": node.slug,
         "sizes": node.sizes,
         "colors": node.colors,
+        "defaultView": node.defaultValues.view,
+        "defaultColor": node.defaultValues.color,
         "index": node.index,
-        "imageUrl": `https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/${node.contentfulid},width=300,height=300.jpg`,
+        "imageUrl": `https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/${node.contentfulid}/view/${node.defaultValues.view},appearance=${node.defaultValues.color},width=300,height=300.jpg`,
         "url": `https://gatsby-contentful-cyo-demo.netlify.com/detail/${node.slug}/`
     }
 }

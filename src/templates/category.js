@@ -38,11 +38,11 @@ export default ({ data }) => {
             case "ContentfulContentElementProductList":
                 if (node.generated) {
                   return (                  
-                    <ContentElementProductList key={"ce" + (count++)} highlight="yes" title={node.title} products={data.topProducts.nodes}/>                  
+                    <ContentElementProductList key={"ce" + (count++)} highlight="yes" title={node.title} products={data.topProducts.nodes} actionButton={node.actionButton}/>                  
                   )                    
                 } else {
                   return (
-                    <ContentElementProductList key={"ce" + (count++)} highlight="yes" title={node.title} products={node.products}/>                  
+                    <ContentElementProductList key={"ce" + (count++)} highlight="yes" title={node.title} products={node.products} actionButton={node.actionButton}/>                  
                   )
                 }                                  
             case "ContentfulContentElementCategoryList":

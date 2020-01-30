@@ -1,0 +1,72 @@
+.productgrid {    
+}
+
+.productgrid > h1 {
+    text-align: center;
+    width: 100%;
+}
+
+.productgrid  .ais-SearchBox {    
+    padding: 1em;
+}
+.productgrid  .ais-SearchBox-input {        
+    width: 100%;
+}
+
+.productgrid  .ais-Hits {    
+    padding-left: 1em;
+}
+
+.productgrid .ais-Hits-list {    
+    width: 100%;  
+    list-style: none;
+    padding: 0px;
+    margin: 0px;    
+}
+
+
+@media only screen and (max-width: 600px) {
+    .productgrid .ais-Hits-item {
+        display:inline-block;
+        width: 50%;        
+        padding-bottom: 1em;
+        padding-right: 1em;
+    }   
+}
+
+@media only screen and (min-width: 601px) {
+    .productgrid .ais-Hits-item {
+        display:inline-block;
+        width: 33%;        
+        padding-bottom: 1em;
+        padding-right: 1em;
+    }   
+}
+
+@media only screen and (min-width: 1024px) {
+    .productgrid .ais-Hits-item {
+        display:inline-block;
+        width: 25%;        
+        padding-bottom: 1em;
+        padding-right: 1em;
+    }   
+}
+
+.productgrid .ais-Hits-item > a > img {
+    padding: 0em;
+    margin: 0em;
+}
+
+.productgrid .ais-Hits-item > a > span {
+    padding: 0.2em 0 1em 0;
+    margin: 0em;    
+    color: #333;
+    white-space: nowrap;  
+    overflow: hidden;  
+    text-overflow: ellipsis; 
+    display:block;   
+}
+
+.productgrid .ais-PoweredBy {
+    font-weight: 0.6em;
+}

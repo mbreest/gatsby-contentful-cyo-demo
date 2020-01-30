@@ -13,7 +13,7 @@ function ActionButton({ title, link, full, hidden }) {
     }
     if (hidden) {
         return (
-            <form onSubmit={event => {
+            <form style={{marginBottom: 0}} onSubmit={event => {
               event.preventDefault()              
               navigate(link)
             }}

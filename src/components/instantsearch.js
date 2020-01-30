@@ -40,7 +40,7 @@ const Hits = ({ hits }) => {
               <Img style={{width: "80px", height: "80px" }} fluid={fluid} alt={hit.title}/>
             </div>
             <div>            
-              <Highlight attribute="name" hit={hit} />            
+              <Highlight attribute="name" hit={hit} />              
             </div>          
           </div>
         </a>        
