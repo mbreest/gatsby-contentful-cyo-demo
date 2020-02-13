@@ -37,9 +37,12 @@ html {
         display: none;
     }    
 
-    #app {        
-        position: -webkit-sticky;
-        position: sticky;
+    #app {
+        position: absolute;        
         top: 0;
+        left:0;
+        width: 100vw;
+        height: 100vw;
+        touch-action: pan-y;
     }
 }
