@@ -18,7 +18,7 @@ export default ({ data, location }) => {
 
 export const query = graphql`
     query allCatalogProductsQuery {      
-      contentfulPage(key: {eq: "products"}) {
+      contentfulPage(key: {eq: "products"}, node_locale: {eq: "de"}) {
         short     
         name
         description

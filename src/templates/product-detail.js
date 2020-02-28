@@ -22,7 +22,7 @@ export default ({ data }) => {
 
 export const query = graphql`
     query catalogProductQuery($slug: String!){       
-      contentfulCatalogProduct(slug: {eq: $slug}) {             
+      contentfulCatalogProduct(slug: {eq: $slug}, node_locale: {eq: "de"}) {             
         name
         slug
         views

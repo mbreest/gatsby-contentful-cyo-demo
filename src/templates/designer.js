@@ -17,7 +17,7 @@ export default ({data}) => {
 
 export const query = graphql`
   query designerQuery {
-    contentfulPage(key: {eq: "designer"}) {
+    contentfulPage(key: {eq: "designer"}, node_locale: {eq: "de"}) {
       short
       name
       description

@@ -56,7 +56,7 @@ export default ({ data }) => {
 
 export const query = graphql`
     query blogPostQuery($slug: String!){
-        contentfulBlogPost(slug: {eq: $slug}) {
+        contentfulBlogPost(slug: {eq: $slug}, node_locale: {eq: "de"}) {
             title
             slug
             published(formatString: "MMMM DD, YYYY")

@@ -79,7 +79,7 @@ export default ({ data }) => {
 
 export const query = graphql`
     query catalogCategoryQuery($slug: String!){       
-      contentfulCatalogCategory(slug: {eq: $slug}) {             
+      contentfulCatalogCategory(slug: {eq: $slug}, node_locale: {eq: "de"}) {             
         name        
         slug
         title
@@ -140,12 +140,12 @@ export const query = graphql`
               }
         }
       }
-      topProducts: allContentfulCatalogProduct(filter: {contentfulparent: {slug: {eq: $slug}}}, sort: {order: ASC, fields: index}, limit: 100) {
+      topProducts: allContentfulCatalogProduct(filter: {contentfulparent: {slug: {eq: $slug}}, node_locale: {eq: "de"}}, sort: {order: ASC, fields: index}, limit: 100) {
         nodes {          
           ...ProductListProductFields
         }
       }
-      topCategories: allContentfulCatalogCategory(filter: {contentfulparent: {slug: {eq: $slug}}}, sort: {fields: index}) {      
+      topCategories: allContentfulCatalogCategory(filter: {contentfulparent: {slug: {eq: $slug}}, node_locale: {eq: "de"}}, sort: {fields: index}) {      
           nodes {
             id
             slug

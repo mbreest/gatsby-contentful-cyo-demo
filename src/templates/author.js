@@ -17,7 +17,7 @@ export default ({ data }) => {
 
 export const query = graphql`
     query authorQuery($short: String!){  
-      contentfulAuthor(short: {eq: $short}) {              
+      contentfulAuthor(short: {eq: $short}, node_locale: {eq: "de"}) {              
         name
         short
         description {
@@ -26,7 +26,7 @@ export const query = graphql`
           }
         }
       }
-      allContentfulBlogPost(filter: {author: {short: {eq: $short}}}, sort: {fields: published, order: DESC}) {
+      allContentfulBlogPost(filter: {author: {short: {eq: $short}}, node_locale: {eq: "de"}}, sort: {fields: published, order: DESC}) {
         nodes {
           ...BlogPostFields_no_author
         }

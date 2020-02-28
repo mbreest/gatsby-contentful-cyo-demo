@@ -4,7 +4,7 @@ export const useDesignerData = () => {
     const { contentfulPage } = useStaticQuery(
       graphql`
         query designerDataQuery {
-            contentfulPage(key: {eq: "designer"}) {
+            contentfulPage(key: {eq: "designer"}, node_locale: {eq: "de"}) {
                 short     
             }
         }

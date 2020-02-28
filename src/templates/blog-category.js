@@ -17,7 +17,7 @@ export default ({ data }) => {
 
 export const query = graphql`
     query blogCategoryQuery($short: String!){       
-      contentfulBlogCategory(short: {eq: $short}) {             
+      contentfulBlogCategory(short: {eq: $short}, node_locale: {eq: "de"}) {             
         name
         short
         description {
@@ -26,7 +26,7 @@ export const query = graphql`
           }
         }
       }
-      allContentfulBlogPost(filter: {blogpost: {elemMatch: {categories: {elemMatch: {short: {eq: $short}}}}}}, sort: {fields: published, order: DESC}) {
+      allContentfulBlogPost(filter: {blogpost: {elemMatch: {categories: {elemMatch: {short: {eq: $short}}}}}, node_locale: {eq: "de"},}, sort: {fields: published, order: DESC}) {
         nodes {
           ...BlogPostFields 
         }

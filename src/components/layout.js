@@ -52,7 +52,7 @@ export default ({ slug, category, page, children, type }) => {
             title
           }
         }
-        allContentfulCatalogCategory(limit: 1000, filter: {}, sort: {fields: index, order: ASC}) {
+        allContentfulCatalogCategory(limit: 1000, filter: {node_locale: {eq: "de"}}, sort: {fields: index, order: ASC}) {
           nodes {
             contentfulparent {        
               slug
@@ -61,7 +61,7 @@ export default ({ slug, category, page, children, type }) => {
             slug
           }
         }
-        allContentfulBlogCategory(filter: {default: {eq: false}}, sort: {fields: index, order: ASC}) {
+        allContentfulBlogCategory(filter: {default: {eq: false}, node_locale: {eq: "de"}}, sort: {fields: index, order: ASC}) {
           edges {
             node {
               name
@@ -69,15 +69,15 @@ export default ({ slug, category, page, children, type }) => {
             }
           }
         }
-        designer: contentfulPage(key: {eq: "designer"}) {
+        designer: contentfulPage(key: {eq: "designer"}, node_locale: {eq: "de"}) {
           short     
           name
         }
-        products: contentfulPage(key: {eq: "products"}) {
+        products: contentfulPage(key: {eq: "products"}, node_locale: {eq: "de"}) {
           short     
           name
         }
-        blog: contentfulPage(key: {eq: "blog"}) {
+        blog: contentfulPage(key: {eq: "blog"}, node_locale: {eq: "de"}) {
           short     
           name
         }

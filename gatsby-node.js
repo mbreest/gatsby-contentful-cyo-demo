@@ -205,7 +205,7 @@ exports.createPages =  async ({ graphql, actions }) => {
   const blogPostTemplate = path.resolve('src/templates/blog-post.js');
   var result = await graphql(`
         {
-            allContentfulBlogPost (limit:100) {
+            allContentfulBlogPost (limit:100, filter: {node_locale: {eq: "de"}}) {
                 edges {
                     node {
                         slug
@@ -226,7 +226,7 @@ exports.createPages =  async ({ graphql, actions }) => {
   const authorTemplate = path.resolve('src/templates/author.js');
   result = await graphql(`
     {
-      allContentfulAuthor (limit:100) {
+      allContentfulAuthor (limit:100, filter:{node_locale: {eq: "de"}}) {
         edges {
           node {
             short
@@ -248,7 +248,7 @@ exports.createPages =  async ({ graphql, actions }) => {
   const blogCategoryTemplate = path.resolve('src/templates/blog-category.js');
   result = await graphql(`
     {
-      allContentfulBlogCategory (filter: {default: {eq: false}}, sort: {fields: index, order: ASC}, limit:100) {
+      allContentfulBlogCategory (filter: {default: {eq: false}, node_locale: {eq: "de"}}, sort: {fields: index, order: ASC}, limit:100) {
         edges {
           node {
             short
@@ -269,7 +269,7 @@ exports.createPages =  async ({ graphql, actions }) => {
  const productsTemplate = path.resolve('src/templates/products.js');
  result = await graphql(`
     {
-      contentfulPage(key: {eq: "products"}) {
+      contentfulPage(key: {eq: "products"}, node_locale: {eq: "de"}) {
         short          
       }
     }`)
@@ -281,7 +281,7 @@ exports.createPages =  async ({ graphql, actions }) => {
  const productDetailTemplate = path.resolve('src/templates/product-detail.js');
  result = await graphql(`
     {
-      allContentfulCatalogProduct (filter: {active: {eq: true}}, limit: 1000) {
+      allContentfulCatalogProduct (filter: {active: {eq: true}, node_locale: {eq: "de"}}, limit: 1000) {
         edges {
           node {
             slug
@@ -302,7 +302,7 @@ exports.createPages =  async ({ graphql, actions }) => {
  const designerTemplate = path.resolve('src/templates/designer.js');
  result = await graphql(`
     {
-      contentfulPage(key: {eq: "designer"}) {
+      contentfulPage(key: {eq: "designer"}, node_locale: {eq: "de"}) {
         short          
       }
     }`)
@@ -314,7 +314,7 @@ exports.createPages =  async ({ graphql, actions }) => {
   const catalogCategoryTemplate = path.resolve('src/templates/category.js');
   result = await graphql(`
     {
-      allContentfulCatalogCategory (filter: {slug: {ne: "homepage"}}, limit: 1000) {
+      allContentfulCatalogCategory (filter: {slug: {ne: "homepage"}, node_locale: {eq: "de"}}, limit: 1000) {
         edges {
           node {
             slug
