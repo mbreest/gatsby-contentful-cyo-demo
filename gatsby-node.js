@@ -133,7 +133,13 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
           },
           sizes: {
             type: "String"
-          }
+          },
+          crop: {
+            type: "String"
+          },
+          gravity: {
+            type: "String"
+          }          
         },      
         async resolve(source, args, context, info) {                                  
           if (source) {                                          
@@ -144,6 +150,14 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
 
             const maxWidth = args.maxWidth ? args.maxWidth : 1200;
             const breakpoints = args.sizes ? args.sizes.split(",").map(Number) : [400, 800, 1200];
+
+            var transformations = []
+            if (args.crop) {
+              transformations.push("c_" + args.crop);
+            }
+            if (args.gravity) {
+              transformations.push("g_" + args.gravity);
+            }
 
             const max = Math.min(maxWidth, 1200);
             const sizes = `(max-width: ${max}px) 100vw, ${max}px`;
@@ -157,7 +171,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
               public_id: source.public_id, 
               cloudName: "cyo-demo", 
               baseTransformations: baseTransformations,
-              transformations: [`w_${max}`],
+              transformations: [`w_${max}`, ...transformations],
               format: source.format
             })
           
@@ -166,7 +180,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
                 public_id: source.public_id, 
                 cloudName: "cyo-demo", 
                 baseTransformations: baseTransformations,
-                transformations: [`w_${breakpointWidth}`],
+                transformations: [`w_${breakpointWidth}`, ...transformations],
                 format: source.format
               });
         

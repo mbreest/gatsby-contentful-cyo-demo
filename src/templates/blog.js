@@ -80,9 +80,12 @@ export const blogPostFields = graphql`
     slug
     published(formatString: "MMMM DD, YYYY")
     bannerImage {
-      fluid(maxWidth: 1200, quality: 80) {
-        ...GatsbyContentfulFluid_withWebp_noBase64
-      }
+      fluid(maxWidth: 1200, sizes: "400,800,1200") {
+        aspectRatio
+        src
+        srcSet
+        sizes
+      } 
     }
     content {
       childMarkdownRemark {
@@ -105,9 +108,12 @@ export const blogPostFieldsNoAuthor = graphql`
     slug
     published(formatString: "MMMM DD, YYYY")
     bannerImage {
-      fluid(maxWidth: 1200, quality: 80) {
-        ...GatsbyContentfulFluid_withWebp_noBase64
-      }
+      fluid(maxWidth: 1200, sizes: "400,800,1200") {
+        aspectRatio
+        src
+        srcSet
+        sizes
+      } 
     }
     content {
       childMarkdownRemark {

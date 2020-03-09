@@ -11,9 +11,13 @@ import BlogText from "../components/blogtext"
 import BlogCategories from "../components/blogcategories"
 
 export default ({ data }) => {    
-  const { title, slug, published, bannerImage, content, contentElements, author, categories, relatedBlogPosts } = data.contentfulBlogPost
+  var { title, slug, published, bannerImage, content, contentElements, author, categories, relatedBlogPosts } = data.contentfulBlogPost
   const { html, excerpt } = content.childMarkdownRemark 
   const { name, short } = author 
+
+  if (Array.isArray(bannerImage) && bannerImage.length > 0) {
+    bannerImage = bannerImage[0];        
+  }
 
   var count = 0;
   return (
@@ -59,11 +63,14 @@ export const query = graphql`
         contentfulBlogPost(slug: {eq: $slug}, node_locale: {eq: "de"}) {
             title
             slug
-            published(formatString: "MMMM DD, YYYY")
+            published(formatString: "MMMM DD, YYYY")          
             bannerImage {
-                fluid(maxWidth: 1200, quality: 80) {
-                  ...GatsbyContentfulFluid_withWebp_noBase64
-                }
+              fluid(maxWidth: 1200, sizes: "400,800,1200") {
+                aspectRatio
+                src
+                srcSet
+                sizes
+              } 
             }
             content {
                 childMarkdownRemark {
@@ -92,10 +99,13 @@ export const query = graphql`
             relatedBlogPosts {
               id
               slug
-              title
+              title                            
               bannerImage {
-                fluid(maxHeight: 200, maxWidth: 350, quality: 80, resizingBehavior: THUMB, cropFocus: CENTER) {                  
-                  ...GatsbyContentfulFluid_withWebp_noBase64
+                fluid(maxWidth: 350, sizes: "350", crop: "thumb", gravity: "center") {                  
+                  aspectRatio
+                  src
+                  srcSet
+                  sizes
                 }
               }
             }

@@ -23,12 +23,12 @@ function BlogGrid({ title, blogPosts, type }) {
         <div className={className}>        
             {title && <h2>{title}</h2>}
             <div>
-            {blogPosts && blogPosts.map( (entry) => {                        
+            {blogPosts && blogPosts.map( (entry) => {                                             
                 if (entry.slug) {            
                     return (        
                       <div key={"bpitem" + (count++)}>
                            <Link to={ "/blog/" + entry.slug + "/"}>
-                          <Img fluid={entry.bannerImage.fluid}  />                    
+                          <Img fluid={entry.bannerImage[0].fluid}  />                    
                           <p className={contentElementStyles.headline}>{entry.title}{" "}</p>
                         </Link>
                         {entry.author && <p><span className={contentElementStyles.date}>{entry.published}</span> | <Link to={"/blog/autor/" + entry.author.short + "/"}>{entry.author.name}</Link></p>}
