@@ -16,7 +16,8 @@ function BlogGrid({ title, blogPosts, type }) {
             blogPosts.push({});
         }
       }
-  }
+  }  
+
   if (blogPosts) {
     var count = 0;
     return (   
@@ -34,7 +35,7 @@ function BlogGrid({ title, blogPosts, type }) {
                         {entry.author && <p><span className={contentElementStyles.date}>{entry.published}</span> | <Link to={"/blog/autor/" + entry.author.short + "/"}>{entry.author.name}</Link></p>}
                         {!entry.author && <p><span className={contentElementStyles.date}>{entry.published}</span></p>}
                           
-                        {entry.content && <p>{entry.content.childMarkdownRemark.excerpt} <Link
+                        {entry.content && <p>{entry.content.excerpt} <Link
                           to={ "/blog/" + entry.slug + "/" }            
                         >
                           Weiterlesen

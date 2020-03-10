@@ -2,8 +2,8 @@ require('dotenv').config();
 const path = require('path');
 const axios = require('axios');
 const crypto = require('crypto');
-const { getImageURL } = require('./src/utils/cloudinary.js')
-
+const { getFluidImage } = require('./src/utils/cloudinary.js')
+const prune = require("underscore.string/prune");
 
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
@@ -139,17 +139,16 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
           },
           gravity: {
             type: "String"
-          }          
+          },
+          aspectRatio:{
+            type: "Int"
+          }             
         },      
         async resolve(source, args, context, info) {                                  
-          if (source) {                                          
-            var baseTransformations = []
-            if (source.derived && source.derived.length > 0) {
-              baseTransformations.push(source.derived[0].raw_transformation)
-            }
-
-            const maxWidth = args.maxWidth ? args.maxWidth : 1200;
+          if (source) {                                                      
+            const maxWidth = Math.min(args.maxWidth ? args.maxWidth : 1200, 1200);
             const breakpoints = args.sizes ? args.sizes.split(",").map(Number) : [400, 800, 1200];
+            const aspectRatio = args.aspectRatio ? args.aspectRatio : 2;
 
             var transformations = []
             if (args.crop) {
@@ -159,45 +158,38 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
               transformations.push("g_" + args.gravity);
             }
 
-            const max = Math.min(maxWidth, 1200);
-            const sizes = `(max-width: ${max}px) 100vw, ${max}px`;
-            const cleaned = breakpoints
-              .concat(max) 
-              .filter(w => w <= max)
-              .sort((a, b) => a - b);
-            const deduped = [...new Set(cleaned)];
-              
-            const src = getImageURL({
-              public_id: source.public_id, 
-              cloudName: "cyo-demo", 
-              baseTransformations: baseTransformations,
-              transformations: [`w_${max}`, ...transformations],
-              format: source.format
-            })
-          
-            const srcSet = deduped.map(breakpointWidth => {                
-              const url = getImageURL({                  
-                public_id: source.public_id, 
-                cloudName: "cyo-demo", 
-                baseTransformations: baseTransformations,
-                transformations: [`w_${breakpointWidth}`, ...transformations],
-                format: source.format
-              });
-        
-              return `${url} ${breakpointWidth}w`;
-            })
-            .join();
-
-            return {
-              aspectRatio: 2.0,
-              base64: "",
-              sizes: sizes,
-              src: src,
-              srcSet: srcSet
-            }
+            return getFluidImage({source: source, max: maxWidth, aspectRatio: aspectRatio, breakpoints: breakpoints, transformations: transformations})
               
           } else{
             return null;
+          }                                          
+        }
+      }
+    }
+  } else if (type.name.startsWith("contentful") && type.name.endsWith("RichTextNode")) {     
+    return {
+      excerpt: {
+        type: 'String',
+        args: {
+          maxLength: {
+            type: "Int"
+          }                    
+        },      
+        async resolve(source, args, context, info) {                                  
+          if (source) {   
+            const maxLength = args.maxLength ? args.maxLength : 150;
+            
+            var text = JSON.parse(source.content).content.map((node) => {
+              if (node.nodeType === "paragraph") {
+                return node.content[0].value
+              } else {
+                return ""
+              }
+            }).join(" ");          
+        
+            return prune(text, maxLength, "...")
+          } else{
+            return "";
           }                                          
         }
       }

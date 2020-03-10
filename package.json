@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Martin Breest <mbs@spreadshirt.net>",
   "dependencies": {
+    "@contentful/rich-text-react-renderer": "^13.4.0",
     "@emotion/core": "^10.0.22",
     "algoliasearch": "^3.35.1",
     "axios": "^0.19.1",
@@ -40,7 +41,8 @@
     "styled-components": "^5.0.0",
     "styled-icons": "^9.2.0",
     "typography": "^0.16.19",
-    "typography-theme-wordpress-2016": "^0.16.19"
+    "typography-theme-wordpress-2016": "^0.16.19",
+    "underscore.string": "^3.3.5"
   },
   "devDependencies": {
     "prettier": "^1.19.1"

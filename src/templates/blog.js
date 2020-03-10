@@ -80,7 +80,7 @@ export const blogPostFields = graphql`
     slug
     published(formatString: "MMMM DD, YYYY")
     bannerImage {
-      fluid(maxWidth: 1200, sizes: "400,800,1200") {
+      fluid(maxWidth: 1200, sizes: "400,800,1200", aspectRatio: 2) {
         aspectRatio
         src
         srcSet
@@ -88,9 +88,7 @@ export const blogPostFields = graphql`
       } 
     }
     content {
-      childMarkdownRemark {
-        excerpt
-      }
+      excerpt(maxLength: 200)
     }
     author {
       name
@@ -108,7 +106,7 @@ export const blogPostFieldsNoAuthor = graphql`
     slug
     published(formatString: "MMMM DD, YYYY")
     bannerImage {
-      fluid(maxWidth: 1200, sizes: "400,800,1200") {
+      fluid(maxWidth: 1200, sizes: "400,800,1200", aspectRatio: 2) {
         aspectRatio
         src
         srcSet
@@ -116,9 +114,7 @@ export const blogPostFieldsNoAuthor = graphql`
       } 
     }
     content {
-      childMarkdownRemark {
-        excerpt
-      }
+      excerpt(maxLength: 200)
     }   
     categories {
       short
