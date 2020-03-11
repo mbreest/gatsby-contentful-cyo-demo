@@ -16,15 +16,16 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
             <h2>{title}</h2>
             <div key="categories">    
             {(categories).map( (category) => { 
-                var hero = category.category.hero;
-                if (Array.isArray(hero) && hero.length > 0) {
-                    hero = hero[0];
+                var image = category.image;
+                if (Array.isArray(image.image) && image.image.length > 0) {
+                    image.image = image.image[0];
                 }
+                console.log(image);
 
                 return (
                 <div key={"pnitem" + (count++)}>                    
                     <Link to={"/" + category.category.slug + "/"}>
-                          {hero && <Img fluid={hero.fluid}/>}    
+                          {image && image.image && <Img fluid={image.image.fluid} title={image.title} alt={image.description}/>}    
                           <p>{category.title}</p>
                     </Link>
                 </div>
@@ -119,17 +120,21 @@ export const categoryNavigationFields = graphql`
         generated       
         highlightedCategories {
             title
+            image {
+              title
+              description
+              image {
+                fluid(maxWidth: 500, sizes: "250,500") {
+                    aspectRatio
+                    src
+                    srcSet
+                    sizes
+                }
+              }
+            }
             category {
                 name
-                slug               
-                hero {
-                    fluid(maxWidth: 500, sizes: "250,500") {
-                        aspectRatio
-                        src
-                        srcSet
-                        sizes
-                    }                    
-                }
+                slug                               
                 iconLarge {
                     title
                     fluid(maxWidth: 500, quality: 80) {
@@ -140,17 +145,21 @@ export const categoryNavigationFields = graphql`
         }
         categories {
             title
+            image {
+              title
+              description
+              image {
+                fluid(maxWidth: 500, sizes: "250,500") {
+                  aspectRatio
+                  src
+                  srcSet
+                  sizes
+                }
+              }
+            }
             category {
                 name
                 slug                
-                hero {
-                    fluid(maxWidth: 500, sizes: "250,500") {
-                        aspectRatio
-                        src
-                        srcSet
-                        sizes
-                    }                    
-                }
                 icon {
                     title
                     fluid(maxWidth: 300, quality: 80) {

@@ -5,20 +5,20 @@ import {designerlink} from "./designerlink"
 import {useDesignerData} from "./pagedata"
 import ActionButton from "./actionbutton";
 
-function ContentElementHero({ title, subtitle, hero, action }) {  
+function ContentElementHero({ title, subtitle, image, action }) {  
     const designerPath = useDesignerData().short;
     let actionTitle = "";
     if (action && action.title) {
         actionTitle += action.title; 
     }    
-    if (Array.isArray(hero) && hero.length > 0) {
-        hero = hero[0];        
+    if (image && Array.isArray(image.image) && image.image.length > 0) {
+        image.image = image.image[0];        
     }
 
     return (   
     <div className={contentElementStyles.cehero}>
-        { hero && hero.fluid && <div>
-            <Img fluid={hero.fluid}/>
+        { image && image.image && <div>
+            <Img fluid={image.image.fluid} title={image.title} alt={image.description}/>
         </div>}
         <div className={contentElementStyles.text}>
             <h1>{title}</h1>
@@ -31,3 +31,32 @@ function ContentElementHero({ title, subtitle, hero, action }) {
   )
 }
 export default ContentElementHero
+
+export const heroFields = graphql`
+  fragment HeroFields on ContentfulContentElementHero {
+    title
+    subtitle    
+    action {
+      product {
+        contentfulid
+      }
+      title            
+      appearanceId
+      viewId
+      designSearch
+    }    
+    image {
+      title
+      description
+      image {
+        fluid(maxWidth: 1200, sizes: "400,800,1200") {
+          aspectRatio
+          src
+          srcSet
+          sizes
+        } 
+      }
+    }               
+    
+  }
+`
