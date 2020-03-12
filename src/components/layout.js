@@ -65,20 +65,20 @@ export default ({ slug, category, page, children, type }) => {
           edges {
             node {
               name
-              short
+              slug
             }
           }
         }
         designer: contentfulPage(key: {eq: "designer"}, node_locale: {eq: "de"}) {
-          short     
+          slug    
           name
         }
         products: contentfulPage(key: {eq: "products"}, node_locale: {eq: "de"}) {
-          short     
+          slug    
           name
         }
         blog: contentfulPage(key: {eq: "blog"}, node_locale: {eq: "de"}) {
-          short     
+          slug    
           name
         }
       }
@@ -118,9 +118,9 @@ export default ({ slug, category, page, children, type }) => {
   
   var [menu, lookup] = createMenu(data.allContentfulCatalogCategory.nodes)
 
-  menu.children.unshift({slug: data.designer.short, name: data.designer.name, children: []})
-  menu.children.push({slug: data.products.short, name: data.products.name, children: []})
-  menu.children.push({slug: data.blog.short, name: data.blog.name, children: []})
+  menu.children.unshift({slug: data.designer.slug, name: data.designer.name, children: []})
+  menu.children.push({slug: data.products.slug, name: data.products.name, children: []})
+  menu.children.push({slug: data.blog.slug, name: data.blog.name, children: []})
   
   function createSubmenu(menu, lookup) {
     if (slug) {
@@ -144,7 +144,7 @@ export default ({ slug, category, page, children, type }) => {
   var submenu = null;
   var links = null;
   if (type === "blog") {   
-    submenu = {children: data.allContentfulBlogCategory.edges.map( (edge) => ({name: edge.node.name, slug: "blog/kategorie/" + edge.node.short}))};     
+    submenu = {children: data.allContentfulBlogCategory.edges.map( (edge) => ({name: edge.node.name, slug: "blog/kategorie/" + edge.node.slug}))};     
     submenu.children.unshift({name: "Alle", slug: "blog"})
 
     links = [];

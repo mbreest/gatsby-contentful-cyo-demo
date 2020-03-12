@@ -32,7 +32,7 @@ function BlogGrid({ title, blogPosts, type }) {
                           <Img fluid={entry.hero.image[0].fluid}  />                    
                           <p className={contentElementStyles.headline}>{entry.title}{" "}</p>
                         </Link>
-                        {entry.author && <p><span className={contentElementStyles.date}>{entry.published}</span> | <Link to={"/blog/autor/" + entry.author.short + "/"}>{entry.author.name}</Link></p>}
+                        {entry.author && <p><span className={contentElementStyles.date}>{entry.published}</span> | <Link to={"/blog/autor/" + entry.author.slug + "/"}>{entry.author.name}</Link></p>}
                         {!entry.author && <p><span className={contentElementStyles.date}>{entry.published}</span></p>}
                           
                         {entry.content && <p>{entry.content.excerpt} <Link

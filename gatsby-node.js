@@ -235,17 +235,17 @@ exports.createPages =  async ({ graphql, actions }) => {
       allContentfulAuthor (limit:100, filter:{node_locale: {eq: "de"}}) {
         edges {
           node {
-            short
+            slug
           }
         }
       }
     }`)
   result.data.allContentfulAuthor.edges.forEach((edge) => {
     createPage({
-      path: "/blog/autor/" + edge.node.short,
+      path: "/blog/autor/" + edge.node.slug,
       component: authorTemplate,
       context: {
-        short: edge.node.short,
+        slug: edge.node.slug,
       },
     });
   });
@@ -257,17 +257,17 @@ exports.createPages =  async ({ graphql, actions }) => {
       allContentfulBlogCategory (filter: {default: {eq: false}, node_locale: {eq: "de"}}, sort: {fields: index, order: ASC}, limit:100) {
         edges {
           node {
-            short
+            slug
           }
         }
       }
     }`)
   result.data.allContentfulBlogCategory.edges.forEach((edge) => {
     createPage({
-      path: "/blog/kategorie/" + edge.node.short,
+      path: "/blog/kategorie/" + edge.node.slug,
       component: blogCategoryTemplate,
       context: {
-        short: edge.node.short,
+        slug: edge.node.slug,
       },
     });
   });  
@@ -276,11 +276,11 @@ exports.createPages =  async ({ graphql, actions }) => {
  result = await graphql(`
     {
       contentfulPage(key: {eq: "products"}, node_locale: {eq: "de"}) {
-        short          
+        slug          
       }
     }`)
   createPage({
-    path: result.data.contentfulPage.short,
+    path: result.data.contentfulPage.slug,
     component: productsTemplate
   });  
 
@@ -309,11 +309,11 @@ exports.createPages =  async ({ graphql, actions }) => {
  result = await graphql(`
     {
       contentfulPage(key: {eq: "designer"}, node_locale: {eq: "de"}) {
-        short          
+        slug          
       }
     }`)
   createPage({
-    path: result.data.contentfulPage.short,
+    path: result.data.contentfulPage.slug,
     component: designerTemplate
   });  
   

@@ -10,8 +10,8 @@ function BlogCategories({ title, categories }) {
         <ul>
         {(categories).map( (category) => { 
           var name = category.name;
-          var link = "/blog/kategorie/" + category.short + "/";
-          if (category.short === "create_blog") {
+          var link = "/blog/kategorie/" + category.slug + "/";
+          if (category.slug === "create_blog") {
             name = "Alle";
             link = "/blog/";
           }

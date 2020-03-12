@@ -5,7 +5,7 @@ export const useDesignerData = () => {
       graphql`
         query designerDataQuery {
             contentfulPage(key: {eq: "designer"}, node_locale: {eq: "de"}) {
-                short     
+                slug     
             }
         }
       `

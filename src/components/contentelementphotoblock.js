@@ -6,7 +6,7 @@ import {useDesignerData} from "./pagedata"
 import contentElementStyles from "./contentelementphotoblock.module.css"
 
 function ContentElementPhotoBlock({ title, highlight, highlightedPhoto, photos, alignRight, singleBlock }) {              
-    const designerPath = useDesignerData().short;
+    const designerPath = useDesignerData().slug;
 
     var className = contentElementStyles.cephotoblock;
     if (highlight === "yes") {

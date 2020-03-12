@@ -7,7 +7,7 @@ import ActionButton from "./actionbutton";
 import { graphql } from 'gatsby';
 
 function ContentElementHero({ title, subtitle, image, action }) {  
-    const designerPath = useDesignerData().short;
+    const designerPath = useDesignerData().slug;
     let actionTitle = "";
     if (action && action.title) {
         actionTitle += action.title; 

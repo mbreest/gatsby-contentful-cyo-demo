@@ -25,7 +25,7 @@ export const query = graphql`
               elemMatch: {
                 categories: {
                   elemMatch: {
-                    short: {
+                    slug: {
                       eq: "create_blog"
                     }
                   }
@@ -53,7 +53,7 @@ export const query = graphql`
               elemMatch: {
                 categories: {
                   elemMatch: {
-                    short: {
+                    slug: {
                       ne: "create_blog"
                     }
                   }
@@ -97,10 +97,10 @@ export const blogPostFields = graphql`
     }
     author {
       name
-      short
+      slug
     }
     categories {
-      short
+      slug
     }
   }
 `
@@ -127,7 +127,7 @@ export const blogPostFieldsNoAuthor = graphql`
       excerpt(maxLength: 200)
     }   
     categories {
-      short
+      slug
     }
   }
 `

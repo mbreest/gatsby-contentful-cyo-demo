@@ -6,7 +6,7 @@ import ActionButton from "../components/actionbutton"
 import contentElementStyles from "./productimage.module.css"
 
 function ProductImage({ product }) {  
-  const designerPath = useDesignerData().short;  
+  const designerPath = useDesignerData().slug;  
   var count = 0;
   var viewCount = 0;
 

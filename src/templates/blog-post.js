@@ -45,7 +45,6 @@ const options = {
 
 export default ({ data }) => {    
   var { title, slug, published, hero, content, author, categories, relatedBlogPosts } = data.contentfulBlogPost
-  const { name, short } = author 
 
   if (Array.isArray(hero.image) && hero.image.length > 0) {
     hero.image = hero.image[0];        
@@ -59,7 +58,7 @@ export default ({ data }) => {
           <Img fluid={hero.image.fluid}/>
         </div>
         <BlogHeader title={title}>       
-          <p>{published} | <Link to={"/blog/autor/" + short + "/"}>{name}</Link></p>
+          <p>{published} | <Link to={"/blog/autor/" + author.slug + "/"}>{author.name}</Link></p>
           {categories && categories.length > 0 && <BlogCategories title="Kategorien" categories={categories}/>}
         </BlogHeader>
                 
@@ -94,7 +93,7 @@ export const query = graphql`
             }            
             author {
               name
-              short
+              slug
             }
             relatedBlogPosts {
               id
@@ -116,7 +115,7 @@ export const query = graphql`
             }
             categories {
               name
-              short
+              slug
             }
         }
     }

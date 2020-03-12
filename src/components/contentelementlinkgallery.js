@@ -7,7 +7,7 @@ import contentElementStyles from "./contentelementlinkgallery.module.css"
 import { getFluidImage } from '../utils/cloudinary.js'
 
 function ContentElementLinkGallery({ links, language}) {  
-  const designerPath = useDesignerData().short; 
+  const designerPath = useDesignerData().slug; 
 
   if (links && links.length % 3 > 0) {
     var x = (links.length - (links.length % 3) + 3) - links.length;

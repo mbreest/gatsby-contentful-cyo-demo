@@ -6,7 +6,7 @@ import Designer from "../components/designer"
 
 export default ({data}) => {  
   return (
-    <Layout page={{slug: data.contentfulPage.short, name: data.contentfulPage.name}}>                        
+    <Layout page={{slug: data.contentfulPage.slug, name: data.contentfulPage.name}}>                        
         <SEO title={data.contentfulPage.name} description={data.contentfulPage.description} />        
         <div>
           <Designer/>
@@ -18,7 +18,7 @@ export default ({data}) => {
 export const query = graphql`
   query designerQuery {
     contentfulPage(key: {eq: "designer"}, node_locale: {eq: "de"}) {
-      short
+      slug
       name
       description
     }

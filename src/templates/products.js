@@ -7,7 +7,7 @@ import ProductGrid from "../components/productgrid"
 
 export default ({ data, location }) => {      
   return (
-    <Layout page={{slug: data.contentfulPage.short, name: data.contentfulPage.name}}>
+    <Layout page={{slug: data.contentfulPage.slug, name: data.contentfulPage.name}}>
         <SEO title={data.contentfulPage.name} description={data.contentfulPage.description} />
         <div>
           <ProductGrid location={location}/>
@@ -19,7 +19,7 @@ export default ({ data, location }) => {
 export const query = graphql`
     query allCatalogProductsQuery {      
       contentfulPage(key: {eq: "products"}, node_locale: {eq: "de"}) {
-        short     
+        slug     
         name
         description
       }
