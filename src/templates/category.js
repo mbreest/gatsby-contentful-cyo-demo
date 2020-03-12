@@ -20,15 +20,15 @@ export default ({ data }) => {
       {(contentElements || []).map( (node) => {
         if (node.internal) {
           switch (node.internal.type) {
-            case "ContentfulContentElementHero":
+            case "ContentfulHero":
                 return (
                   <ContentElementHero key={"ce" + (count++)} image={node.image} title={node.title} subtitle={node.subtitle} action={node.action}/>
                 )
-            case "ContentfulContentElement3ColumnText":
+            case "Contentful3ColumnText":
                 return (
                   <ContentElement3ColumnText key={"ce" + (count++)} highlight="yes" title={node.title} headline1={ node.headline1 } text1={ node.text1 } headline2={ node.headline2 } text2={ node.text2 } headline3={ node.headline3 } text3={ node.text3 }/>
                 )
-            case "ContentfulContentElementProductList":
+            case "ContentfulProductList":
                 if (node.generated) {
                   return (                  
                     <ContentElementProductList key={"ce" + (count++)} highlight="yes" title={node.title} products={data.topProducts.nodes} actionButton={node.actionButton}/>                  
@@ -38,21 +38,25 @@ export default ({ data }) => {
                     <ContentElementProductList key={"ce" + (count++)} highlight="yes" title={node.title} products={node.products} actionButton={node.actionButton}/>                  
                   )
                 }                                  
-            case "ContentfulContentElementCategoryList":
+            case "ContentfulCategoryList":
                 return (
                   <ContentElementCategoryList key={"ce" + (count++)} highlight="no" title={node.title} categories={node.categories}/>                  
                 )
-            case "ContentfulContentElementCategoryNavigation":            
+            case "ContentfulCategoryNavigationIcon":            
               if (node.generated) {                       
                 return (                  
-                  <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" title={node.title} highlightedCategories={[]} categories={data.topCategories.nodes} useHero={node.useHero} useIcon={node.useIcon}/>
+                  <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" title={node.title} highlightedCategories={[]} categories={data.topCategories.nodes} useHero={false} useIcon={node.useIcon}/>
                 )
               } else {
                 return (
-                  <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" title={node.title} highlightedCategories={node.highlightedCategories} categories={node.categories} useHero={node.useHero} useIcon={node.useIcon}/>                  
+                  <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" title={node.title} highlightedCategories={node.highlightedCategories} categories={node.categories} useHero={false} useIcon={node.useIcon}/>                  
                 )
               }
-            case "ContentfulContentElementPhotoStory":            
+            case "ContentfulCategoryNavigationHero":                          
+              return (
+                <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" title={node.title} highlightedCategories={[]} categories={node.categories} useHero={true} useIcon={false}/>                  
+              )              
+            case "ContentfulPhotoStory":            
               return (
                  <ContentElementPhotoStory key={"ce" + (count++)} highlight="no" title={node.title} photoBlocks={node.photoBlocks}/>
               )            
@@ -76,37 +80,43 @@ export const query = graphql`
         name        
         slug                
         contentElements {
-            ... on ContentfulContentElement3ColumnText {
+            ... on Contentful3ColumnText {
               ...ThreeColumnTextFields              
               internal {
                 type
               }
             }
-            ... on ContentfulContentElementProductList {
+            ... on ContentfulProductList {
               ...ProductListFields
               internal {
                 type
               }
             }
-            ... on ContentfulContentElementCategoryList {
+            ... on ContentfulCategoryList {
               ...CategoryListFields
               internal {
                 type
               }
             }
-            ... on ContentfulContentElementCategoryNavigation {
-              ...CategoryNavigationFields              
+            ... on ContentfulCategoryNavigationIcon {
+              ...CategoryNavigationIconFields              
+              internal {
+                type
+              }
+            }    
+            ... on ContentfulCategoryNavigationHero {
+              ...CategoryNavigationHeroFields              
               internal {
                 type
               }
             }              
-            ... on ContentfulContentElementPhotoStory {
+            ... on ContentfulPhotoStory {
               ...PhotoStoryFields
               internal {
                 type
               }
             }
-            ... on ContentfulContentElementHero {
+            ... on ContentfulHero {
               ...HeroFields
               internal {
                 type
@@ -114,26 +124,16 @@ export const query = graphql`
             }
         }
       }
-      topProducts: allContentfulCatalogProduct(filter: {contentfulparent: {slug: {eq: $slug}}, node_locale: {eq: "de"}}, sort: {order: ASC, fields: index}, limit: 100) {
+      topProducts: allContentfulCatalogProduct(filter: {category: {slug: {eq: $slug}}, node_locale: {eq: "de"}}, sort: {order: ASC, fields: index}, limit: 100) {
         nodes {          
           ...ProductListProductFields
         }
       }
-      topCategories: allContentfulCatalogCategory(filter: {contentfulparent: {slug: {eq: $slug}}, node_locale: {eq: "de"}}, sort: {fields: index}) {      
+      topCategories: allContentfulCatalogCategory(filter: {category: {slug: {eq: $slug}}, node_locale: {eq: "de"}}, sort: {fields: index}) {      
           nodes {
             id
             slug
-            name
-            icon {
-              fluid(maxWidth: 300, quality: 80) {
-                ...GatsbyContentfulFluid_withWebp_noBase64
-              }
-            }            
-            iconLarge {
-              fluid(maxWidth: 500, quality: 80) {
-                ...GatsbyContentfulFluid_withWebp_noBase64
-              }
-            }
+            name            
             index
           }
       }

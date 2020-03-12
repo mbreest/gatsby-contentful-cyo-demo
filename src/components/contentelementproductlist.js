@@ -47,7 +47,7 @@ function ContentElementProductList({ highlight, title, products, actionButton })
 export default ContentElementProductList
 
 export const productListFields = graphql`
-  fragment ProductListFields on ContentfulContentElementProductList {
+  fragment ProductListFields on ContentfulProductList {
     products {
       ...ProductListProductFields
     }

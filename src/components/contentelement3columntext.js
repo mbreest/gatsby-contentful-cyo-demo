@@ -30,7 +30,7 @@ function ContentElement3ColumnText({ highlight, title, headline1, text1, headlin
 export default ContentElement3ColumnText
 
 export const threeColumnTextFields = graphql`
-  fragment ThreeColumnTextFields on ContentfulContentElement3ColumnText {
+  fragment ThreeColumnTextFields on Contentful3ColumnText {
     headline1
     headline2
     headline3

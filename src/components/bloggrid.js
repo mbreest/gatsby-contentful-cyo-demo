@@ -29,7 +29,7 @@ function BlogGrid({ title, blogPosts, type }) {
                     return (        
                       <div key={"bpitem" + (count++)}>
                            <Link to={ "/blog/" + entry.slug + "/"}>
-                          <Img fluid={entry.bannerImage[0].fluid}  />                    
+                          <Img fluid={entry.hero.image[0].fluid}  />                    
                           <p className={contentElementStyles.headline}>{entry.title}{" "}</p>
                         </Link>
                         {entry.author && <p><span className={contentElementStyles.date}>{entry.published}</span> | <Link to={"/blog/autor/" + entry.author.short + "/"}>{entry.author.name}</Link></p>}

@@ -23,13 +23,13 @@ function ContentElementPhotoBlock({ title, highlight, highlightedPhoto, photos, 
         {!singleBlock && <h3>{title}</h3>}
         <div className={direction}>
             {highlightedPhoto && <div key={"pbitem" + (count++)} tabIndex="0" role="button" className={contentElementStyles.cephotoblockhighlighted} onClick={() => {navigate(designerlink(designerPath, highlightedPhoto))}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate(designerlink(designerPath, highlightedPhoto))} }}>                
-                <Img fluid={highlightedPhoto.image.fluid}/>
+                <Img fluid={highlightedPhoto.image.image[0].fluid} title={highlightedPhoto.image.title} alt={highlightedPhoto.image.description}/>
             </div>        
             }            
             <div className={contentElementStyles.cephotoblockbox}>
             {photos && (photos).map( (photo) => (
                 <div key={"pbitem" + (count++)} tabIndex="0" role="button" onClick={() => {navigate(designerlink(designerPath, photo))}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate(designerlink(designerPath, photo)) } }}>                    
-                    <Img fluid={photo.image.fluid}/>
+                    <Img fluid={photo.image.image[0].fluid} title={photo.image.title} alt={photo.image.description}/>
                 </div>
             ))}
             </div>            
@@ -40,15 +40,22 @@ function ContentElementPhotoBlock({ title, highlight, highlightedPhoto, photos, 
 export default ContentElementPhotoBlock
 
 export const photoBlockFields = graphql`
-  fragment PhotoBlockFields on ContentfulContentElementPhotoBlock {
+  fragment PhotoBlockFields on ContentfulPhotoBlock {
     id
     title
     alignRight
     highlightedPhoto {
         image {
-            fluid(maxWidth: 500, quality: 80) {
-                ...GatsbyContentfulFluid_withWebp_noBase64
+          title
+          description
+          image {
+            fluid(maxWidth: 500, aspectRatio: 1) {
+              aspectRatio
+              src
+              srcSet
+              sizes
             }
+          }            
         }
         title
         viewId
@@ -57,9 +64,16 @@ export const photoBlockFields = graphql`
     photos {
         title
         image {
-            fluid(maxWidth: 300, quality: 80) {
-                ...GatsbyContentfulFluid_withWebp_noBase64
+          title
+          description
+          image {
+            fluid(maxWidth: 300, aspectRatio: 1) {
+              aspectRatio
+              src
+              srcSet
+              sizes
             }
+          }            
         }
         productId
         viewId

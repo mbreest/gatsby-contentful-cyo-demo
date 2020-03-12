@@ -79,13 +79,18 @@ export const blogPostFields = graphql`
     title
     slug
     published(formatString: "MMMM DD, YYYY")
-    bannerImage {
-      fluid(maxWidth: 1200, sizes: "400,800,1200", aspectRatio: 2) {
-        aspectRatio
-        src
-        srcSet
-        sizes
-      } 
+    hero {
+      title
+      description  
+      image {        
+        fluid(maxWidth: 1200, sizes: "400,800,1200", aspectRatio: 2) {
+          aspectRatio
+          src
+          srcSet
+          sizes
+        }
+      }
+       
     }
     content {
       excerpt(maxLength: 200)
@@ -105,13 +110,18 @@ export const blogPostFieldsNoAuthor = graphql`
     title
     slug
     published(formatString: "MMMM DD, YYYY")
-    bannerImage {
-      fluid(maxWidth: 1200, sizes: "400,800,1200", aspectRatio: 2) {
-        aspectRatio
-        src
-        srcSet
-        sizes
-      } 
+    hero {
+      title
+      description
+      image {        
+        fluid(maxWidth: 1200, sizes: "400,800,1200", aspectRatio: 2) {
+          aspectRatio
+          src
+          srcSet
+          sizes
+        }
+      }
+       
     }
     content {
       excerpt(maxLength: 200)

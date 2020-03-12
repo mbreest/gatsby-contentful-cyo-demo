@@ -44,11 +44,11 @@ const options = {
 };
 
 export default ({ data }) => {    
-  var { title, slug, published, bannerImage, content, author, categories, relatedBlogPosts } = data.contentfulBlogPost
+  var { title, slug, published, hero, content, author, categories, relatedBlogPosts } = data.contentfulBlogPost
   const { name, short } = author 
 
-  if (Array.isArray(bannerImage) && bannerImage.length > 0) {
-    bannerImage = bannerImage[0];        
+  if (Array.isArray(hero.image) && hero.image.length > 0) {
+    hero.image = hero.image[0];        
   }
   
   return (
@@ -56,7 +56,7 @@ export default ({ data }) => {
       <SEO title={title} description={""} />      
       <div>
         <div>
-          <Img fluid={bannerImage.fluid}/>
+          <Img fluid={hero.image.fluid}/>
         </div>
         <BlogHeader title={title}>       
           <p>{published} | <Link to={"/blog/autor/" + short + "/"}>{name}</Link></p>
@@ -76,13 +76,18 @@ export const query = graphql`
             title
             slug
             published(formatString: "MMMM DD, YYYY")          
-            bannerImage {
-              fluid(maxWidth: 1200, sizes: "400,800,1200", aspectRatio: 2) {
-                aspectRatio
-                src
-                srcSet
-                sizes
-              } 
+            hero {
+              title
+              description
+              image {                
+                fluid(maxWidth: 1200, sizes: "400,800,1200", aspectRatio: 2) {
+                  aspectRatio
+                  src
+                  srcSet
+                  sizes
+                }
+              }
+               
             }          
             content {
               json
@@ -95,13 +100,18 @@ export const query = graphql`
               id
               slug
               title                            
-              bannerImage {
-                fluid(maxWidth: 350, sizes: "350", crop: "thumb", gravity: "center", aspectRatio: 2) {                  
-                  aspectRatio
-                  src
-                  srcSet
-                  sizes
+              hero {
+                title
+                description
+                image {
+                  fluid(maxWidth: 350, sizes: "350", crop: "thumb", gravity: "center", aspectRatio: 2) {                  
+                    aspectRatio
+                    src
+                    srcSet
+                    sizes
+                  }
                 }
+                
               }
             }
             categories {

@@ -7,8 +7,8 @@ import ProductDetails from "../components/productdetails"
 
 export default ({ data }) => {      
   var category = null;
-  if (data.contentfulCatalogProduct.contentfulparent) {
-    category = {slug: data.contentfulCatalogProduct.contentfulparent.slug, name: data.contentfulCatalogProduct.contentfulparent.name};
+  if (data.contentfulCatalogProduct.category) {
+    category = {slug: data.contentfulCatalogProduct.category.slug, name: data.contentfulCatalogProduct.category.name};
   }
 
   return (
@@ -45,7 +45,7 @@ export const query = graphql`
           }
         }
         contentfulid
-        contentfulparent {
+        category {
           slug
           name
         }

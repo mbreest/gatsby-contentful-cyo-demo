@@ -148,7 +148,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
           if (source) {                                                      
             const maxWidth = Math.min(args.maxWidth ? args.maxWidth : 1200, 1200);
             const breakpoints = args.sizes ? args.sizes.split(",").map(Number) : [400, 800, 1200];
-            const aspectRatio = args.aspectRatio ? args.aspectRatio : 2;
+            const aspectRatio = args.aspectRatio ? args.aspectRatio : null;
 
             var transformations = []
             if (args.crop) {

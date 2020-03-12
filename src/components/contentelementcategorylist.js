@@ -23,7 +23,7 @@ function ContentElementCategoryList({ highlight, title, categories }) {
 export default ContentElementCategoryList
 
 export const categoryListFields = graphql`
-  fragment CategoryListFields on ContentfulContentElementCategoryList {
+  fragment CategoryListFields on ContentfulCategoryList {
     id
     title
     categories {

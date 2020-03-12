@@ -22,7 +22,7 @@ export default ContentElementPhotoStory
 
 
 export const photoStoryFields = graphql`
-  fragment PhotoStoryFields on ContentfulContentElementPhotoStory {
+  fragment PhotoStoryFields on ContentfulPhotoStory {
     title
     photoBlocks {
       ...PhotoBlockFields

@@ -16,11 +16,10 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
             <h2>{title}</h2>
             <div key="categories">    
             {(categories).map( (category) => { 
-                var image = category.image;
+                var image = category.image;                
                 if (Array.isArray(image.image) && image.image.length > 0) {
-                    image.image = image.image[0];
+                    image.image = image.image[0];                    
                 }
-                console.log(image);
 
                 return (
                 <div key={"pnitem" + (count++)}>                    
@@ -47,13 +46,19 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
             <div className={className}>
                 <h2>{title}</h2>
                 <div key="highlightedCategories">
-                {highlightedCategories && (highlightedCategories).map( (category) => { return (
+                {highlightedCategories && (highlightedCategories).map( (category) => { 
+                    var image = category.image;
+                    if (image && image.image && Array.isArray(image.image) && image.image.length > 0) {
+                        image.image = image.image[0];                        
+                    }
+
+                    return (
                     <div  key={"pnitem" + (count++)} className={contentElementStyles.highlightedclass}>                    
                         <Link to={"/" + category.category.slug + "/"}>
                             <div className={highlightedCategoryClassName}>
                                 <div className={contentElementStyles.highlightedlink}>{category.title}</div>
                                 <div>
-                                    {category.category.iconLarge && <Img fluid={category.category.iconLarge.fluid}/>}                                    
+                                    {image && image.image && <Img fluid={image.image.fluid} title={image.title} alt={image.description}/>}    
                                 </div>                                
                             </div>                                                      
                         </Link>
@@ -62,11 +67,17 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
                 })}    
                 </div>
                 <div key="categories">    
-                {(categories).map( (category) => { return (
+                {(categories).map( (category) => { 
+                    var image = category.image;
+                    if (image && image.image && Array.isArray(image.image) && image.image.length > 0) {
+                        image.image = image.image[0];                        
+                    }
+
+                    return (
                     <div  key={"pnitem" + (count++)} className={contentElementStyles.defaultclass}>                    
                         <Link to={"/" + category.category.slug + "/"}>
                             <div className={categoryClassName}>
-                                {category.category.icon && <Img fluid={category.category.icon.fluid}/>}                                
+                                {image && image.image && <Img fluid={image.image.fluid} title={image.title} alt={image.description}/>}    
                             </div>             
                             <div className={contentElementStyles.defaultlink}>{category.title}</div>
                         </Link>
@@ -113,8 +124,8 @@ function ContentElementCategoryNavigation({ highlight, title, useHero, useIcon, 
 }
 export default ContentElementCategoryNavigation
 
-export const categoryNavigationFields = graphql`
-    fragment CategoryNavigationFields on ContentfulContentElementCategoryNavigation {
+export const categoryNavigationIconFields = graphql`
+    fragment CategoryNavigationIconFields on ContentfulCategoryNavigationIcon {
         id
         title         
         generated       
@@ -124,32 +135,7 @@ export const categoryNavigationFields = graphql`
               title
               description
               image {
-                fluid(maxWidth: 500, sizes: "250,500") {
-                    aspectRatio
-                    src
-                    srcSet
-                    sizes
-                }
-              }
-            }
-            category {
-                name
-                slug                               
-                iconLarge {
-                    title
-                    fluid(maxWidth: 500, quality: 80) {
-                        ...GatsbyContentfulFluid_withWebp_noBase64
-                    }
-                }
-            }
-        }
-        categories {
-            title
-            image {
-              title
-              description
-              image {
-                fluid(maxWidth: 500, sizes: "250,500") {
+                fluid(maxWidth: 600, sizes: "300,600", aspectRatio: 1) {
                   aspectRatio
                   src
                   srcSet
@@ -159,16 +145,54 @@ export const categoryNavigationFields = graphql`
             }
             category {
                 name
-                slug                
-                icon {
-                    title
-                    fluid(maxWidth: 300, quality: 80) {
-                        ...GatsbyContentfulFluid_withWebp_noBase64
-                    }
-                }
+                slug                                             
             }
         }
-        useHero
+        categories {
+            title
+            image {
+              title
+              description
+              image {
+                fluid(maxWidth: 600, sizes: "300,600", aspectRatio: 1) {
+                  aspectRatio
+                  src
+                  srcSet
+                  sizes
+                }
+              }
+            }
+            category {
+                name
+                slug                               
+            }
+        }
         useIcon  
+    }
+`
+
+export const categoryNavigationHeroFields = graphql`
+    fragment CategoryNavigationHeroFields on ContentfulCategoryNavigationHero {
+        id
+        title                 
+        categories {
+            title
+            image {
+              title
+              description
+              image {
+                fluid(maxWidth: 600, sizes: "300,600", aspectRatio: 2) {
+                  aspectRatio
+                  src
+                  srcSet
+                  sizes
+                }
+              }
+            }
+            category {
+                name
+                slug                               
+            }
+        }
     }
 `

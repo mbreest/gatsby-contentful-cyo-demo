@@ -54,7 +54,7 @@ export default ({ slug, category, page, children, type }) => {
         }
         allContentfulCatalogCategory(limit: 1000, filter: {node_locale: {eq: "de"}}, sort: {fields: index, order: ASC}) {
           nodes {
-            contentfulparent {        
+            category {        
               slug
             }
             name
@@ -99,7 +99,7 @@ export default ({ slug, category, page, children, type }) => {
   function addMenuItems(current, nodes, lookup) {
     for (var i in nodes) {
       var node = nodes[i];
-      if (node.contentfulparent && node.contentfulparent.slug === current.slug) {
+      if (node.category && node.category.slug === current.slug) {
         var n = {name: node.name, slug: node.slug, children: [], parent: current}
         lookup["" + n.slug] = n;
         current.children.push(n);

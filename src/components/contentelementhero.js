@@ -4,6 +4,7 @@ import contentElementStyles from "./contentelementhero.module.css"
 import {designerlink} from "./designerlink"
 import {useDesignerData} from "./pagedata"
 import ActionButton from "./actionbutton";
+import { graphql } from 'gatsby';
 
 function ContentElementHero({ title, subtitle, image, action }) {  
     const designerPath = useDesignerData().short;
@@ -33,7 +34,7 @@ function ContentElementHero({ title, subtitle, image, action }) {
 export default ContentElementHero
 
 export const heroFields = graphql`
-  fragment HeroFields on ContentfulContentElementHero {
+  fragment HeroFields on ContentfulHero {
     title
     subtitle    
     action {
@@ -49,7 +50,7 @@ export const heroFields = graphql`
       title
       description
       image {
-        fluid(maxWidth: 1200, sizes: "400,800,1200") {
+        fluid(maxWidth: 1200, sizes: "400,800,1200", aspectRatio: 2) {
           aspectRatio
           src
           srcSet
