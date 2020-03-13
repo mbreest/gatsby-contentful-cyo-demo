@@ -6,7 +6,7 @@ import BlogGrid from "../components/bloggrid"
 
 export default ({ data }) => {  
     return (
-        <Layout type="blog">          
+        <Layout type="blog" page={{name: "Blog", slug: "/blog/"}}>          
           <BlogHeader title="Create Blog" text="Inspiration. Lifestyle. Weihnachtswahnsinn."/>              
           <BlogGrid blogPosts={data.default.nodes}/>            
           <BlogGrid title="Mehr Artikel" blogPosts={data.more.nodes}/>           

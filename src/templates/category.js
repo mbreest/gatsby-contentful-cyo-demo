@@ -10,11 +10,11 @@ import ContentElementCategoryNavigation from "../components/contentelementcatego
 import ContentElementPhotoStory from "../components/contentelementphotostory"
 
 export default ({ data }) => {  
-  const { name, slug, contentElements } = data.contentfulCatalogCategory
+  const { name, slug, category, contentElements } = data.contentfulCatalogCategory
   var count = 0;
 
   return (
-    <Layout slug={slug} category={{slug: slug, name: name}}>
+    <Layout page={{slug: "/" + slug + "/", name: name}} category={category}>
       <SEO title={name} description="" />
       
       {(contentElements || []).map( (node) => {
@@ -78,7 +78,11 @@ export const query = graphql`
     query catalogCategoryQuery($slug: String!){       
       contentfulCatalogCategory(slug: {eq: $slug}, node_locale: {eq: "de"}) {             
         name        
-        slug                
+        slug     
+        category {
+          slug
+          name
+        }           
         contentElements {
             ... on Contentful3ColumnText {
               ...ThreeColumnTextFields              

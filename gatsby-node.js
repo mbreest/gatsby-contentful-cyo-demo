@@ -200,8 +200,8 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
 }
 
 exports.createPages =  async ({ graphql, actions }) => {
-  const { createPage } = actions;
-    
+  const { createPage } = actions; 
+
   const blogTemplate = path.resolve('src/templates/blog.js');
   createPage({
     path: "/blog",
@@ -224,7 +224,7 @@ exports.createPages =  async ({ graphql, actions }) => {
       path: "/blog/" + edge.node.slug,
       component: blogPostTemplate,
       context: {
-        slug: edge.node.slug,
+        slug: edge.node.slug       
       },
     });
   });    

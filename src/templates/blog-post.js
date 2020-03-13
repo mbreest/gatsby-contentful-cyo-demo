@@ -32,7 +32,7 @@ const options = {
         case "video":
           let src = node.data.target.fields.video[language];
           if (src.startsWith("https://youtu.be")) {            
-            return <iframe title={node.data.target.fields.title[language]} width="100%" height="400" src={"https://www.youtube.com/embed/" + src.split("/").pop()} frameborder="0" allowfullscreen></iframe>          
+            return <iframe title={node.data.target.fields.title[language]} width="100%" height="400" src={"https://www.youtube.com/embed/" + src.split("/").pop()} frameBorder="0" allowFullScreen></iframe>          
           } else {
             return <></>
           }       

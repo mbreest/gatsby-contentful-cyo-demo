@@ -43,7 +43,7 @@ const searchClient = {
   },
 };
 
-export default ({ slug, category, page, children, type }) => {    
+export default ({ type, page, category, children }) => {    
   const data = useStaticQuery(
     graphql`
       query {
@@ -60,28 +60,81 @@ export default ({ slug, category, page, children, type }) => {
             name
             slug
           }
-        }
-        allContentfulBlogCategory(filter: {default: {eq: false}, node_locale: {eq: "de"}}, sort: {fields: index, order: ASC}) {
+        }  
+        allContentfulNavigationMenu(filter: {name: {eq: "Main"}, node_locale: {eq: "de"}}) {
           edges {
             node {
               name
-              slug
+              item {
+                ... on ContentfulBlogCategory {
+                  slug
+                  internal {
+                    type
+                  }
+                }          
+                ... on ContentfulCatalogCategory {
+                  slug
+                  internal {
+                    type
+                  }
+                }
+                ... on ContentfulPage {
+                  slug
+                  internal {
+                    type
+                  }
+                }
+              }
+              navigationElements {
+                name
+                item {
+                  ... on ContentfulBlogCategory {
+                    slug
+                    internal {
+                      type
+                    }
+                  }
+                  ... on ContentfulCatalogCategory {
+                    slug
+                    internal {
+                      type
+                    }
+                  }
+                  ... on ContentfulPage {
+                    slug
+                    internal {
+                      type
+                    }
+                  }
+                }
+                navigationElements {
+                  name
+                  item {
+                    ... on ContentfulBlogCategory {
+                      slug
+                      internal {
+                        type
+                      }
+                    }
+                    ... on ContentfulCatalogCategory {
+                      slug
+                      internal {
+                        type
+                      }
+                    }
+                    ... on ContentfulPage {
+                      slug
+                      internal {
+                        type
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
-        }
-        designer: contentfulPage(key: {eq: "designer"}, node_locale: {eq: "de"}) {
-          slug    
-          name
-        }
-        products: contentfulPage(key: {eq: "products"}, node_locale: {eq: "de"}) {
-          slug    
-          name
-        }
-        blog: contentfulPage(key: {eq: "blog"}, node_locale: {eq: "de"}) {
-          slug    
-          name
-        }
-      }
+        }      
+      }  
     `
   )
 
@@ -96,57 +149,28 @@ export default ({ slug, category, page, children, type }) => {
     return null;  
   }
   
-  function addMenuItems(current, nodes, lookup) {
+  function addSubCategories(current, nodes, lookup) {
     for (var i in nodes) {
       var node = nodes[i];
       if (node.category && node.category.slug === current.slug) {
         var n = {name: node.name, slug: node.slug, children: [], parent: current}
         lookup["" + n.slug] = n;
         current.children.push(n);
-        addMenuItems(n, nodes, lookup);
+        addSubCategories(n, nodes, lookup);
       }
     }
   }
 
-  function createMenu(nodes) {    
+  function createCategories(nodes) {    
     var root = detectHome(nodes);
     var lookup = {};
     lookup["" + root.slug] = root;
-    addMenuItems(root, nodes, lookup);
-    return [root, lookup];
+    addSubCategories(root, nodes, lookup);
+    return lookup;
   }
   
-  var [menu, lookup] = createMenu(data.allContentfulCatalogCategory.nodes)
-
-  menu.children.unshift({slug: data.designer.slug, name: data.designer.name, children: []})
-  menu.children.push({slug: data.products.slug, name: data.products.name, children: []})
-  menu.children.push({slug: data.blog.slug, name: data.blog.name, children: []})
-  
-  function createSubmenu(menu, lookup) {
-    if (slug) {
-      var current = lookup[slug];    
-      if (current.parent) {
-        while (current.parent.slug !== "-") {
-            current = current.parent;
-        }
-        var secondLevelCategory = current.slug;
-        for (var i in menu.children) {
-          var node = menu.children[i];
-          if (node.slug === secondLevelCategory) {
-            return node;
-          }
-        }
-      } 
-    } 
-    return null;
-  }
-  
-  var submenu = null;
   var links = null;
-  if (type === "blog") {   
-    submenu = {children: data.allContentfulBlogCategory.edges.map( (edge) => ({name: edge.node.name, slug: "blog/kategorie/" + edge.node.slug}))};     
-    submenu.children.unshift({name: "Alle", slug: "blog"})
-
+  if (type === "blog") {     
     links = [];
     if (page) {
       links.unshift({url: page.slug, title: page.name});
@@ -154,11 +178,11 @@ export default ({ slug, category, page, children, type }) => {
     links.unshift({url: "blog", title: "News"})
     links.unshift({url: "", title: "Gestalten"});
     
-  } else {
-    submenu = createSubmenu(menu, lookup);
-  
+  } else {  
     links = [];    
-    if (page) {
+    var lookup = createCategories(data.allContentfulCatalogCategory.nodes)  
+
+    if (page && page.slug != "/-/") {
       links.unshift({url: page.slug, title: page.name});
     }
   
@@ -175,12 +199,62 @@ export default ({ slug, category, page, children, type }) => {
     links.unshift({url: "", title: "Gestalten"});
   }
 
+  // menu
+  function path(slug, type) {
+    switch(type) {
+      case "ContentfulBlogCategory":
+        return "/blog/kategorie/" + slug + "/";
+      default: 
+        return "/" + slug + "/";
+    }
+  }
   
+  function createMenu() {
+    return data.allContentfulNavigationMenu.edges[0].node.navigationElements.map((node) => {    
+      var subMenus = node.navigationElements ? node.navigationElements.map((subnode) => {
+        return {
+          name: subnode.name,
+          path: path(subnode.item.slug, subnode.item.internal.type),
+          subMenus: []
+        };
+      }) : [];
+      return {
+        name: node.name,
+        path: path(node.item.slug, node.item.internal.type),
+        subMenus: subMenus          
+      }    
+   })
+  }
+
+  function createSubMenu() {
+    var submenu = null
+    for(var i in menu) {
+      var menuItem = menu[i];
+      if (menuItem.path === page.slug) {
+        submenu = menuItem.subMenus;
+        break;      
+      } else {
+        for (var j in menuItem.subMenus) {
+          var subMenuItem = menuItem.subMenus[j]
+          if (subMenuItem.path === page.slug) {
+            submenu = menuItem.subMenus;
+            break;
+          }
+        }
+      }
+    }
+    return submenu
+  }
+  
+
+  var menu = createMenu()
+  var submenu = createSubMenu() 
+    
   var hideMenuClass = "";
   if (page && page.slug === "selbst-gestalten") {
     hideMenuClass = " mobilehide";
   }
-
+   
   class Search extends React.Component {
     constructor(props) {
       super(props);      
@@ -269,8 +343,8 @@ export default ({ slug, category, page, children, type }) => {
                 <Logo/>
                 <EnhancedSearch/>
               </div>              
-              <Menu type="main" menuItems={menu.children}/>                          
-              {submenu && <Menu type="sub" menuItems={submenu.children}/> }            
+              <Menu type="main" menuItems={menu}/>                          
+              {submenu && <Menu type="sub" menuItems={submenu}/> }            
             </div>                    
             {links && links.length > 1 && <Breadcrumb links={links} mod={hideMenuClass}/> }
           {children}                  
