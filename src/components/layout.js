@@ -225,20 +225,22 @@ export default ({ type, page, category, children }) => {
       }    
    })
   }
-
+  
   function createSubMenu() {
     var submenu = null
-    for(var i in menu) {
-      var menuItem = menu[i];
-      if (menuItem.path === page.slug) {
-        submenu = menuItem.subMenus;
-        break;      
-      } else {
-        for (var j in menuItem.subMenus) {
-          var subMenuItem = menuItem.subMenus[j]
-          if (subMenuItem.path === page.slug) {
-            submenu = menuItem.subMenus;
-            break;
+    if (page) {
+      for(var i in menu) {
+        var menuItem = menu[i];
+        if (menuItem.path === page.slug) {
+          submenu = menuItem.subMenus;
+          break;      
+        } else {
+          for (var j in menuItem.subMenus) {
+            var subMenuItem = menuItem.subMenus[j]
+            if (subMenuItem.path === page.slug) {
+              submenu = menuItem.subMenus;
+              break;
+            }
           }
         }
       }
@@ -248,7 +250,7 @@ export default ({ type, page, category, children }) => {
   
 
   var menu = createMenu()
-  var submenu = createSubMenu() 
+  var submenu = createSubMenu()
     
   var hideMenuClass = "";
   if (page && page.slug === "selbst-gestalten") {
