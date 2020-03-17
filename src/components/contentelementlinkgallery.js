@@ -19,12 +19,11 @@ function ContentElementLinkGallery({ links, language}) {
   var count = 0;
   return (   
     <div className={contentElementStyles.gallery}>
-        {(links[language]).map( (link) => {
-          
-          if (link.fields.image && link.fields.image[language]) {            
+        {(links).map( (link) => {          
+          if (link.fields && link.fields.image) {            
             return (
               <div key={"celg" + (count++)} tabIndex="0" role="button" onClick={() => {navigate(designerlink(designerPath, link.fields, language))}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { navigate(designerlink(designerPath, link.fields, language))} }}>                  
-                  <Img fluid={getFluidImage({source: link.fields.image[language].fields.image[language][0], max: 600, aspectRatio: 2, breakpoints: [600]})} title={link.fields.image[language].fields.title[language]}/>                  
+                  <Img fluid={getFluidImage({source: link.fields.image.fields.image[0], max: 600, aspectRatio: 2, breakpoints: [600]})} title={link.fields.image.fields.title}/>                  
               </div>                                  
             )
           } else {

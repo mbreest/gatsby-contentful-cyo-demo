@@ -11,7 +11,7 @@ function ProductImage({ product }) {
   var viewCount = 0;
 
   const backgroundColor = "f2f2f2";
-  const [id] = useState(product.contentfulid);
+  const [id] = useState(product.productTypeId);
   const [view, setView] = useState(product.defaultValues.view);  
   const [color, setColor] = useState(product.defaultValues.color);  
 
@@ -44,7 +44,7 @@ function ProductImage({ product }) {
               ))}
             </ul>
           </div>}
-          <ActionButton title="Selbst gestalten" link={designerlink(designerPath, {productTypeId: product.contentfulid, appearanceId: color, viewId: view} )} full="yes" hidden={true}/> 
+          <ActionButton title="Selbst gestalten" link={designerlink(designerPath, {productTypeId: product.productTypeId, appearanceId: color, viewId: view} )} full="yes" hidden={true}/> 
         </div>             
     </div>
   )

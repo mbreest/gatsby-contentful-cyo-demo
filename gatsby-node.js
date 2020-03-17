@@ -62,7 +62,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
       views: {
         type: '[String!]!',        
         resolve(source, args, context, info) {
-          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
+          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.productTypeId)});
           if (productType && productType.views) {                   
             return productType.views.map((view) => (view.id))                        
           } else {
@@ -73,7 +73,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
       defaultValues:{
         type: 'Defaults!',        
         async resolve(source, args, context, info) {                           
-          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
+          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.productTypeId)});
           if (productType && productType.defaultValues) {                         
             return {
               view: productType.defaultValues.defaultView.id, 
@@ -87,14 +87,14 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
       available: {
         type: 'Boolean!',        
         async resolve(source, args, context, info) {                 
-          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
+          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.productTypeId)});
           return (productType != null)
         },
       },
       sizes: {
         type: '[Size!]!',        
         async resolve(source, args, context, info) {                 
-          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
+          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.productTypeId)});
           if (productType && productType.sizes) {
             return productType.sizes.map((size) => ({name: size.name}));
           } else {
@@ -105,7 +105,7 @@ exports.setFieldsOnGraphQLNodeType = ({ type, createNodeId }) => {
       colors: {
         type: '[Color!]!',        
         async resolve(source, args, context, info) {                           
-          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.contentfulid)});
+          var productType = context.nodeModel.getNodeById({type: "ProductType", id: createNodeId("ProductType-" + source.productTypeId)});
           if (productType && productType.sizes) {                         
             return productType.appearances.map((appearance) => {
               var name = appearance.name;

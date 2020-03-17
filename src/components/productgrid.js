@@ -57,7 +57,7 @@ export const productGridFields = graphql`
   fragment ProductGridFields on ContentfulCatalogProduct {
     name                    
     slug
-    contentfulid
+    productTypeId
     defaultValues {
       view
       color

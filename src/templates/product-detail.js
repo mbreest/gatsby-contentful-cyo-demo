@@ -44,7 +44,7 @@ export const query = graphql`
             html
           }
         }
-        contentfulid
+        productTypeId
         category {
           slug
           name

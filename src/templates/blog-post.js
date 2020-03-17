@@ -26,13 +26,13 @@ const options = {
         case "image":
           let desc = "";
           if (node.data.target.fields.description) {
-            desc = node.data.target.fields.description[language];
+            desc = node.data.target.fields.description;
           }          
-          return <Img fluid={getFluidImage({source: node.data.target.fields.image[language][0], max: 1200, breakpoints: [400,800,1200]})} title={node.data.target.fields.title[language]} alt={desc}/>
+          return <Img fluid={getFluidImage({source: node.data.target.fields.image[0], max: 1200, breakpoints: [400,800,1200]})} title={node.data.target.fields.title} alt={desc}/>
         case "video":
-          let src = node.data.target.fields.video[language];
+          let src = node.data.target.fields.video;
           if (src.startsWith("https://youtu.be")) {            
-            return <iframe title={node.data.target.fields.title[language]} width="100%" height="400" src={"https://www.youtube.com/embed/" + src.split("/").pop()} frameBorder="0" allowFullScreen></iframe>          
+            return <iframe title={node.data.target.fields.title} width="100%" height="400" src={"https://www.youtube.com/embed/" + src.split("/").pop()} frameBorder="0" allowFullScreen></iframe>          
           } else {
             return <></>
           }       

@@ -25,8 +25,8 @@ function ContentElementProductList({ highlight, title, products, actionButton })
           {products && (products).map( (product) => {
             const fluid = {
               aspectRatio: 1,
-              src: imageServerUrl(product.contentfulid, product.defaultValues.view, product.defaultValues.color, 150, "f2f2f2"),
-              srcSet: imageServerUrl(product.contentfulid, product.defaultValues.view, product.defaultValues.color, 150, "f2f2f2") + " 150w",
+              src: imageServerUrl(product.productTypeId, product.defaultValues.view, product.defaultValues.color, 150, "f2f2f2"),
+              srcSet: imageServerUrl(product.productTypeId, product.defaultValues.view, product.defaultValues.color, 150, "f2f2f2") + " 150w",
               sizes: "(max-width: 150px) 100vw, 150px"
             }
             return (
@@ -64,7 +64,7 @@ export const productListProductFields = graphql`
   fragment ProductListProductFields on ContentfulCatalogProduct {    
     name
     slug
-    contentfulid
+    productTypeId
     defaultValues{
       view
       color

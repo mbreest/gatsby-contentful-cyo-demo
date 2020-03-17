@@ -182,7 +182,7 @@ export default ({ type, page, category, children }) => {
     links = [];    
     var lookup = createCategories(data.allContentfulCatalogCategory.nodes)  
 
-    if (page && page.slug != "/-/") {
+    if (page && page.slug !== "/-/") {
       links.unshift({url: page.slug, title: page.name});
     }
   

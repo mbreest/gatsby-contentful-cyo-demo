@@ -39,7 +39,7 @@ export const heroFields = graphql`
     subtitle    
     action {
       product {
-        contentfulid
+        productTypeId
       }
       title            
       appearanceId
