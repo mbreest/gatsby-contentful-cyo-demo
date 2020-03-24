@@ -3,6 +3,10 @@ const contentful = require("contentful");
 const decycle = require("./decycle.js").decycle
 const excerpt = require('./excerpt.js').excerptRichtext
 
+const unified = require("unified")
+const markdown = require("remark-parse")
+const html = require("remark-html")
+
 const TYPE = {
   AUTHOR: "author",
   BLOG: "blog",
@@ -91,14 +95,40 @@ async function createModel(locales) {
     const cache = res.data.productTypes.reduce((cache, productType) => { cache[productType.id] = productType; return cache;}, {});   
     
     catalogProducts.forEach(p => enrichProduct(p, cache, locales))
-    
+    catalogProducts.forEach((p) => {      
+      if (p.fields.description) {        
+        Object.keys(p.fields.description).forEach((locale) => { 
+          p.fields.description[locale] = unified().use(markdown).use(html).processSync(p.fields.description[locale]).contents; 
+        });
+      }    
+    })
+
     catalogCategories.forEach(cc => {
         if (cc.fields.contentElements) {
             locales.forEach((locale) => {
                 cc.fields.contentElements[locale].forEach(ce => {
-                    if (ce.sys.contentType.sys.id === "contentElementProductList") {
+                    if (ce.sys.contentType.sys.id === "contentElementProductList") {  
                         if (ce.fields.products) {
                             ce.fields.products[locale].forEach(p => enrichProduct(p, cache, locales, [FIELDS.DEFAULT_VALUES]));
+                        }
+                    } else if (ce.sys.contentType.sys.id === "contentElement3columnText") {  
+                        if (ce.fields.text1) {
+                          Object.keys(ce.fields.text1).forEach((locale) => { 
+                            ce.fields.text1[locale] = unified().use(markdown).use(html).processSync(ce.fields.text1[locale]).contents; 
+                            console.log(ce.fields.text1[locale]);
+                          });
+                        }
+                        if (ce.fields.text2) {
+                          Object.keys(ce.fields.text2).forEach((locale) => { 
+                            ce.fields.text2[locale] = unified().use(markdown).use(html).processSync(ce.fields.text2[locale]).contents; 
+                            console.log(ce.fields.text2[locale]);
+                          });
+                        }
+                        if (ce.fields.text3) {
+                          Object.keys(ce.fields.text3).forEach((locale) => { 
+                            ce.fields.text3[locale] = unified().use(markdown).use(html).processSync(ce.fields.text3[locale]).contents; 
+                            console.log(ce.fields.text3[locale]);
+                          });
                         }
                     }
                 })    

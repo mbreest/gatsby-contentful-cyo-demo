@@ -2,8 +2,9 @@ import React from "react"
 import contentElementStyles from "./productdetails.module.css"
 
 function ProductDetails({ product, locale }) {  
-  const name = product.fields.name[locale];
-  const description = product.fields.description[locale];
+  const name = product.fields.name[locale];  
+  const description = product.fields.description[locale]
+
   const className = contentElementStyles.productdetails;  
   return (   
     <div className={className}>     
