@@ -1,0 +1,106 @@
+@media only screen and (min-width: 601px) {
+    .cecategorynavigationicon {
+        padding: 0em;
+        margin-bottom: 2em;
+    }
+
+    .cecategorynavigationicon > h2 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .cecategorynavigationicon > div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;    
+    }
+
+    .highlightedclass {
+        flex: 50%;
+        padding: 0.5em;
+    }  
+
+    .defaultclass {
+        flex: 10%;
+        padding: 0.5em;
+    }  
+
+    .highlightedlink {
+        font-weight: bold;
+    }  
+
+    .defaultlink {
+        font-weight: bold;
+    }
+
+    .cecategorynavigationhighlightedcategory {
+        display: flex;    
+        align-items: flex-end;
+        background-color: #e6f6f8;
+        font-weight: bold;
+    }
+
+    .cecategorynavigationcategory {
+        background-color: #F2F2F2;
+        font-weight: bold;
+    }
+
+    .cecategorynavigationhighlightedcategory > div {
+        flex: 10%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .cecategorynavigationicon {
+        padding: 0em;
+        margin-bottom: 2em;
+    }
+
+    .cecategorynavigationicon > h2 {
+        width: 100%;
+        text-align: center;
+    }
+
+    .cecategorynavigationicon > div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;   
+        padding-left: 1em;         
+    }
+
+    .highlightedclass {
+        flex: 100%;        
+        padding-bottom: 1em;
+        padding-right: 1em;
+    
+    }  
+
+    .defaultclass {
+        flex: 50%;        
+        padding-bottom: 1em;
+        padding-right: 1em;
+    }  
+
+    .highlightedlink {
+        font-weight: bold;
+    }  
+
+    .defaultlink {
+        font-weight: bold;
+    }
+
+    .cecategorynavigationhighlightedcategory {
+        display: flex;    
+        align-items: flex-end;
+        background-color: #e6f6f8;
+    }
+
+    .cecategorynavigationcategory {
+        background-color: #F2F2F2;
+    }
+
+    .cecategorynavigationhighlightedcategory > div {
+        flex: 100%;
+    }
+}
+

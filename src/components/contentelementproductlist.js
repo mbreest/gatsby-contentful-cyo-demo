@@ -1,21 +1,28 @@
 import React from "react"
-import {Link, graphql} from 'gatsby';
+import {Link} from 'gatsby';
 import {imageServerUrl} from "./imageserver"
 import contentElementStyles from "./contentelementproductlist.module.css"
 import Img from "gatsby-image";
 import ActionButton from "./actionbutton"
 
-function ContentElementProductList({ highlight, title, products, actionButton }) {  
-  let className = contentElementStyles.ceproductlist;  
+function ContentElementProductList({ highlight, data, locale, topProducts }) {  
+  const title = data.fields.title[locale];
+  const actionButton = data.fields.actionButton ? data.fields.actionButton[locale] : null;
+  const products = data.fields.products ? data.fields.products[locale] : topProducts;  
+
+  if (actionButton) {
+    var actionTitle = actionButton.fields.title[locale];
+    var actionLink = "/produkte/";
+    if (actionButton.fields.query) {
+      actionLink += "?query=" + actionButton.fields.query[locale];
+    }
+  }
+
+  var className = contentElementStyles.ceproductlist;  
   if (highlight === "yes") {
       className += " highlight";
   }
   var count = 0;
-
-  var link = "/produkte/";
-  if (actionButton && actionButton.query) {
-    link += "?query=" + actionButton.query;
-  }
 
   return (   
     <div className={className}>
@@ -23,51 +30,32 @@ function ContentElementProductList({ highlight, title, products, actionButton })
         <div>
           <ul>    
           {products && (products).map( (product) => {
-            const fluid = {
+            const name = product.fields.name[locale];
+            const slug = product.fields.slug[locale];
+            const ptId = product.fields.productTypeId[locale];
+            const viewId = product.fields.defaultValues[locale].view;
+            const colorId = product.fields.defaultValues[locale].color;
+            const url = imageServerUrl(ptId, viewId, colorId, 150, "f2f2f2");
+            const image = {
               aspectRatio: 1,
-              src: imageServerUrl(product.productTypeId, product.defaultValues.view, product.defaultValues.color, 150, "f2f2f2"),
-              srcSet: imageServerUrl(product.productTypeId, product.defaultValues.view, product.defaultValues.color, 150, "f2f2f2") + " 150w",
+              src: url,
+              srcSet: url + " 150w",
               sizes: "(max-width: 150px) 100vw, 150px"
             }
+
             return (
               <li key={"cepliitem" + (count++)}>
-                <Link to={"/detail/" + product.slug + "/"}>
-                <Img fluid={fluid}  alt={product.name}/>
-                <p>{product.name}</p>
+                <Link to={"/detail/" + slug + "/"}>
+                <Img fluid={image}  alt={name}/>
+                <p>{name}</p>
                 </Link>
               </li>
             )
           })}
           </ul>
         </div>
-        {actionButton && <div><ActionButton title={actionButton.title} link={link} hidden={true}/></div>}
+        {actionButton && <div><ActionButton title={actionTitle} link={actionLink} hidden={true}/></div>}
     </div>
   )
 }
 export default ContentElementProductList
-
-export const productListFields = graphql`
-  fragment ProductListFields on ContentfulProductList {
-    products {
-      ...ProductListProductFields
-    }
-    title
-    generated
-    actionButton {
-      query
-      title
-    }
-  }
-`
-
-export const productListProductFields = graphql`
-  fragment ProductListProductFields on ContentfulCatalogProduct {    
-    name
-    slug
-    productTypeId
-    defaultValues{
-      view
-      color
-    }
-  }
-`

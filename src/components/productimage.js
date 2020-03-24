@@ -1,50 +1,57 @@
 import React, { useState }   from "react"
 import {designerlink} from "./designerlink"
-import {useDesignerData} from "./pagedata"
 import {imageServerUrl} from "./imageserver"
 import ActionButton from "../components/actionbutton"
 import contentElementStyles from "./productimage.module.css"
 
-function ProductImage({ product }) {  
-  const designerPath = useDesignerData().slug;  
+function ProductImage({ product, locale, designerPath}) {  
+  const name = product.fields.name[locale];
+  const ptId = product.fields.productTypeId[locale];  
+  const available = product.fields.available[locale];  
+  const viewId = available ? product.fields.defaultValues[locale].view : null;
+  const colorId = available ? product.fields.defaultValues[locale].color : null;
+  const views = available ? product.fields.views[locale] : null;
+  const colors = available ? product.fields.colors[locale] : null;
+  const sizes = available ? product.fields.sizes[locale] : null;
+  
   var count = 0;
   var viewCount = 0;
 
   const backgroundColor = "f2f2f2";
-  const [id] = useState(product.productTypeId);
-  const [view, setView] = useState(product.defaultValues.view);  
-  const [color, setColor] = useState(product.defaultValues.color);  
+  const [id] = useState(ptId);
+  const [view, setView] = useState(viewId);  
+  const [color, setColor] = useState(colorId);  
 
   return (   
     <div className={contentElementStyles.productimage}>        
-        {product.available && <div className={contentElementStyles.viewImages}>
+        {available && <div className={contentElementStyles.viewImages}>
           <ul>
-            {(product.views).map((viewId) => (
-              <li key={"piview" + (viewCount++)}><div tabIndex="0" role="button" onClick={() => {setView(viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { setView(viewId)} }}><img src={imageServerUrl(id, viewId, color, 450, backgroundColor)} alt={product.name}/></div></li>
+            {(views).map((viewId) => (
+              <li key={"piview" + (viewCount++)}><div tabIndex="0" role="button" onClick={() => {setView(viewId)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { setView(viewId)} }}><img src={imageServerUrl(id, viewId, color, 450, backgroundColor)} alt={name}/></div></li>
             ))}     
           </ul>
         </div>}
         <div className={contentElementStyles.mainImage}>
-            <img src={imageServerUrl(id, view, color, 450, backgroundColor)} alt={product.name}/>
+            <img src={imageServerUrl(id, view, color, 450, backgroundColor)} alt={name}/>
         </div>
         <div className={contentElementStyles.buttons}>
-          <div key="piname" className={contentElementStyles.title}>{product.name}</div>
-          {!product.available && <div key="piavailable" className={contentElementStyles.available}>Dieses Produkt ist aktuell nicht verfügbar!</div>}
-          {product.available && <div key="picolors" className={contentElementStyles.colors}>          
+          <div key="piname" className={contentElementStyles.title}>{name}</div>
+          {!available && <div key="piavailable" className={contentElementStyles.available}>Dieses Produkt ist aktuell nicht verfügbar!</div>}
+          {available && <div key="picolors" className={contentElementStyles.colors}>          
             <ul>
-            {(product.colors).map((color) => (
+            {(colors).map((color) => (
               <li key={"picolor" + (count++)}><div tabIndex="0" role="button" style={{backgroundColor: color.hex}} onClick={() => {setColor(color.id)}} onKeyDown={(e) => {if (e.keyCode === 13 || e.keyCode === 32) { setColor(color.id) } }}></div></li>
               ))}
             </ul>
           </div>}
-          {product.available && <div key="pisizes" className={contentElementStyles.sizes}>          
+          {available && <div key="pisizes" className={contentElementStyles.sizes}>          
             <ul>
-            {(product.sizes).map((size) => (
+            {(sizes).map((size) => (
               <li key={"pisize" + (count++)}><div>{size.name}</div></li>
               ))}
             </ul>
           </div>}
-          <ActionButton title="Selbst gestalten" link={designerlink(designerPath, {productTypeId: product.productTypeId, appearanceId: color, viewId: view} )} full="yes" hidden={true}/> 
+          <ActionButton title="Selbst gestalten" link={designerlink(designerPath, { productTypeId: ptId, appearanceId: color, viewId: view }, locale )} full="yes" hidden={true}/> 
         </div>             
     </div>
   )

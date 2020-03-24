@@ -1,54 +1,26 @@
 import React from 'react';
-import {graphql } from 'gatsby';
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ProductImage from "../components/productimage"
 import ProductDetails from "../components/productdetails"
+import Menu from "../components/menu"
+import Breadcrumb from "../components/breadcrumb"
 
-export default ({ data }) => {      
-  var category = null;
-  if (data.contentfulCatalogProduct.category) {
-    category = {slug: data.contentfulCatalogProduct.category.slug, name: data.contentfulCatalogProduct.category.name};
-  }
-
+export default ({ pageContext: { catalogProduct, locale, designerPath, menu, submenu, breadcrumb } }) => {        
+  const name = catalogProduct.fields.name[locale];
+  const slug = catalogProduct.fields.slug[locale];
+  const description = catalogProduct.fields.description ? catalogProduct.fields.description[locale] : null;
+  const category = catalogProduct.fields.category ? {slug: catalogProduct.fields.category[locale].fields.slug[locale], name: catalogProduct.fields.category[locale].fields.name[locale]} : null;
+  
   return (
-    <Layout page={{slug: "detail/" + data.contentfulCatalogProduct.slug, name: data.contentfulCatalogProduct.name}} category={category}>
-      <SEO title={data.contentfulCatalogProduct.name} description={data.contentfulCatalogProduct.description.childMarkdownRemark.html} />            
-      <ProductImage product={data.contentfulCatalogProduct}/>      
-      <ProductDetails product={data.contentfulCatalogProduct}/>      
+    <Layout page={{slug: "detail/" + slug, name: name}} category={category}>
+      <SEO title={name} description={description}  locale={locale}/>                  
+      <Menu type="main" menuItems={menu}/>                          
+      {submenu && <Menu type="sub" menuItems={submenu}/> }            
+      <Breadcrumb links={breadcrumb}/>
+      
+      <ProductImage product={catalogProduct} locale={locale} designerPath={designerPath}/>   
+      <ProductDetails product={catalogProduct} locale={locale}/>   
     </Layout>
   )
 }
-
-export const query = graphql`
-    query catalogProductQuery($slug: String!){       
-      contentfulCatalogProduct(slug: {eq: $slug}, node_locale: {eq: "de"}) {             
-        name
-        slug
-        views
-        defaultValues {
-          view
-          color
-        }
-        sizes {
-          name
-        }
-        colors {
-          name
-          hex
-          id
-        }
-        available
-        description {
-          childMarkdownRemark {
-            html
-          }
-        }
-        productTypeId
-        category {
-          slug
-          name
-        }
-      }
-    }
-`

@@ -8,60 +8,7 @@ module.exports = {
     author: `mbs`,
     siteUrl: `https://gatsby-contentful-cyo-demo.netlify.com`
   },
-  plugins: [
-    {
-      resolve: 'gatsby-plugin-react-svg',
-      options: {
-          rule: {
-            include: "/src/images/"
-          }
-      }
-    },
-    {
-      resolve: `gatsby-source-contentful`,
-      options: {
-        spaceId: process.env.SPACE_ID,
-        accessToken: process.env.ACCESS_TOKEN,
-        richText: {
-          resolveFieldLocales: true
-        }
-      },
-    },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    "gatsby-remark-embed-video",
-    "gatsby-remark-responsive-iframe",
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-images-contentful`,
-            options: {              
-              maxWidth: 1080,
-              withWebp: true,
-              showCaptions: true
-            },
-          },
-          {
-            resolve: "gatsby-remark-embed-video",
-            options: {  
-              ratio: 1.77,
-              width: "100%",              
-              height: 400,            
-              related: false, //Optional: Will remove related videos from the end of an embedded YouTube video.
-              noIframeBorder: true, //Optional: Disable insertion of <style> border: 0
-              urlOverrides: [
-                {
-                  id: 'youtube',
-                  embedURL: (videoId) => `https://www.youtube-nocookie.com/embed/${videoId}`,
-                }
-              ] //Optional: Override URL of a service provider, e.g to enable youtube-nocookie support
-            }
-          },
-        ],
-      },
-    },    
+  plugins: [       
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -101,16 +48,6 @@ module.exports = {
       options: {          
         policy: [{ userAgent: '*', disallow: '/' }]
       }
-    },
-    `gatsby-plugin-sitemap`,  
-    {
-      resolve: `gatsby-plugin-algolia`,
-      options: {
-        appId: process.env.GATSBY_ALGOLIA_APP_ID,
-        apiKey: process.env.ALGOLIA_ADMIN_API_KEY,
-        queries,
-        chunkSize: 10000, // default: 1000
-      },
     },
     `gatsby-plugin-styled-components`
   ],

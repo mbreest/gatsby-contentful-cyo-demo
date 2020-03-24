@@ -1,5 +1,5 @@
 import React  from "react"
-import { graphql, Link } from 'gatsby';
+import { Link } from 'gatsby';
 import {imageServerUrl} from "./imageserver"
 import "./productgrid.css"
 import Img from "gatsby-image";
@@ -52,15 +52,3 @@ function ProductGrid(location) {
   )
 }
 export default ProductGrid
-
-export const productGridFields = graphql`
-  fragment ProductGridFields on ContentfulCatalogProduct {
-    name                    
-    slug
-    productTypeId
-    defaultValues {
-      view
-      color
-    }    
-  }
-`

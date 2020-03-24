@@ -1,35 +1,24 @@
 import React from 'react';
-import {graphql } from 'gatsby';
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import BlogHeader from "../components/blogheader"
 import BlogGrid from "../components/bloggrid"
+import Menu from "../components/menu"
+import Breadcrumb from "../components/breadcrumb"
 
-export default ({ data }) => {    
+export default ({ pageContext: { blogCategory, blogPosts, locale, menu, submenu, breadcrumb } }) => {    
+  const name = blogCategory.fields.name[locale];
+  const slug = blogCategory.fields.slug[locale];
+  const description = blogCategory.fields.description[locale];      
+
   return (
-    <Layout type="blog" page={{name: data.contentfulBlogCategory.name, slug: "/blog/kategorie/" + data.contentfulBlogCategory.slug + "/" }}>
-      <SEO title={data.contentfulBlogCategory.name} description={data.contentfulBlogCategory.description.childMarkdownRemark.html} />
-      <BlogHeader title={data.contentfulBlogCategory.name} text={data.contentfulBlogCategory.description.childMarkdownRemark.html}/>            
-      <BlogGrid type="simple" title="Aktuelle Artikel" blogPosts={data.allContentfulBlogPost.nodes}/>                  
+    <Layout type="blog" page={{name: name, slug: "/blog/kategorie/" + slug + "/" }}>
+      <SEO title={name} description={description} />
+      <Menu type="main" menuItems={menu}/>                          
+      {submenu && <Menu type="sub" menuItems={submenu}/> }            
+      <Breadcrumb links={breadcrumb}/>
+      <BlogHeader title={name} text={description}/>            
+      <BlogGrid type="simple" title="Aktuelle Artikel" blogPosts={blogPosts} locale={locale}/>                  
     </Layout>
   )
 }
-
-export const query = graphql`
-    query blogCategoryQuery($slug: String!){       
-      contentfulBlogCategory(slug: {eq: $slug}, node_locale: {eq: "de"}) {             
-        name
-        slug
-        description {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      allContentfulBlogPost(filter: {blogpost: {elemMatch: {categories: {elemMatch: {slug: {eq: $slug}}}}}, node_locale: {eq: "de"},}, sort: {fields: published, order: DESC}) {
-        nodes {
-          ...BlogPostFields 
-        }
-      }   
-    }
-`

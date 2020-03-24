@@ -1,27 +1,24 @@
-import React from 'react';
-import {graphql } from 'gatsby';
+import React from 'react'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-
+import Menu from "../components/menu"
+import Breadcrumb from "../components/breadcrumb"
 import ProductGrid from "../components/productgrid"
 
-export default ({ data, location }) => {      
+export default ({ pageContext: {page, locale, menu, submenu, breadcrumb}, location }) => {      
+  const name = page.fields.name[locale];
+  const slug = page.fields.slug[locale];
+  const description = page.fields.description[locale];
+  
   return (
-    <Layout page={{slug: data.contentfulPage.slug, name: data.contentfulPage.name}}>
-        <SEO title={data.contentfulPage.name} description={data.contentfulPage.description} />
+    <Layout page={{slug: slug, name: name}}>
+        <SEO title={name} description={description} />
+        <Menu type="main" menuItems={menu}/>                          
+        {submenu && <Menu type="sub" menuItems={submenu}/> }            
+        <Breadcrumb links={breadcrumb}/>
         <div>
           <ProductGrid location={location}/>
         </div>
     </Layout>
   )
 }
-
-export const query = graphql`
-    query allCatalogProductsQuery {      
-      contentfulPage(key: {eq: "products"}, node_locale: {eq: "de"}) {
-        slug     
-        name
-        description
-      }
-    }
-`

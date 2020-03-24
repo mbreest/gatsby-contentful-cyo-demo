@@ -1,5 +1,4 @@
 import React from 'react';
-import {graphql} from 'gatsby';
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ContentElementHero from "../components/contentelementhero"
@@ -7,59 +6,64 @@ import ContentElementProductList from "../components/contentelementproductlist"
 import ContentElement3ColumnText from "../components/contentelement3columntext"
 import ContentElementCategoryList from "../components/contentelementcategorylist"
 import ContentElementCategoryNavigation from "../components/contentelementcategorynavigation"
+import ContentElementCategoryNavigationIcon from "../components/contentelementcategorynavigationicon"
+import ContentElementCategoryNavigationHero from "../components/contentelementcategorynavigationhero"
 import ContentElementPhotoStory from "../components/contentelementphotostory"
+import Menu from "../components/menu"
+import Breadcrumb from "../components/breadcrumb"
 
-export default ({ data }) => {  
-  const { name, slug, category, contentElements } = data.contentfulCatalogCategory
+export default ({ pageContext: { catalogCategory, topProducts, topCategories, locale, designerPath, menu, submenu, breadcrumb } }) => {  
+  const name = catalogCategory.fields.name[locale];
+  const slug = catalogCategory.fields.slug[locale];
+  const category = catalogCategory.fields.category ? {name: catalogCategory.fields.category[locale].fields.name[locale], slug: catalogCategory.fields.category[locale].fields.slug[locale]} : null;  
+  const contentElements = catalogCategory.fields.contentElements[locale];
+  
   var count = 0;
 
   return (
     <Layout page={{slug: "/" + slug + "/", name: name}} category={category}>
       <SEO title={name} description="" />
-      
-      {(contentElements || []).map( (node) => {
-        if (node.internal) {
-          switch (node.internal.type) {
-            case "ContentfulHero":
+      <Menu type="main" menuItems={menu}/>                          
+      {submenu && <Menu type="sub" menuItems={submenu}/> }            
+      <Breadcrumb links={breadcrumb}/>
+
+      {(contentElements || []).map( (node) => {        
+        if (node.sys.contentType.sys.id) {        
+          switch (node.sys.contentType.sys.id) {
+            case "contentElementHero":
                 return (
-                  <ContentElementHero key={"ce" + (count++)} image={node.image} title={node.title} subtitle={node.subtitle} action={node.action}/>
+                  <ContentElementHero key={"ce" + (count++)} data={node} locale={locale} designerPath={designerPath}/>
                 )
-            case "Contentful3ColumnText":
+            case "contentElement3columnText":
+              return (
+                <ContentElement3ColumnText key={"ce" + (count++)} highlight="yes" data={node} locale={locale}/>
+              ) 
+            case "contentElementPhotoStory":            
+              return (
+                 <ContentElementPhotoStory key={"ce" + (count++)} highlight="no" data={node} locale={locale} designerPath={designerPath}/>
+              )   
+            case "contentElementCategoryList":
                 return (
-                  <ContentElement3ColumnText key={"ce" + (count++)} highlight="yes" title={node.title} headline1={ node.headline1 } text1={ node.text1 } headline2={ node.headline2 } text2={ node.text2 } headline3={ node.headline3 } text3={ node.text3 }/>
+                  <ContentElementCategoryList key={"ce" + (count++)} highlight="no" data={node} locale={locale}/>                  
                 )
-            case "ContentfulProductList":
-                if (node.generated) {
-                  return (                  
-                    <ContentElementProductList key={"ce" + (count++)} highlight="yes" title={node.title} products={data.topProducts.nodes} actionButton={node.actionButton}/>                  
-                  )                    
-                } else {
-                  return (
-                    <ContentElementProductList key={"ce" + (count++)} highlight="yes" title={node.title} products={node.products} actionButton={node.actionButton}/>                  
-                  )
-                }                                  
-            case "ContentfulCategoryList":
+            case "categoryNavigationHero":                          
                 return (
-                  <ContentElementCategoryList key={"ce" + (count++)} highlight="no" title={node.title} categories={node.categories}/>                  
-                )
-            case "ContentfulCategoryNavigationIcon":            
-              if (node.generated) {                       
+                  <ContentElementCategoryNavigationHero key={"ce" + (count++)} highlight="no" data={node} locale={locale}/>                  
+                )              
+            case "contentElementProductList":
+              return (                  
+                <ContentElementProductList key={"ce" + (count++)} highlight="yes" data={node} locale={locale} topProducts={topProducts}/>                  
+              )                                  
+            case "contentElementCategoryNavigation":            
+              if (node.fields.useIcon && node.fields.useIcon[locale] === true) {                       
                 return (                  
-                  <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" title={node.title} highlightedCategories={[]} categories={data.topCategories.nodes} useHero={false} useIcon={node.useIcon}/>
+                  <ContentElementCategoryNavigationIcon key={"ce" + (count++)} highlight="no" data={node} locale={locale} topCategories={topCategories}/>
                 )
               } else {
                 return (
-                  <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" title={node.title} highlightedCategories={node.highlightedCategories} categories={node.categories} useHero={false} useIcon={node.useIcon}/>                  
+                  <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" data={node} locale={locale} topCategories={topCategories}/>                  
                 )
-              }
-            case "ContentfulCategoryNavigationHero":                          
-              return (
-                <ContentElementCategoryNavigation key={"ce" + (count++)} highlight="no" title={node.title} highlightedCategories={[]} categories={node.categories} useHero={true} useIcon={false}/>                  
-              )              
-            case "ContentfulPhotoStory":            
-              return (
-                 <ContentElementPhotoStory key={"ce" + (count++)} highlight="no" title={node.title} photoBlocks={node.photoBlocks}/>
-              )            
+              }            
             default:
               return (
                 <div/>              
@@ -69,77 +73,8 @@ export default ({ data }) => {
           else {
             return (<div/>)
           }
-        })}      
+        })}    
+       
     </Layout>
   )
 }
-
-export const query = graphql`
-    query catalogCategoryQuery($slug: String!){       
-      contentfulCatalogCategory(slug: {eq: $slug}, node_locale: {eq: "de"}) {             
-        name        
-        slug     
-        category {
-          slug
-          name
-        }           
-        contentElements {
-            ... on Contentful3ColumnText {
-              ...ThreeColumnTextFields              
-              internal {
-                type
-              }
-            }
-            ... on ContentfulProductList {
-              ...ProductListFields
-              internal {
-                type
-              }
-            }
-            ... on ContentfulCategoryList {
-              ...CategoryListFields
-              internal {
-                type
-              }
-            }
-            ... on ContentfulCategoryNavigationIcon {
-              ...CategoryNavigationIconFields              
-              internal {
-                type
-              }
-            }    
-            ... on ContentfulCategoryNavigationHero {
-              ...CategoryNavigationHeroFields              
-              internal {
-                type
-              }
-            }              
-            ... on ContentfulPhotoStory {
-              ...PhotoStoryFields
-              internal {
-                type
-              }
-            }
-            ... on ContentfulHero {
-              ...HeroFields
-              internal {
-                type
-              }
-            }
-        }
-      }
-      topProducts: allContentfulCatalogProduct(filter: {category: {slug: {eq: $slug}}, node_locale: {eq: "de"}}, sort: {order: ASC, fields: index}, limit: 100) {
-        nodes {          
-          ...ProductListProductFields
-        }
-      }
-      topCategories: allContentfulCatalogCategory(filter: {category: {slug: {eq: $slug}}, node_locale: {eq: "de"}}, sort: {fields: index}) {      
-          nodes {
-            id
-            slug
-            name            
-            index
-          }
-      }
-    }
-`

@@ -22,7 +22,7 @@ function getImageURL({public_id, cloudName, baseTransformations = [], transforma
   return baseURL + imagePath;
 }
 
-function getFluidImage({source, max, aspectRatio = null, breakpoints, transformations = []}) {  
+function getFluidImage({source, max, aspectRatio = null, breakpoints, crop, gravity, transformations = []}) {  
   const sizes = `(max-width: ${max}px) 100vw, ${max}px`;
   const cleaned = breakpoints
     .concat(max) 
@@ -30,6 +30,14 @@ function getFluidImage({source, max, aspectRatio = null, breakpoints, transforma
     .sort((a, b) => a - b);
   const deduped = [...new Set(cleaned)];
   
+  if (crop) {
+    transformations.push("c_" + crop);
+  }
+  if (gravity) {
+    transformations.push("g_" + gravity);
+  }
+
+
   var baseTransformations = []
   if (source.derived && source.derived.length > 0) {
     baseTransformations.push(source.derived[0].raw_transformation)
