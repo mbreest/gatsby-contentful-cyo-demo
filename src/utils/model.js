@@ -115,19 +115,16 @@ async function createModel(locales) {
                         if (ce.fields.text1) {
                           Object.keys(ce.fields.text1).forEach((locale) => { 
                             ce.fields.text1[locale] = unified().use(markdown).use(html).processSync(ce.fields.text1[locale]).contents; 
-                            console.log(ce.fields.text1[locale]);
                           });
                         }
                         if (ce.fields.text2) {
                           Object.keys(ce.fields.text2).forEach((locale) => { 
                             ce.fields.text2[locale] = unified().use(markdown).use(html).processSync(ce.fields.text2[locale]).contents; 
-                            console.log(ce.fields.text2[locale]);
                           });
                         }
                         if (ce.fields.text3) {
                           Object.keys(ce.fields.text3).forEach((locale) => { 
                             ce.fields.text3[locale] = unified().use(markdown).use(html).processSync(ce.fields.text3[locale]).contents; 
-                            console.log(ce.fields.text3[locale]);
                           });
                         }
                     }

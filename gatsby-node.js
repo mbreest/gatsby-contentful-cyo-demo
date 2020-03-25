@@ -6,6 +6,7 @@ const pageBreadcrumb = require("./src/utils/breadcrumb.js").pageBreadcrumb
 const categoryBreadcrumb = require("./src/utils/breadcrumb.js").categoryBreadcrumb
 const blogBreadcrumb = require("./src/utils/breadcrumb.js").blogBreadcrumb
 const navigationMenu = require("./src/utils/navigation.js").navigationMenu
+const updateAlgoliaIndex = require("./src/utils/algolia.js").updateAlgoliaIndex
 
 const locale = "de";
 const locales = ["de"]
@@ -53,22 +54,52 @@ function minBlogFields(blog) {
   }
 }
 
-exports.onPreBootstrap = async () => {  
-  model = await createModel(locales);      
+function algoliaProduct(catalogProduct, locale) {
+  const name = catalogProduct.fields.name[locale];
+  const slug = catalogProduct.fields.slug[locale];
+  const available = catalogProduct.fields.available[locale];
+  const productTypeId = available ? catalogProduct.fields.productTypeId[locale] : "-1";
+  const sizes = available ? catalogProduct.fields.sizes[locale] : [];
+  const colors = available ? catalogProduct.fields.colors[locale] : [];
+  const defaultView = available ? catalogProduct.fields.defaultValues[locale].view : "-1";
+  const defaultColor = available ? catalogProduct.fields.defaultValues[locale].color : "-1";
+  const index = catalogProduct.fields.index[locale];
 
-  locales.forEach((l) => {
-    const page = model.pages.filter(p => filterByKey(p, "designer", locale))[0];
-    process.env[`link.designer.slug.${l}`] = page.fields.slug[locale];
-  })    
+  return {
+    "objectID": productTypeId,        
+    "name": name,
+    "slug": slug,
+    "sizes": sizes,
+    "colors": colors,
+    "available": available,
+    "defaultView": defaultView,
+    "defaultColor": defaultColor,
+    "index": index,        
+    "imageUrl": `https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/${productTypeId}/view/${defaultView},appearance=${defaultColor},width=300,height=300.jpg`,
+    "url": `https://gatsby-contentful-cyo-demo.netlify.com/detail/${slug}/`
+  }  
+}
+
+exports.onPreBootstrap = async () => {  
+  model = await createModel(locales);        
+
+  if (process.env.NODE_ENV === "production") {    
+    const { catalogProducts } = model;
+    updateAlgoliaIndex(catalogProducts.map((cp) => algoliaProduct(cp, locale)), locale);
+  }  
 }
 
 exports.createPages =  async ({ actions }) => {  
-  const { createPage } = actions; 
+  const { createPage } = actions;     
 
   const {authors, blogPosts, blogCategories, catalogProducts, catalogCategories, pages, navigationMenus} = model;
   
   const designer = pages.filter(p => filterByKey(p, "designer", locale))[0];
   
+  locales.forEach((l) => {
+    process.env[`link.designer.slug.${l}`] = designer.fields.slug[locale];
+  })    
+
   function resolvePath(ne, locale) {
     const path = ne.fields.item[locale].fields.slug[locale];
     if (ne.fields.item[locale].sys.contentType.sys.id === "blogCategory") {
