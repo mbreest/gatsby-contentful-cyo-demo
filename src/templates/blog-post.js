@@ -11,7 +11,7 @@ import BlogCategories from "../components/blogcategories"
 import Menu from "../components/menu"
 import Breadcrumb from "../components/breadcrumb"
 
-import { BLOCKS } from "@contentful/rich-text-types"
+import { BLOCKS, INLINES } from "@contentful/rich-text-types"
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 
 const fluid = require('../utils/cloudinary.js').getFluidImage
@@ -53,6 +53,18 @@ export default ({ pageContext: { blogPost, locale, designerPath, menu, submenu, 
           default:
             return <></>
         }     
+      },
+      [INLINES.EMBEDDED_ENTRY]: (node) => {     
+        switch (node.data.target.sys.contentType.sys.id) {
+          case "catalogCategory":
+            return <Link to={"/" + node.data.target.fields.slug[locale] + "/"}>{node.data.target.fields.name[locale]}</Link>
+          case "productType":
+            return <Link to={"/detail/" + node.data.target.fields.slug[locale] + "/"}>{node.data.target.fields.name[locale]}</Link>
+          case "blog":
+            return <Link to={"/blog/" + node.data.target.fields.slug[locale] + "/"}>{node.data.target.fields.title[locale]}</Link>          
+          default:
+            return <span>(not supported)</span>
+        }        
       }
     }
   };
