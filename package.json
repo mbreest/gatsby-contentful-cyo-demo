@@ -30,7 +30,7 @@
     "react-instantsearch-dom": "^6.1.0",
     "react-onclickoutside": "^6.9.0",
     "react-typography": "^0.16.19",
-    "remark-html": "^11.0.1",
+    "remark-html": "^13.0.2",
     "remark-parse": "^7.0.2",
     "styled-components": "^5.0.0",
     "styled-icons": "^9.2.0",
